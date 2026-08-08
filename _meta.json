@@ -1,0 +1,19 @@
+---
+name: seedancer
+slug: seedancer
+version: 4.0.0
+description: Seedance 2.5 导演操作系统——30秒直出/50素材/4K/局部编辑/白模绿幕/多语言
+author: taosiuman
+license: MIT-0
+tags:
+  - seedance
+  - video-generation
+  - prompt-engineering
+  - filmmaking
+  - ai-director
+  - seedance-2.5
+platforms:
+  - jimeng
+  - doubao
+  - volcano-engine
+---

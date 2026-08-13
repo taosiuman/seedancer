@@ -1,8 +1,8 @@
 ---
 name: seedancer
 slug: seedancer
-version: 4.0.0
-description: Seedance 2.5 导演操作系统——30秒直出/50素材/4K/局部编辑/白模绿幕/多语言
+version: 4.1.0
+description: AIGC 影视导演操作系统——CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW。多模型支持（Seedance 2.5/Kling/Veo），从一句话到成片完整制片管线。
 author: taosiuman
 license: MIT-0
 tags:
@@ -12,8 +12,16 @@ tags:
   - filmmaking
   - ai-director
   - seedance-2.5
+  - cinedance
+  - lira
+  - acting
+  - geo-spatial
+  - aigc
+  - multi-model
 platforms:
   - jimeng
   - doubao
   - volcano-engine
+  - kling
+  - veo
 ---

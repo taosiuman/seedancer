@@ -1,5 +1,46 @@
 # Seedancer 更新日志
 
+## v4.1.0 (2026-08-13) — 整合 AIGC Film Studio 体系 🎬
+
+### 🚀 核心升级
+
+整合 [ifeihong/aigc-film-studio](https://github.com/ifeihong/aigc-film-studio) v3.2.0 的核心体系，从"Seedance 专用提示词工具"进化为"多模型影视导演操作系统"。
+
+### ✨ 新增 8 大系统
+
+| 新增系统 | 说明 | 参考文档 |
+|---|---|---|
+| **CINEDANCE 16-block** | 视频提示词导演系统（4-D 方法论 + 镜头决策树 + FOV 光学控制） | `cinedance-video-prompt.md` (29KB) |
+| **LIRA 4-D** | 图像提示词优化系统（模型路由 + 手术式编辑 + 10 条防失败规则） | `lira-image-prompt.md` (17KB) |
+| **ACTING** | 角色表演系统（5 大支柱 + 眼生命 + 主档案 + 坏表演图鉴） | `acting-performance.md` (16KB) |
+| **GEO 空间锁定** | 180° 轴线 + frame-left/right 坐标 + 地标锚定 | `geo-spatial-layout.md` (7KB) |
+| **Style Prefix** | 逐字粘贴风格前缀（三条根条款：Skin/Acting/Continuity） | `style-prefix.md` (11KB) |
+| **AI 导演方法论** | L1/L2/L3 三级输入 + 体裁适配 + 语言路由 | `ai-director.md` (13KB) |
+| **失败诊断** | 6 类 33 码 — 从失败现象直接定位修复方案 | `failure-codes.md` (11KB) |
+| **交付物系统** | 5 类标准化交付物 | `deliverable-system.md` (16KB) |
+
+### 🎯 多模型支持
+
+- **视频**：Seedance 2.5 / Kling 3.0 / Veo 3
+- **图像**：GPT Image 2 / Seedream
+
+### 📊 体裁适配
+
+横屏电影 / 短剧 / 漫剧 / 竖屏短视频 — 四种体裁自动路由。
+
+### 📦 文件变更
+
+- 11 个文件（3 个修改 + 8 个新增）
+- 新增约 120KB 参考文档
+- SKILL.md 升级至 v4.1.0
+- 新增 README.md
+
+### 📝 整合策略
+
+保留 Seedance 2.5 全部特有功能（30 秒/4K/50 素材/局部编辑/白模/绿幕），叠加 AIGC Film Studio 的方法论体系。
+
+---
+
 ## v4.0.0 (2026-08-09) — Seedance 2.5 全面适配 🎬
 
 ### 🚀 核心升级

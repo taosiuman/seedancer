@@ -1,7 +1,7 @@
 MIT-0 License
 
 ================================================================================
-SEEDANCER v4.1.0 — Attribution & Sources
+SEEDANCER v5.0.0 — Attribution & Sources
 ================================================================================
 
 This skill incorporates content from the following sources:
@@ -44,11 +44,25 @@ This skill incorporates content from the following sources:
    - references/deliverable-system.md
    - assets/templates/* (multiple template files)
 
-4. Seedancer v3.0.0 (this fork)
+4. chaoge-assets-trial (Chaoge AI导演体验版 v1.3.0)
+   Author: taosiuman (超哥)
+   License: MIT-0
+   Note: P0-P2 pre-production pipeline — story bible, emotion curve,
+   creative baseline, character dependency graph, prop mother boards.
+
+   Files derived from this project:
+   - references/story-analysis.md
+   - references/emotion-curve.md
+   - references/creative-baseline.md
+   - references/character-assets.md
+   - references/prop-assets.md
+
+5. Seedancer v5.0.0 (this fork)
    Author: taosiuman (https://github.com/taosiuman)
    License: MIT-0
-   Note: Architecture-level refactor into "director operating system"
-   with 8-gate routing, sequence project management, and retake protocol.
+   Note: End-to-end film production OS — P0-P2 pre-production + 10-gate
+   routing + CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix
+   + SCALE LAW + AI Director + failure diagnostics.
 
 ================================================================================
 ORIGINAL LICENSES

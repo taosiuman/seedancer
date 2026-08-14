@@ -1,17 +1,18 @@
 # Seedancer — AIGC 影视导演操作系统
 
-> 从一句话到成片的完整制片管线。**不是提示词工具，是导演操作系统。**
+> 从剧本到成片的端到端制片管线。**不是提示词工具，是导演操作系统。**
 
 [![ClawHub](https://img.shields.io/badge/ClawHub-seedancer-blue)](https://clawhub.ai/taosiuman/seedancer)
 [![License: MIT-0](https://img.shields.io/badge/License-MIT--0-green)](./LICENSE)
-[![Version](https://img.shields.io/badge/version-4.1.0-orange)](https://github.com/taosiuman/seedancer/releases/tag/v4.1.0)
+[![Version](https://img.shields.io/badge/version-5.0.0-orange)](https://github.com/taosiuman/seedancer/releases/tag/v5.0.0)
 
 ## 概览
 
-Seedancer 是一个面向 AI 影视创作者的完整导演操作系统，覆盖从单镜头提示词到多镜头序列项目到完整制片管线的全流程。
+Seedancer 是一个面向 AI 影视创作者的端到端制片操作系统，覆盖从剧本解析到预生产资产到分镜生成到成片交付的全流程。
 
 基于 **Seedance 2.5** / **Kling 3.0** / **Veo 3** 模型机制设计，支持：
 
+- 📝 **P0-P2 预生产管线** — 十项剧本解析 + 情绪曲线 + 创作基准 + 角色资产 + 道具母板
 - 🎬 **30 秒直出** — 完整情绪弧线一次生成
 - 🖼️ **原生 4K** — 商业级交付品质
 - 📦 **50 个参考素材** — 30 图 + 10 视频 + 10 音频
@@ -20,6 +21,18 @@ Seedancer 是一个面向 AI 影视创作者的完整导演操作系统，覆盖
 - 🟩 **绿幕参考** — 主体合成 + 光影重渲染
 
 ## 核心系统
+
+### 预生产管线（v5.0.0 新增）
+
+| 阶段 | 系统 | 说明 |
+|------|------|------|
+| **P0** | 项目接收 | 自动输出项目基准卡 |
+| **P0A** | 十项剧本解析 | 世界观 + 人物小传 + 状态链 + 情绪曲线自动可视化 |
+| **P1** | 创作基准 | 摄影系统 + 风格锁定 + 环境色彩 + 声音圣经 |
+| **P2a** | 角色资产 | 依赖图 + 批次生产 + 9:16确认稿 + 16:9设定板 |
+| **P2b** | 关键道具 | 候选清单 + 3:4产品档案照母板 |
+
+### 制片管线
 
 | 系统 | 说明 |
 |------|------|
@@ -33,6 +46,17 @@ Seedancer 是一个面向 AI 影视创作者的完整导演操作系统，覆盖
 | **失败诊断** | 6 类 33 码 — 从失败现象直接定位修复方案 |
 | **交付物系统** | 5 类标准化交付物 — 提示词 / 参数卡 / 分镜表 / 项目档案 / 制作报告 |
 
+## 全流程架构
+
+```text
+P0 项目接收
+→ P0A 十项剧本解析 + 情绪曲线图
+→ P1 摄影/色彩/声音创作基准
+→ P2a 角色资产（依赖图 → 批次生产 → 9:16 → 16:9）
+→ P2b 关键道具母板
+→ 10 门控路由 → 6 阶段制片流程 → 交付物输出
+```
+
 ## 多模型支持
 
 | 模型 | 类型 | 适用场景 |
@@ -40,45 +64,49 @@ Seedancer 是一个面向 AI 影视创作者的完整导演操作系统，覆盖
 | **Seedance 2.5** | 视频 | 主力模型，30s/4K/局部编辑/白模/绿幕 |
 | **Kling 3.0** | 视频 | 备选，运动幅度大 |
 | **Veo 3** | 视频 | 备选，电影质感 |
-| **GPT Image 2** | 图像 | 概念图 / 参考图 |
-| **Seedream** | 图像 | 风格化图像 |
+| **GPT Image 2** | 图像 | 概念图 / 参考图 / 角色确认稿 |
+| **NBP** | 图像 | 帧编辑 / 文字渲染 / 道具母板 |
+| **Seedream** | 图像 | 风格化图像 / Seedance 生态配合 |
 
 ## 体裁适配
 
-| 体裁 | 画幅 | 集长 | 特点 |
-|------|------|------|------|
-| 横屏电影 | 16:9 / 2.35:1 | 60-120min | 标准电影语法 |
-| 短剧 | 9:16 / 16:9 | 2-5min/集 | 高密度反转 |
-| 漫剧 | 9:16 | 1-3min/集 | 二次元风格 |
-| 竖屏短视频 | 9:16 | 15-60s | 社交传播 |
+| 体裁 | 画幅 | 特点 |
+|------|------|------|
+| 横屏电影 | 16:9 / 2.35:1 | 标准电影语法 |
+| 短剧 | 9:16 / 16:9 | 高密度反转 |
+| 漫剧 | 9:16 | 二次元风格 |
+| 竖屏短视频 | 9:16 | 社交传播 |
 
 ## 快速开始
 
 ### 安装（OpenClaw）
 
 ```bash
-# 通过 ClawHub 安装
 clawhub install seedancer
 ```
 
 ### 使用
 
-安装后，在 OpenClaw agent 中直接使用触发词：
+**完整项目（P0-P2 预生产 + 制片）**：
+> "读取我的剧本，帮我完成从剧本解析到角色资产到分镜的全流程"
 
+**单镜头快速生成**：
 > "帮我拍一个赛博朋克风格的雨夜街道镜头"
 
-Seedancer 会自动激活导演操作系统，引导你完成：
-1. 意图理解 → 画面翻译
-2. 模型选择 → 模式路由
-3. 参考素材 → 提示词生成
-4. 参数输出 → 交付物标准化
+**已有资产继续制作**：
+> "我已经有角色设定板了，帮我生成分镜视频提示词"
 
 ## 参考文档
 
 | 文档 | 说明 |
 |------|------|
-| [`references/cinedance-video-prompt.md`](references/cinedance-video-prompt.md) | CINEDANCE 视频提示词导演系统 |
-| [`references/lira-image-prompt.md`](references/lira-image-prompt.md) | LIRA 图像提示词优化系统 |
+| [`references/story-analysis.md`](references/story-analysis.md) | P0A 十项剧本解析 |
+| [`references/emotion-curve.md`](references/emotion-curve.md) | 情绪曲线自动可视化 |
+| [`references/creative-baseline.md`](references/creative-baseline.md) | P1 摄影/色彩/声音基准 |
+| [`references/character-assets.md`](references/character-assets.md) | 角色资产依赖图与批次生产 |
+| [`references/prop-assets.md`](references/prop-assets.md) | 关键道具母板 |
+| [`references/cinedance-video-prompt.md`](references/cinedance-video-prompt.md) | CINEDANCE 视频提示词系统 |
+| [`references/lira-image-prompt.md`](references/lira-image-prompt.md) | LIRA 图像提示词系统 |
 | [`references/acting-performance.md`](references/acting-performance.md) | ACTING 角色表演系统 |
 | [`references/geo-spatial-layout.md`](references/geo-spatial-layout.md) | GEO 空间锁定 |
 | [`references/style-prefix.md`](references/style-prefix.md) | Style Prefix 风格前缀 |
@@ -107,7 +135,8 @@ Seedancer 会自动激活导演操作系统，引导你完成：
 
 | 版本 | 日期 | 亮点 |
 |------|------|------|
-| **v4.1.0** | 2026-08-13 | 整合 AIGC Film Studio 体系（CINEDANCE/LIRA/ACTING/GEO/Style Prefix） |
+| **v5.0.0** | 2026-08-14 | P0-P2 预生产管线 + 10 门控路由 + 端到端制片 |
+| v4.1.0 | 2026-08-13 | 整合 AIGC Film Studio（CINEDANCE/LIRA/ACTING/GEO/Style Prefix） |
 | v4.0.0 | 2026-08-09 | Seedance 2.5 全面适配（30s/4K/50 素材/局部编辑/白模/绿幕） |
 | v3.0.0 | 2026-06-22 | 架构级重构 — 8 门控路由 + 重拍协议 + 序列项目管理 |
 | v2.2.2 | 2026-06-20 | 时间片分镜模式 |
@@ -122,6 +151,7 @@ Seedancer 会自动激活导演操作系统，引导你完成：
 - [seedance-2-prompt-engineering-skill](https://clawhub.ai/dandysuper/seedance-2-prompt-engineering-skill) by dandysuper (MIT-0)
 - [Emily2040/seedance-2.0](https://github.com/Emily2040/seedance-2.0) by Iamemily2050 (MIT)
 - [ifeihong/aigc-film-studio](https://github.com/ifeihong/aigc-film-studio) v3.2.0 by Feihong (MIT)
+- chaoge-assets-trial v1.3.0 by taosiuman (MIT-0)
 
 完整归属声明见 [LICENSE](LICENSE)。
 

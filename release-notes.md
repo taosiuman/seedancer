@@ -1,5 +1,62 @@
 # Seedancer 更新日志
 
+## v7.0.0 (2026-08-24) — 新增五大导演系统 🎬
+
+### 🚀 核心升级
+
+整合三大开源技能（shotlist-builder + seedance-director + hellgrind），从"提示词生成器"进化为"真正的 AI 导演操作系统"。
+
+### ✨ 新增五大导演系统
+
+| 新增系统 | 说明 | 参考文档 |
+|---|---|---|
+| **场景原型路由** | 9种场景原型（追逐/对决/冲击/旅程/氛围/揭示/对峙/审讯/谈判）+ 决策树自动选型 | `scene-prototypes.md` |
+| **摄影机-情绪同步** | 6种情绪 → 摄影机类型/运动/焦段自动映射（愤怒=手持不稳定、平静=平滑呼吸、震惊=静止+慢推） | `camera-emotion-sync.md` |
+| **表演微节拍目录** | 每种情绪分解为具体肌肉/呼吸/眼神运动（愤怒=咬肌搏动+鼻翼扩张；焦虑=喉结吞咽+舔润下唇） | `performance-micro-beats.md` |
+| **JSON API 输出模式** | 结构化双语（EN+ZH）JSON 输出，5个分节标签，中文≤1800字符，可自动化集成 | `json-api-mode.md` |
+| **光源规则系统** | practicals-only 铁律 + 60:30:10色彩比例 + 场景变体（夜景/日外/夜外/暖室内） | `lighting-rules.md` |
+
+### 🆕 新增参考文档（5 个）
+
+- ✅ `references/scene-prototypes.md` — 场景原型路由：9种原型 + 3大决策树（动作/通用/对话）
+- ✅ `references/camera-emotion-sync.md` — 摄影机-情绪同步：6种情绪映射 + 镜头选择规则 + 情绪弧线分阶段变化
+- ✅ `references/performance-micro-beats.md` — 表演微节拍目录：按情绪分类（愤怒/焦虑/悲伤/控制/沉重/震惊/压抑）+ 台词前后节拍
+- ✅ `references/json-api-mode.md` — JSON API 输出模式：格式规范 + 5分节标签 + 反垃圾词汇表（EN 30+ / ZH 20+）
+- ✅ `references/lighting-rules.md` — 光源规则系统：practicals-only + 60:30:10色彩 + 5种场景变体
+
+### 🏗️ 架构升级
+
+- ✅ **SKILL.md** 更新 description + attribution（新增来源 6: shotlist-builder, 7: seedance-director）
+- ✅ **README.md** 全面重写（v7.0.0 项目说明）
+- ✅ **CHANGELOG.md** 新增（详细更新日志）
+
+### 📊 文件变更
+
+- 9 个文件（1 修改 SKILL.md + 5 新增 reference + 1 重写 README.md + 1 新增 CHANGELOG.md + 1 修改 release-notes.md）
+- 新增约 15KB 参考文档
+- SKILL.md 升级至 v7.0.0
+- README.md 全面重写
+- CHANGELOG.md 新增
+
+### 📝 整合策略
+
+保留 Seedancer v6.0.0 全部功能（P0-P2 预生产管线 + 五大硬门系统 + CINEDANCE/LIRA/ACTING/GEO/Style Prefix/SCALE LAW/AI 导演/失败诊断/交付物/多模型支持），新增五大导演系统。新系统与原有系统无缝衔接：
+- 场景原型路由 → 在门控 3 自动判断场景类型
+- 摄影机-情绪同步 → 增强运镜设计系统（v6.0.0）
+- 表演微节拍 → 增强 ACTING 表演系统
+- JSON API → 可选输出模式（与 Markdown 输出并存）
+- 光源规则 → 增强 Style Prefix
+
+### 🔗 整合来源
+
+| 来源 | 贡献 |
+|------|------|
+| shotlist-builder | 场景原型路由 + 摄影机-情绪同步 + 表演微节拍 + 光源规则 |
+| seedance-director (skill_cn.md) | JSON API 输出模式 + 反垃圾词汇表 |
+| hellgrind 地狱磨砺 | ACTING/CINEDANCE/LIRA 增强 |
+
+---
+
 ## v6.0.0 (2026-08-24) — 新增五大硬门系统 🎬
 
 ### 🚀 核心升级
@@ -53,6 +110,7 @@
 | 输出格式 | CINEDANCE 16-block 作为内部架构，Elio 格式作为输出模板 |
 
 ---
+
 ## v5.0.0 (2026-08-14) — 新增 P0-P2 预生产管线 🎬
 
 ### 🚀 核心升级
@@ -80,36 +138,14 @@
 ### 🏗️ 架构升级
 
 - ✅ **10 门控路由**（原 8 门控 + 新增门控 0 预生产检测 + 门控 0A 预生产阶段）
-- ✅ **预生产 → 制片管线无缝衔接**：
-  - P1 风格锁定 → Style Prefix 核心内容
-  - P1 摄影参数 → CINEDANCE OPTICS/LIGHTING 全局默认值
-  - P1 声音原则 → CINEDANCE AUDIO 全局约束
-  - P2a 角色 descriptor → CINEDANCE ACTIVE REFERENCES 逐字注入
-  - P2a 状态链 → 跨镜头 descriptor 版本管理
-  - P2b 道具 descriptor → CINEDANCE/GEO/SCALE LAW 锚点
-  - 情绪曲线节点 → 分镜段落映射 + CINEDANCE 参数选择
+- ✅ **预生产 → 制片管线无缝衔接**
 - ✅ **快速路径**：单镜头/已有资产可跳过 P0-P2 直接进入制片管线
 - ✅ **确认门禁系统**：每个阶段有固定确认/过渡话术
 - ✅ **事实等级制度**：剧本事实/强推断/导演提案/待定冲突 四级分明
 
-### 📊 文件变更
-
-- 7 个文件（1 个修改 SKILL.md + 5 个新增 reference + 1 个新增 VERSION）
-- 新增约 22KB 参考文档
-- SKILL.md 升级至 v5.0.0
-- _meta.json 升级至 v5.0.0
-- release-notes.md 新增 v5.0.0 条目
-- LICENSE 新增 chaoge-assets-trial 归属
-
-### 📝 整合策略
-
-保留 Seedancer v4.1.0 全部功能（CINEDANCE/LIRA/ACTING/GEO/Style Prefix/SCALE LAW/AI 导演/失败诊断/交付物/多模型支持），在上游新增 P0-P2 预生产管线。预生产输出直接注入生产管线的各个 block，形成无缝数据流。
-
 ---
 
 ## v4.1.0 (2026-08-13) — 整合 AIGC Film Studio 体系 🎬
-
-### 🚀 核心升级
 
 整合 [ifeihong/aigc-film-studio](https://github.com/ifeihong/aigc-film-studio) v3.2.0 的核心体系，从"Seedance 专用提示词工具"进化为"多模型影视导演操作系统"。
 
@@ -126,27 +162,9 @@
 | **失败诊断** | 6 类 33 码 — 从失败现象直接定位修复方案 | `failure-codes.md` (11KB) |
 | **交付物系统** | 5 类标准化交付物 | `deliverable-system.md` (16KB) |
 
-### 🎯 多模型支持
-
-- **视频**：Seedance 2.5 / Kling 3.0 / Veo 3
-- **图像**：GPT Image 2 / Seedream
-
-### 📊 体裁适配
-
-横屏电影 / 短剧 / 漫剧 / 竖屏短视频 — 四种体裁自动路由。
-
-### 📦 文件变更
-
-- 11 个文件（3 个修改 + 8 个新增）
-- 新增约 120KB 参考文档
-- SKILL.md 升级至 v4.1.0
-- 新增 README.md
-
 ---
 
 ## v4.0.0 (2026-08-09) — Seedance 2.5 全面适配 🎬
-
-### 🚀 核心升级
 
 Seedance 2.5 模型大版本升级，视频生成从"能生成"走向"可修改、可迭代、可交付"。
 
@@ -177,4 +195,4 @@ Seedance 2.5 模型大版本升级，视频生成从"能生成"走向"可修改�
 
 ---
 
-**🎬 Seedancer v5.0.0 — 从剧本到成片的端到端制片操作系统。**
+**🎬 Seedancer v7.0.0 — 从剧本到成片的端到端制片操作系统。**

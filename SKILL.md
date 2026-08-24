@@ -1,9 +1,9 @@
 ---
 name: seedancer
-description: "AIGC 影视导演操作系统——从剧本解析到预生产资产到多镜头序列项目到完整制片管线的端到端工作流。整合 P0-P2 预生产管线 + 台词容量预检 + 分组硬门 + 镜头密度四道门 + 运镜设计系统 + 输出格式硬门 + 空间/人物指代硬门 + 媒介翻译表 + CINEDANCE 16-block + LIRA 图像提示词 + ACTING 表演 + GEO 空间锁定 + Style Prefix + SCALE LAW + AI 导演 + 失败诊断。基于 Seedance 2.5 / Kling 3.0 / Veo 3（30秒直出/50素材/4K/局部编辑/白模绿幕）。触发词：Seedance、即梦、视频生成、提示词、Seedancer、AIGC电影、短剧、AI短片。"
+description: "AIGC 影视导演操作系统——从剧本解析到预生产资产到多镜头序列项目到完整制片管线的端到端工作流。整合 P0-P2 预生产管线 + 五大硬门系统 + 场景原型路由 + 摄影机-情绪同步 + 表演微节拍目录 + JSON API 输出模式 + 光源规则系统 + CINEDANCE 16-block + LIRA 图像提示词 + ACTING 表演 + GEO 空间锁定 + Style Prefix + SCALE LAW + AI 导演 + 失败诊断。基于 Seedance 2.5 / Kling 3.0 / Veo 3（30秒直出/50素材/4K/局部编辑/白模绿幕）。触发词：Seedance、即梦、视频生成、提示词、Seedancer、AIGC电影、短剧、AI短片。"
 license: MIT-0
 author: taosiuman
-version: 6.0.0
+version: 7.0.0
 attribution: |
   This skill incorporates content from:
   1. seedance-2-prompt-engineering-skill by ClawHub user kn78900pfs4x1dyejyd8vj121s804aea (MIT-0)
@@ -34,12 +34,19 @@ attribution: |
      - 分组硬门 + 镜头密度四道门 → references/grouping-density.md
      - 运镜设计系统 → references/camera-design.md
      - 输出格式硬门 + 空间/人物指代硬门 + 媒介翻译表 → references/output-format.md
+  6. shotlist-builder by Claude Code Team (MIT)
+     - 场景原型路由系统 → references/scene-prototypes.md
+     - 摄影机-情绪同步系统 → references/camera-emotion-sync.md
+     - 表演微节拍目录 → references/performance-micro-beats.md
+     - 光源规则系统 → references/lighting-rules.md
+  7. seedance-director (skill_cn.md) by ClawHub (MIT)
+     - JSON API 输出模式 → references/json-api-mode.md
   Full attribution details in LICENSE file.
 ---
 
-# Seedancer v6.0.0 — AIGC 影视导演操作系统
+# Seedancer v7.0.0 — AIGC 影视导演操作系统
 
-> 从**剧本解析**到**预生产资产**到**分镜生成**到**成片交付**的端到端制片操作系统。v6.0.0 新增 **五大硬门系统**（整合自 Elio_AIGC Seedance 2.0 Prompts V2.3）：台词容量预检 + 分组硬门 + 镜头密度四道门 + 运镜设计系统 + 输出格式/空间/指代硬门 + 媒介翻译表。保留 P0-P2 预生产管线 + CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 33 码。支持多模型（Seedance 2.5/Kling/Veo/GPT Image 2/NBP/Seedream），五类交付物标准化输出。
+> 从**剧本解析**到**预生产资产**到**分镜生成**到**成片交付**的端到端制片操作系统。v7.0.0 新增 **五大导演系统**（整合自 shotlist-builder + seedance-director + hellgrind）：场景原型路由 + 摄影机-情绪同步 + 表演微节拍目录 + JSON API 输出模式 + 光源规则系统。保留 P0-P2 预生产管线 + 五大硬门系统（v6.0.0）+ CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 33 码。支持多模型（Seedance 2.5/Kling/Veo/GPT Image 2/NBP/Seedream），五类交付物标准化输出。
 
 ---
 
@@ -57,7 +64,87 @@ attribution: |
 
 ---
 
-## 🆕 v6.0.0 — 五大硬门系统
+## 🆕 v7.0.0 — 五大导演系统
+
+> 整合自 shotlist-builder + seedance-director (skill_cn.md) + hellgrind 三大技能。
+
+### 新系统总览
+
+| 系统 | 作用 | 参考文档 |
+|------|------|----------|
+| **场景原型路由** | 9种原型 + 决策树自动选型 | `scene-prototypes.md` |
+| **摄影机-情绪同步** | 6种情绪 → 摄影机类型/运动/焦段 | `camera-emotion-sync.md` |
+| **表演微节拍目录** | 每种情绪分解为肌肉/呼吸/眼神具体运动 | `performance-micro-beats.md` |
+| **JSON API 输出模式** | 结构化双语输出，可自动化 | `json-api-mode.md` |
+| **光源规则系统** | practicals-only + 60:30:10色彩 + 场景变体 | `lighting-rules.md` |
+
+### 场景原型路由
+
+所有场景自动归入 3 大类 9 种原型：
+
+**动作类**：追逐 → 对决 → 冲击
+**通用类**：旅程 → 氛围 → 揭示
+**对话类**：对峙 → 审讯 → 谈判
+
+每种原型有独立的摄影机焦点、空间动态和决策树。决策树从用户描述中自动判断走哪个分支。
+
+### 摄影机-情绪同步
+
+摄影机是焦点角色的情绪分身。6 种情绪对应不同的摄影机类型：
+
+| 情绪 | 摄影机类型 | 中文写法 |
+|------|-----------|----------|
+| 愤怒/紧张 | 手持呼吸，不稳定 | 画面有明显呼吸式漂移、上下微抖 |
+| 平静/控制 | 手持呼吸，平滑 | 极细微的、规律的呼吸式微动 |
+| 悲伤/脆弱 | 手持，缓慢低位 | 呼吸节奏放慢，极轻微下沉感 |
+| 震惊/揭示 | 静止 + 慢推/慢拉 | 开始严格静止，0.5秒后极缓慢移动 |
+| 动作 | 60fps 180°快门 | 流畅运动，快门范围内运动模糊 |
+| 终拍/判词 | 俯拍定格 | 严格正上方俯拍，0.3-0.5秒freeze |
+
+情绪变化时摄影机同步分阶段变化，绑定到编号表演节拍（① ② ③ ...）。
+
+### 表演微节拍目录
+
+**铁律**：泛化情绪 → 坏提示词。具体肌肉/呼吸/眼神 → 好提示词。
+
+每种情绪分解为具体的肌肉运动：
+- 愤怒：咬肌搏动、颈动脉脉搏、鼻翼扩张、瞳孔收缩
+- 焦虑：喉结吞咽、台词前短促浅吸气、舔润下唇
+- 悲伤：眼角外缘下垂、湿润带眼神光但不流泪
+- 震惊：身体冻结0.3-0.5秒、瞳孔扩张、延迟急促鼻吸气
+
+每句台词有前节拍（吞咽/吸气）+ 中 emphasis + 后节拍（0.5秒凝视）。
+
+### JSON API 输出模式
+
+可选输出模式。返回 JSON 数组包含 EN + ZH 两个提示词对象：
+
+```json
+[{"lang":"en","prompt":"..."},{"lang":"zh","prompt":"..."}]
+```
+
+提示词内嵌 5 个分节标签：Style & Mood / Narrative Summary / Dynamic Description / Static Description / Audio。
+
+中文硬上限 1800 字符。含完整反垃圾词汇表（EN 30+ / ZH 20+ 禁用词）。
+
+### 光源规则系统
+
+**practicals-only 铁律**：严格仅使用场景内实际存在的光源（屏幕、窗户、实用灯具）。禁止一切电影补光。
+
+- 摄影机始终在人物的阴影侧（shadow side）拍摄
+- 色彩 60:30:10 — 主色/辅色/点缀色
+- 全程大气薄雾 haze，禁止可见光束（god rays）
+- 场景变体：夜景/地下基地/日外/夜外/暖室内各有独立灯光条款
+
+### 反垃圾词汇表
+
+**EN 禁用**：breathtaking, stunning, captivating, mesmerizing, masterfully, meticulously, exquisitely, cinematic masterpiece, visual feast, seamlessly, effortlessly, flawlessly, cutting-edge, groundbreaking 等 30+ 词
+
+**ZH 禁用**：令人叹为观止、精心打造、匠心独运、视觉盛宴、完美呈现、极致体验、震撼人心等 20+ 词
+
+---
+
+## v6.0.0 — 五大硬门系统
 
 > 整合自 Elio_AIGC Seedance 2.0 Prompts V2.3（SKILL制作者：B站/抖音：Elio_AIGC）。原 skill 用户询问时标注出处。
 

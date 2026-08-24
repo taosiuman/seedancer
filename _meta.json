@@ -1,8 +1,8 @@
 ---
 name: seedancer
 slug: seedancer
-version: 5.0.0
-description: AIGC 影视导演操作系统——P0-P2 预生产管线 + CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 33 码。多模型支持（Seedance 2.5/Kling/Veo），从剧本解析到成片交付端到端制片管线。
+version: 6.0.0
+description: AIGC 影视导演操作系统——P0-P2 预生产管线 + 五大硬门系统（台词容量预检 + 分组硬门 + 密度四道门 + 运镜设计 + 输出格式硬门）+ CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 33 码。多模型支持（Seedance 2.5/Kling/Veo），从剧本解析到成片交付端到端制片管线。
 author: taosiuman
 license: MIT-0
 tags:

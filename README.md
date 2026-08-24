@@ -4,7 +4,7 @@
 
 [![ClawHub](https://img.shields.io/badge/ClawHub-seedancer-blue)](https://clawhub.ai/taosiuman/seedancer)
 [![License: MIT-0](https://img.shields.io/badge/License-MIT--0-green)](./LICENSE)
-[![Version](https://img.shields.io/badge/version-5.0.0-orange)](https://github.com/taosiuman/seedancer/releases/tag/v5.0.0)
+[![Version](https://img.shields.io/badge/version-6.0.0-orange)](https://github.com/taosiuman/seedancer/releases/tag/v6.0.0)
 
 ## 概览
 
@@ -12,6 +12,7 @@ Seedancer 是一个面向 AI 影视创作者的端到端制片操作系统，覆
 
 基于 **Seedance 2.5** / **Kling 3.0** / **Veo 3** 模型机制设计，支持：
 
+- 🚪 **五大硬门系统** — 台词容量预检 + 分组硬门 + 密度四道门 + 运镜设计 + 输出格式硬门
 - 📝 **P0-P2 预生产管线** — 十项剧本解析 + 情绪曲线 + 创作基准 + 角色资产 + 道具母板
 - 🎬 **30 秒直出** — 完整情绪弧线一次生成
 - 🖼️ **原生 4K** — 商业级交付品质
@@ -22,7 +23,19 @@ Seedancer 是一个面向 AI 影视创作者的端到端制片操作系统，覆
 
 ## 核心系统
 
-### 预生产管线（v5.0.0 新增）
+### 五大硬门系统（v6.0.0 新增）
+
+整合自 Elio_AIGC Seedance 2.0 Prompts V2.3，确保视频提示词的可执行性与一致性：
+
+| 硬门 | 作用 | 参考文档 |
+|------|------|----------|
+| **台词容量预检** | 语速四档 + 标点停顿 + 反应留白 → 先算时长再分组 | `dialogue-capacity.md` |
+| **分组硬门** | 15/30秒硬上限 + 承接等式 + 组尾稳定态 | `grouping-density.md` |
+| **镜头密度四道门** | Smin/Bmin/新反馈/Gmax → 短漫剧必过 | `grouping-density.md` |
+| **运镜设计系统** | 叙事功能表 + 三要素 + 每场运镜主轴 | `camera-design.md` |
+| **输出格式/指代硬门** | 自然段写法 + 禁止代词 + 禁止模糊方位 + 媒介翻译表 | `output-format.md` |
+
+### 预生产管线（v5.0.0）
 
 | 阶段 | 系统 | 说明 |
 |------|------|------|
@@ -54,7 +67,7 @@ P0 项目接收
 → P1 摄影/色彩/声音创作基准
 → P2a 角色资产（依赖图 → 批次生产 → 9:16 → 16:9）
 → P2b 关键道具母板
-→ 10 门控路由 → 6 阶段制片流程 → 交付物输出
+→ 12 门控路由（含门控 7A 台词容量 + 7B 密度硬门）→ 6 阶段制片流程 → 交付物输出
 ```
 
 ## 多模型支持
@@ -100,6 +113,10 @@ clawhub install seedancer
 
 | 文档 | 说明 |
 |------|------|
+| [`references/dialogue-capacity.md`](references/dialogue-capacity.md) | 🆕 台词容量预检系统 |
+| [`references/grouping-density.md`](references/grouping-density.md) | 🆕 分组硬门 + 镜头密度四道门 |
+| [`references/camera-design.md`](references/camera-design.md) | 🆕 运镜设计系统 |
+| [`references/output-format.md`](references/output-format.md) | 🆕 输出格式 + 空间/指代硬门 + 媒介翻译表 |
 | [`references/story-analysis.md`](references/story-analysis.md) | P0A 十项剧本解析 |
 | [`references/emotion-curve.md`](references/emotion-curve.md) | 情绪曲线自动可视化 |
 | [`references/creative-baseline.md`](references/creative-baseline.md) | P1 摄影/色彩/声音基准 |
@@ -123,19 +140,24 @@ clawhub install seedancer
 | [`references/continuation-handoff.md`](references/continuation-handoff.md) | 续接交接协议 |
 | [`references/anti-slop-lexicon.md`](references/anti-slop-lexicon.md) | 反油腻词典 |
 
-## 五条黄金规则
+## 九条黄金规则
 
 1. **先听懂，再翻译** — 用户说感受，你输出工艺
 2. **先路由，再生成** — 模式/模型/体裁决定一切
 3. **先参考，再提示** — 没有参考素材的提示词是空中楼阁
 4. **先失败诊断，再重试** — 33 个错误码直接定位修复
 5. **先交付物，再收工** — 每次输出必须是标准化交付物
+6. **台词先算再写** — 台词容量预检不过，不进入分镜
+7. **组尾必须稳定** — 承接等式不成立，不进入下一组
+8. **密度必须达标** — 四道门不过，不交付
+9. **禁止代词和模糊方位** — 正文出现代词或模糊方位，立即修正
 
 ## 版本历史
 
 | 版本 | 日期 | 亮点 |
 |------|------|------|
-| **v5.0.0** | 2026-08-14 | P0-P2 预生产管线 + 10 门控路由 + 端到端制片 |
+| **v6.0.0** | 2026-08-24 | 五大硬门系统（台词容量预检 + 分组硬门 + 密度四道门 + 运镜设计 + 输出格式硬门）+ 12 门控路由 |
+| v5.0.0 | 2026-08-14 | P0-P2 预生产管线 + 10 门控路由 + 端到端制片 |
 | v4.1.0 | 2026-08-13 | 整合 AIGC Film Studio（CINEDANCE/LIRA/ACTING/GEO/Style Prefix） |
 | v4.0.0 | 2026-08-09 | Seedance 2.5 全面适配（30s/4K/50 素材/局部编辑/白模/绿幕） |
 | v3.0.0 | 2026-06-22 | 架构级重构 — 8 门控路由 + 重拍协议 + 序列项目管理 |
@@ -152,6 +174,7 @@ clawhub install seedancer
 - [Emily2040/seedance-2.0](https://github.com/Emily2040/seedance-2.0) by Iamemily2050 (MIT)
 - [ifeihong/aigc-film-studio](https://github.com/ifeihong/aigc-film-studio) v3.2.0 by Feihong (MIT)
 - chaoge-assets-trial v1.3.0 by taosiuman (MIT-0)
+- [seedance20-video-prompts](https://clawhub.ai/Elio_AIGC/seedance20-video-prompts) V2.3 by Elio_AIGC（B站/抖音：Elio_AIGC）
 
 完整归属声明见 [LICENSE](LICENSE)。
 

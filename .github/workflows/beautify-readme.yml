@@ -1,0 +1,43 @@
+name: Beautify README with Archify
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  beautify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Archify skill
+        run: |
+          git clone --depth 1 https://github.com/tt-a1i/archify.git /tmp/archify
+          cd /tmp/archify
+          npm install
+
+      - name: Generate architecture diagram
+        run: |
+          cd /tmp/archify
+          node bin/archify.mjs deliver architecture \
+            /tmp/archify/examples/architecture.json \
+            "$GITHUB_WORKSPACE/assets/seedancer-architecture.html" \
+            --quality showcase --json
+
+      - name: Commit beautified README
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          git add README.md docs/README-cn.md assets/ 2>/dev/null || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "docs: beautify README with Archify [skip ci]"
+            git push
+          fi

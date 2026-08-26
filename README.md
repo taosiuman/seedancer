@@ -1,5 +1,9 @@
 # Seedancer v7.0.0 — AI Film Director Operating System
 
+<p align="center">
+  <a href="README.md"><b>English</b></a> · <a href="docs/README-cn.md">中文</a>
+</p>
+
 <div align="center">
 
 **From Script to Screen — End-to-End AI Film Production Pipeline**

@@ -1,5 +1,9 @@
 # Seedancer v7.0.0 — AIGC 影视导演操作系统
 
+<p align="center">
+  <a href="../README.md"><b>English</b></a> · <a href="README-cn.md">中文</a>
+</p>
+
 <div align="center">
 
 **从剧本到成片的端到端智能制片管线**

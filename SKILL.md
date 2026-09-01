@@ -3,7 +3,7 @@ name: seedancer
 description: "AIGC 影视导演操作系统——从剧本解析到预生产资产到多镜头序列项目到完整制片管线的端到端工作流。整合 P0-P2 预生产管线 + 五大硬门系统 + 场景原型路由 + 摄影机-情绪同步 + 表演微节拍目录 + JSON API 输出模式 + 光源规则系统 + CINEDANCE 16-block + LIRA 图像提示词 + ACTING 表演 + GEO 空间锁定 + Style Prefix + SCALE LAW + AI 导演 + 失败诊断。基于 Seedance 2.5 / Kling 3.0 / Veo 3（30秒直出/50素材/4K/局部编辑/白模绿幕）。触发词：Seedance、即梦、视频生成、提示词、Seedancer、AIGC电影、短剧、AI短片。"
 license: MIT-0
 author: taosiuman
-version: 7.0.1
+version: 7.0.2
 attribution: |
   This skill incorporates content from:
   1. seedance-2-prompt-engineering-skill by ClawHub user kn78900pfs4x1dyejyd8vj121s804aea (MIT-0)

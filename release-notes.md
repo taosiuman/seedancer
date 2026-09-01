@@ -1,5 +1,19 @@
 # Seedancer 更新日志
 
+## v7.0.1 (2026-09-01) — 文档修复版 📝
+
+修复 v7.0.0 发布审查中发现的文档一致性问题。
+
+| 问题 | 修复 |
+|------|------|
+| 参考文档表缺少 v7.0.0 新增的 5 个 reference | ✅ 补充 scene-prototypes / camera-emotion-sync / performance-micro-beats / json-api-mode / lighting-rules |
+| 黄金规则标题"五条"但实际有 9 条 | ✅ 改为"九条黄金规则" |
+| attribution 未列出 hellgrind 作为独立来源 | ✅ 补充为来源 #8 |
+| 文档底部版本线停留在 v6.0.0 | ✅ 更新为 v7.0.1 |
+| VERSION 文件停留在 v5.0.0 | ✅ 更新至 v7.0.1 |
+
+---
+
 ## v7.0.0 (2026-08-24) — 新增五大导演系统 🎬
 
 ### 🚀 核心升级

@@ -3,7 +3,7 @@ name: seedancer
 description: "AIGC 影视导演操作系统——从剧本解析到预生产资产到多镜头序列项目到完整制片管线的端到端工作流。整合 P0-P2 预生产管线 + 五大硬门系统 + 场景原型路由 + 摄影机-情绪同步 + 表演微节拍目录 + JSON API 输出模式 + 光源规则系统 + CINEDANCE 16-block + LIRA 图像提示词 + ACTING 表演 + GEO 空间锁定 + Style Prefix + SCALE LAW + AI 导演 + 失败诊断。基于 Seedance 2.5 / Kling 3.0 / Veo 3（30秒直出/50素材/4K/局部编辑/白模绿幕）。触发词：Seedance、即梦、视频生成、提示词、Seedancer、AIGC电影、短剧、AI短片。"
 license: MIT-0
 author: taosiuman
-version: 7.0.0
+version: 7.0.1
 attribution: |
   This skill incorporates content from:
   1. seedance-2-prompt-engineering-skill by ClawHub user kn78900pfs4x1dyejyd8vj121s804aea (MIT-0)
@@ -41,10 +41,14 @@ attribution: |
      - 光源规则系统 → references/lighting-rules.md
   7. seedance-director (skill_cn.md) by ClawHub (MIT)
      - JSON API 输出模式 → references/json-api-mode.md
+  8. hellgrind 地狱磨砺 by taosiuman (MIT-0)
+     - ACTING 表演系统增强
+     - CINEDANCE 分镜系统增强
+     - LIRA 图像系统增强
   Full attribution details in LICENSE file.
 ---
 
-# Seedancer v7.0.0 — AIGC 影视导演操作系统
+# Seedancer v7.0.1 — AIGC 影视导演操作系统
 
 > 从**剧本解析**到**预生产资产**到**分镜生成**到**成片交付**的端到端制片操作系统。v7.0.0 新增 **五大导演系统**（整合自 shotlist-builder + seedance-director + hellgrind）：场景原型路由 + 摄影机-情绪同步 + 表演微节拍目录 + JSON API 输出模式 + 光源规则系统。保留 P0-P2 预生产管线 + 五大硬门系统（v6.0.0）+ CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 33 码。支持多模型（Seedance 2.5/Kling/Veo/GPT Image 2/NBP/Seedream），五类交付物标准化输出。
 
@@ -616,7 +620,7 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 
 ---
 
-## 五条黄金规则
+## 九条黄金规则
 
 1. **资产优先。** 锁定并压力测试所有角色/地点/道具前，不生成任何镜头。
 2. **逐字描述一切。** 模型无记忆，descriptor 每镜逐字进提示词，绝不缩写。
@@ -950,6 +954,11 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 
 | 文档 | 说明 | 版本 |
 |------|------|------|
+| `references/scene-prototypes.md` 🆕 | 场景原型路由：9种原型 + 3大决策树 | v7.0.0 |
+| `references/camera-emotion-sync.md` 🆕 | 摄影机-情绪同步：6种情绪映射 | v7.0.0 |
+| `references/performance-micro-beats.md` 🆕 | 表演微节拍目录：情绪分解为肌肉运动 | v7.0.0 |
+| `references/json-api-mode.md` 🆕 | JSON API 输出模式 + 反垃圾词表 | v7.0.0 |
+| `references/lighting-rules.md` 🆕 | 光源规则系统：practicals-only + 色彩比例 | v7.0.0 |
 | `references/dialogue-capacity.md` 🆕 | 台词容量预检系统 | v6.0.0 |
 | `references/grouping-density.md` 🆕 | 分组硬门 + 镜头密度四道门 | v6.0.0 |
 | `references/camera-design.md` 🆕 | 运镜设计系统 | v6.0.0 |
@@ -1092,4 +1101,4 @@ Seedance 2.5 全面适配。
 
 ---
 
-**🎬 Seedancer v6.0.0 — 从剧本到成片的端到端制片操作系统。P0-P2 预生产管线 + 五大硬门系统 + CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 33 码。多模型支持，五类交付物。**
+**🎬 Seedancer v7.0.1 — 从剧本到成片的端到端制片操作系统。P0-P2 预生产管线 + 五大硬门系统 + 五大导演系统 + CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 33 码。多模型支持，五类交付物。**

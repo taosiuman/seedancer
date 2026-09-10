@@ -3,7 +3,7 @@ name: seedancer
 description: "AIGC 影视导演操作系统——从剧本解析到预生产资产到多镜头序列项目到完整制片管线的端到端工作流。整合 P0-P2 预生产管线 + 五大硬门系统 + 场景原型路由 + 摄影机-情绪同步 + 表演微节拍目录 + JSON API 输出模式 + 光源规则系统 + CINEDANCE 16-block + LIRA 图像提示词 + ACTING 表演 + GEO 空间锁定 + Style Prefix + SCALE LAW + AI 导演 + 失败诊断。基于 Seedance 2.5 / Kling 3.0 / Veo 3.1 / Wan 3.0（30秒直出/50素材/4K/局部编辑/白模绿幕）。触发词：Seedance、即梦、视频生成、提示词、Seedancer、AIGC电影、短剧、AI短片。"
 license: MIT-0
 author: taosiuman
-version: 7.1.0
+version: 8.0.0
 attribution: |
   This skill incorporates content from:
   1. seedance-2-prompt-engineering-skill by ClawHub user kn78900pfs4x1dyejyd8vj121s804aea (MIT-0)
@@ -660,9 +660,219 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 
 ---
 
+## 🆕 并发控制协议 (v8.0.0)
+
+> 防止API限流和资源耗尽
+
+### 并发限制
+
+| 任务类型 | 默认并发 | 环境变量 |
+|---------|---------|----------|
+| 图片生成 | 30 | `SEEDANCER_IMAGE_CONCURRENCY` |
+| 视频生成 | 50 | `SEEDANCER_VIDEO_CONCURRENCY` |
+| 视频分析 | 10 | `SEEDANCER_ANALYSIS_CONCURRENCY` |
+| 音频生成 | 20 | `SEEDANCER_AUDIO_CONCURRENCY` |
+
+### 并发策略
+
+#### 1. 令牌桶算法
+
+```javascript
+class ConcurrencyLimiter {
+  constructor(maxConcurrent) {
+    this.maxConcurrent = maxConcurrent;
+    this.currentConcurrent = 0;
+    this.queue = [];
+  }
+
+  async acquire() {
+    if (this.currentConcurrent < this.maxConcurrent) {
+      this.currentConcurrent++;
+      return true;
+    }
+    
+    return new Promise(resolve => {
+      this.queue.push(resolve);
+    });
+  }
+
+  release() {
+    this.currentConcurrent--;
+    if (this.queue.length > 0) {
+      this.currentConcurrent++;
+      const next = this.queue.shift();
+      next();
+    }
+  }
+}
+```
+
+#### 2. 批量任务并发
+
+```javascript
+async function executeBatch(tasks, limiter) {
+  const results = [];
+  
+  for (const task of tasks) {
+    await limiter.acquire();
+    
+    try {
+      const result = await task.execute();
+      results.push(result);
+    } finally {
+      limiter.release();
+    }
+  }
+  
+  return results;
+}
+```
+
+### 限流保护
+
+#### 1. 指数退避
+
+```javascript
+async function retryWithBackoff(fn, maxRetries = 3) {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await fn();
+    } catch (error) {
+      if (error.code === 429) { // Rate limit
+        const delay = Math.pow(2, i) * 1000; // 1s, 2s, 4s
+        await new Promise(resolve => setTimeout(resolve, delay));
+      } else {
+        throw error;
+      }
+    }
+  }
+  throw new Error('Max retries exceeded');
+}
+```
+
+#### 2. 错误处理
+
+- 429 Too Many Requests: 自动重试，指数退避
+- 503 Service Unavailable: 自动重试，固定延迟
+- 其他错误: 记录日志，继续执行
+
+---
+
 ## 多模型支持
 
-### 🆕 模型自动选择系统 (v8.0.0)
+### 🆕 进度状态查询协议 (v8.0.0)
+
+> 提供项目进度的实时查询能力
+
+### 查询接口
+
+#### 1. 项目总览查询
+
+```json
+{
+  "project": {
+    "id": "project-001",
+    "name": "项目名称",
+    "status": "in-progress",
+    "startTime": "2026-09-10T10:00:00Z",
+    "estimatedCompletion": "2026-09-10T18:00:00Z"
+  },
+  "progress": {
+    "total": 100,
+    "completed": 45,
+    "failed": 2,
+    "pending": 53
+  },
+  "currentTask": {
+    "id": "task-045",
+    "type": "video-generation",
+    "startTime": "2026-09-10T14:30:00Z"
+  }
+}
+```
+
+#### 2. 分镜进度查询
+
+```json
+{
+  "storyboard": {
+    "total": 10,
+    "completed": 7,
+    "failed": 0,
+    "pending": 3
+  },
+  "details": [
+    {
+      "id": "storyboard-001",
+      "status": "completed",
+      "videoStatus": "completed",
+      "videoUrl": "https://..."
+    }
+  ]
+}
+```
+
+#### 3. 资产生成进度查询
+
+```json
+{
+  "assets": {
+    "total": 20,
+    "completed": 15,
+    "failed": 1,
+    "pending": 4
+  },
+  "details": [
+    {
+      "id": "asset-001",
+      "type": "image",
+      "status": "completed",
+      "url": "https://..."
+    }
+  ]
+}
+```
+
+### 状态定义
+
+| 状态 | 含义 |
+|-----|------|
+| pending | 待处理 |
+| running | 运行中 |
+| completed | 已完成 |
+| failed | 失败 |
+| cancelled | 已取消 |
+
+### 实时更新机制
+
+#### 1. WebSocket 推送
+
+```javascript
+// 服务端
+const ws = new WebSocketServer({ port: 8080 });
+
+ws.on('connection', (socket) => {
+  // 推送进度更新
+  socket.send(JSON.stringify({
+    type: 'progress-update',
+    data: getProjectProgress()
+  }));
+});
+```
+
+#### 2. 轮询查询
+
+```javascript
+// 客户端
+setInterval(async () => {
+  const progress = await fetch('/api/progress').then(r => r.json());
+  updateUI(progress);
+}, 5000); // 每5秒查询一次
+```
+
+---
+
+## 🆕 模型自动选择系统 (v8.0.0)
 
 > 借鉴 ShotFunClaw `task-selector.js` 设计，基于场景/预算/能力自动推荐模型。
 

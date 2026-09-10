@@ -1,6 +1,6 @@
 # 视频分析管线协议 v1.0
 
-> 借鉴 ShotFunClaw `shotfun-drama-localization-pipeline` 的视频分析管线设计
+> 借鉴 ShotFunClaw `shotfun-drama-localization-pipeline` 视频分析管线
 
 ---
 

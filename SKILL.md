@@ -1,9 +1,9 @@
 ---
 name: seedancer
-description: "AIGC 影视导演操作系统——从剧本解析到预生产资产到多镜头序列项目到完整制片管线的端到端工作流。整合 P0-P2 预生产管线 + 五大硬门系统 + 场景原型路由 + 摄影机-情绪同步 + 表演微节拍目录 + JSON API 输出模式 + 光源规则系统 + CINEDANCE 16-block + LIRA 图像提示词 + ACTING 表演 + GEO 空间锁定 + Style Prefix + SCALE LAW + AI 导演 + 失败诊断。基于 Seedance 2.5 / Kling 3.0 / Veo 3（30秒直出/50素材/4K/局部编辑/白模绿幕）。触发词：Seedance、即梦、视频生成、提示词、Seedancer、AIGC电影、短剧、AI短片。"
+description: "AIGC 影视导演操作系统——从剧本解析到预生产资产到多镜头序列项目到完整制片管线的端到端工作流。整合 P0-P2 预生产管线 + 五大硬门系统 + 场景原型路由 + 摄影机-情绪同步 + 表演微节拍目录 + JSON API 输出模式 + 光源规则系统 + CINEDANCE 16-block + LIRA 图像提示词 + ACTING 表演 + GEO 空间锁定 + Style Prefix + SCALE LAW + AI 导演 + 失败诊断。基于 Seedance 2.5 / Kling 3.0 / Veo 3.1 / Wan 3.0（30秒直出/50素材/4K/局部编辑/白模绿幕）。触发词：Seedance、即梦、视频生成、提示词、Seedancer、AIGC电影、短剧、AI短片。"
 license: MIT-0
 author: taosiuman
-version: 7.0.2
+version: 7.1.0
 attribution: |
   This skill incorporates content from:
   1. seedance-2-prompt-engineering-skill by ClawHub user kn78900pfs4x1dyejyd8vj121s804aea (MIT-0)
@@ -48,7 +48,7 @@ attribution: |
   Full attribution details in LICENSE file.
 ---
 
-# Seedancer v7.0.1 — AIGC 影视导演操作系统
+# Seedancer v8.0.0 — AIGC 影视导演操作系统
 
 > 从**剧本解析**到**预生产资产**到**分镜生成**到**成片交付**的端到端制片操作系统。v7.0.0 新增 **五大导演系统**（整合自 shotlist-builder + seedance-director + hellgrind）：场景原型路由 + 摄影机-情绪同步 + 表演微节拍目录 + JSON API 输出模式 + 光源规则系统。保留 P0-P2 预生产管线 + 五大硬门系统（v6.0.0）+ CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 33 码。支持多模型（Seedance 2.5/Kling/Veo/GPT Image 2/NBP/Seedream），五类交付物标准化输出。
 
@@ -634,7 +634,85 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 
 ---
 
+## 🆕 新模型能力速览 (v7.1.0)
+
+> 2026-07-31 起，MiniMax H3 与 Seedance 2.0 Mini 上线，带来新能力。
+
+### MiniMax H3 关键能力
+
+| 能力 | 说明 | 应用场景 |
+|------|------|----------|
+| **原生立体声** | 音视频联合生成，输出原生立体声 | 需要空间感的场景（环境音、音乐、对话） |
+| **2K 默认分辨率** | 无需超分，原生 2K 输出 | 高分辨率交付、投影、大屏 |
+| **原生多镜头建模** | 单次生成包含多个镜头的序列 | 广告、产品演示、快速原型 |
+| **In-Context Regeneration** | 模型在上下文内重建高分辨率输出，保留细节 | 文字渲染、品牌 logo、精细纹理 |
+| **跨模态参考** | 从视频 A 取运镜、从图像 B 取角色、从音频 C 取声音 | 复杂创意参考、风格迁移 |
+| **V2V 运动转移** | 从参考视频提取运动模式应用到新角色/场景 | 动作参考、舞蹈、物理交互 |
+| **开源权重** | 模型权重开放，可本地部署与定制 | 私有化部署、定制训练 |
+
+**H3 定价优势**：2K ~$0.061/秒，768p ~$0.036/秒（低于主流模型 1/3 - 1/2）
+
+### Seedance 2.0 Mini
+
+- **4K 输出支持**：轻量变体，支持 4K 原生输出
+- **快速迭代**：适合需要快速生成多个版本的场景
+- **高分辨率交付**：直接输出 4K，无需后期超分
+
+---
+
 ## 多模型支持
+
+### 🆕 模型自动选择系统 (v8.0.0)
+
+> 借鉴 ShotFunClaw `task-selector.js` 设计，基于场景/预算/能力自动推荐模型。
+
+#### 选择维度
+
+| 维度 | 选项 | 影响 |
+|------|------|------|
+| 场景类型 | 照片真实感/快速出图/720p视频/1080p视频/30秒长视频/口播视频/品牌广告/动作物理 | 推荐模型 |
+| 预算偏好 | 低（省钱）/ 中（平衡）/ 高（质量优先） | 过滤价格档位 |
+| 能力需求 | 参考图/真人素材/音画同出/局部编辑/文字渲染 | 过滤能力支持 |
+
+#### 场景→模型映射表
+
+| 场景 | 推荐模型 | 备选模型 | 价格档位 |
+|------|----------|----------|----------|
+| 照片级真实感图片 | GPT Image 2 | Nano Banana 2 | 高 |
+| 快速出图（原型/测试） | Nano Banana 2 | Seedream 5.0 Pro | 低 |
+| 帧编辑（修改已有图） | Nano Banana Pro | — | 中 |
+| 文字渲染/品牌Logo | Nano Banana Pro | MiniMax H3 | 中 |
+| 720p视频（性价比） | Seedance 2.0 | Seedance 2.0 Mini | 中 |
+| 1080p视频（高质量） | Kling 3.0 Omni | Seedance 2.5 | 高 |
+| 30秒长视频 | Seedance 2.5 | — | 中 |
+| 口播视频（音画同出） | Kling 3.0 Omni | MiniMax H3 | 中 |
+| 品牌/广告（文字精准） | MiniMax H3 | Nano Banana Pro | 中 |
+| 动作/物理交互 | Kling 3.0 | Seedance 2.5 | 中 |
+| 多模态参考生成 | Wan 3.0 | Seedance 2.5 | 中 |
+| 原生立体声/2K | MiniMax H3 | — | 中 |
+| 真人素材（需报白） | Seedance 2.0 | Kling 3.0 Omni | 中 |
+
+#### 选择流程
+
+```
+1. 用户描述场景 → Agent 判断场景类型
+2. 询问预算偏好（低/中/高）
+3. 询问能力需求（参考图/真人/音画同出等）
+4. 根据映射表推荐模型 + 解释理由
+5. 用户确认后使用
+6. 写入 manifest.json 的 modelSelection 字段
+```
+
+#### 并发控制
+
+| 任务类型 | 默认并发 | 环境变量 |
+|----------|----------|----------|
+| 图片生成 | 30 | `SEEDANCER_IMAGE_CONCURRENCY` |
+| 视频生成 | 50 | `SEEDANCER_VIDEO_CONCURRENCY` |
+| 视频分析 | 10 | `SEEDANCER_ANALYSIS_CONCURRENCY` |
+| 音频生成 | 20 | `SEEDANCER_AUDIO_CONCURRENCY` |
+
+---
 
 ### 视频生成模型
 
@@ -642,12 +720,17 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 |---|---|---|---|---|
 | **Seedance 2.5** | 字节跳动 | **30秒** | 长叙事、多参考图、真人感、局部编辑 | 复杂动作与长对白 |
 | **Seedance 2.0** | 字节跳动 | 15秒 | 多镜头叙事、角色一致性 | 性价比高 |
-| **Kling 3.0** | 快手 | 15秒 | 物理精确、角色一致性 | 动作与物理交互 |
-| **Kling 3.0 Omni** | 快手 | 15秒 | 原生音画同步、唇形同步 | 对白镜 |
-| **Veo 3** | Google | 8秒 | 原生音频生成、电影级画质 | 短氛围镜 |
+| **Kling 3.0** | 快手 | 15秒 | 物理精确、角色一致性、深度多模态指令解析、跨任务整合 | 动作与物理交互 |
+| **Kling 3.0 Omni** | 快手 | 15秒 | 原生音画同步、唇形同步、**视频背景替换**、Native Audio 特征解耦、视觉身份与声线双重绑定、复杂多场景转场高一致性、智能分镜系统、多语混说、4K 编辑管线（2026-06-17 升级） | 对白镜、场景替换、专业编辑 |
+| **Veo 3.1** | Google | 8秒 | 原生音频生成、电影级画质、**4K输出**、原生9:16竖屏 | 短氛围镜、专业级输出 |
+
+| **MiniMax H3** | MiniMax (海螺AI) | 15秒 | **原生立体声**、**2K 分辨率**、指令遵循强、文字/品牌渲染精准、V2V 运动转移、**原生多镜头建模**、In-Context Regeneration（高分辨率重建）、开源权重 | 广告/电商/品牌渲染/多模态交叉参考 |
+| **Wan 3.0** | 阿里巴巴 | 2-15秒 | 全模态输入、720P/1080P、5主体参考、元素增删替换 | 多模态参考生成、灵活编辑 |
 
 - 用户未指定时，默认推荐 **Seedance 2.5**
 - **视频模型选用前，必须先询问用户**
+
+> 🆕 **Seedance 2.0 Mini** — 新轻量变体，支持 4K 输出，适合快速迭代与高分辨率交付场景（2026-08 上线）
 
 ### 图像生成模型
 
@@ -990,6 +1073,29 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 
 ## 变更日志
 
+### v7.1.0 (2026-09-10)
+
+**新增 MiniMax H3 模型支持**
+- ✅ MiniMax H3（2026-07-31 发布）：原生立体声、2K 分辨率、15秒时长、原生多镜头建模、V2V 运动转移、In-Context Regeneration 高分辨率重建、开源权重
+- ✅ H3 擅长指令遵循、文字/品牌渲染精准、跨模态参考（从视频 A 取运镜、从图像 B 取角色、从音频 C 取声音）
+- ✅ H3 定价优势：2K 视频 ~$0.061/秒，768p ~$0.036/秒，远低于主流模型
+- ✅ 适用场景：广告/电商/品牌渲染/多模态交叉参考
+
+**新增 Seedance 2.0 Mini 变体**
+- ✅ Seedance 2.0 Mini：轻量变体，支持 4K 输出（2026-08 上线）
+- ✅ 适合快速迭代与高分辨率交付场景
+
+### v7.0.4 (2026-09-06)
+
+**Kling 3.0 Omni 编辑管线升级信息更新**
+- ✅ Kling 3.0 Omni 2026-06-17 编辑管线升级：4K 编辑输入/输出、一致性增强、3-15 秒编辑范围
+- ✅ Kling 3.0 新增智能分镜系统、多语混说、主体参考/角色定向驱动
+- ✅ 来源：Atlas Cloud AI (June 2026)、快手官方
+
+**搜索发现**：
+- Seedance 2.5 已正式发布（2026-07 上线），技能已完整支持
+- Veo 3.1、Wan 3.0 暂无新更新信息
+
 ### v6.0.0 (2026-08-24)
 
 **新增五大硬门系统** — 整合自 Elio_AIGC Seedance 2.0 Prompts V2.3（SKILL制作者：B站/抖音：Elio_AIGC）
@@ -1101,4 +1207,4 @@ Seedance 2.5 全面适配。
 
 ---
 
-**🎬 Seedancer v7.0.1 — 从剧本到成片的端到端制片操作系统。P0-P2 预生产管线 + 五大硬门系统 + 五大导演系统 + CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 33 码。多模型支持，五类交付物。**
+**🎬 Seedancer v7.1.0 — 从剧本到成片的端到端制片操作系统。P0-P2 预生产管线 + 五大硬门系统 + 五大导演系统 + CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 33 码。多模型支持（Seedance 2.5/2.0 Mini/Kling 3.0/Veo 3.1/MiniMax H3/Wan 3.0），五类交付物。**

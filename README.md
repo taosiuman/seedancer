@@ -1,4 +1,4 @@
-# Seedancer v7.0.0 — AI Film Director Operating System
+# Seedancer v8.0.0 — AI Film Director Operating System
 
 <p align="center">
   <a href="README.md"><b>English</b></a> · <a href="docs/README-cn.md">中文</a>
@@ -23,7 +23,7 @@
 
 **Seedancer** is not a prompt generator. It is a **director-grade AI film production operating system** — a complete workflow engine that transforms scripts into production-ready video prompts through **12 quality gates**, **10 core modules**, and **30+ reference documents**.
 
-### ✨ What's New in v7.0.0
+### ✨ What's New in v8.0.0
 
 Five advanced director systems built on three integrated open-source skills:
 
@@ -59,7 +59,7 @@ Rigorous constraints ensuring prompt executability:
 - **Camera Design System** — Narrative function table + 3-element camera axis
 - **Output Format Gate** — Natural paragraph style + pronoun ban + media translation table
 
-### Five Director Systems (v7.0.0)
+### Five Director Systems (v8.0.0)
 
 ####  Scene Prototype Router
 
@@ -228,7 +228,7 @@ references/
 
 | Version | Date | Highlights |
 |---------|------|-----------|
-| **v7.0.0** | 2026-08-24 | 5 director systems: scene router, camera-emotion sync, micro-beats, lighting rules, JSON API |
+| **v8.0.0** | 2026-09-23 | 33 improvements from ShotFunClaw research + SkillSpector audit fixes |
 | **v6.0.0** | 2026-08-24 | 5 hard gates: dialogue capacity, grouping, shot density, camera design, output format |
 | **v5.0.0** | 2026-08-14 | P0-P2 pre-production pipeline |
 | **v4.1.0** | 2026-08-13 | CINEDANCE / LIRA / ACTING / GEO / Style Prefix integration |
@@ -260,7 +260,7 @@ Full attribution: [LICENSE](LICENSE)
 
 <div align="center">
 
-**🎬 Seedancer v7.0.0 — Where Scripts Become Frames**
+**🎬 Seedancer v8.0.0 — Where Scripts Become Frames**
 
 *Made with ❤️ for AI filmmakers*
 

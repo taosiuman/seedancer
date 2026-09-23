@@ -1,6 +1,6 @@
 ---
 name: seedancer
-description: "AIGC 影视导演操作系统——从剧本解析到预生产资产到多镜头序列项目到完整制片管线的端到端工作流。整合 P0-P2 预生产管线 + 五大硬门系统 + 场景原型路由 + 摄影机-情绪同步 + 表演微节拍目录 + JSON API 输出模式 + 光源规则系统 + CINEDANCE 16-block + LIRA 图像提示词 + ACTING 表演 + GEO 空间锁定 + Style Prefix + SCALE LAW + AI 导演 + 失败诊断。基于 Seedance 2.5 / Kling 3.0 / Veo 3.1 / Wan 3.0（30秒直出/50素材/4K/局部编辑/白模绿幕）。触发词：Seedance、即梦、视频生成、提示词、Seedancer、AIGC电影、短剧、AI短片。"
+description: "AI film production pipeline — generates structured video prompts for AI video generators (Seedance/Kling/Veo/Wan). Includes script analysis, camera-emotion sync, performance micro-beats, lighting rules, and 30+ reference docs. Primarily Chinese-language skill targeting Chinese AIGC video platforms. English speakers: see README.md. Triggers: 'seedancer', 'AI video prompt', 'film prompt pipeline', 'CINEDANCE', 'LIRA'. NOT for: general video generation requests, image generation, or non-AI filmmaking."
 license: MIT-0
 author: taosiuman
 version: 8.0.0
@@ -412,13 +412,31 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 
 ---
 
-## 语言路由
+## Language Policy / 语言政策
+
+**This skill is primarily designed for Chinese-language AIGC video platforms (Seedance/Kling/Wan).**
 
 | 用户输入语言 | 提示词语言 | 说明文字语言 |
 |---|---|---|
 | 中文 | **中文** | 中文 |
 | 英文 | **英文** | 英文 |
 | 日文 | **日文** | 日文 |
+| 其他语言 | 英文 | 英文 |
+
+**Note**: All reference documents are currently in Chinese only. English speakers should refer to README.md for overview. For other languages, the system will default to English prompts.
+
+---
+
+## 语言路由
+
+> **Language Notice**: This skill's reference documents are primarily in Chinese. English speakers: see README.md for overview. The skill supports generating prompts in multiple languages based on user input.
+
+| 用户输入语言 | 提示词语言 | 说明文字语言 |
+|---|---|---|
+| 中文 | **中文** | 中文 |
+| 英文 | **英文** | 英文 |
+| 日文 | **日文** | 日文 |
+| 其他 | **英文** (default) | 英文 |
 
 - Block 名称始终英文
 - 技术标签始终英文

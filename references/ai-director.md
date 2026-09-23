@@ -1,3 +1,8 @@
+> **Language**: This document is in Chinese only. For English overview, see [README.md](../README.md).
+>
+> **语言说明**: 本文档仅提供中文版本。英文概述请查看 [README.md](../README.md)。
+
+---
 # AI 导演方法论
 
 > **定位**：在 12 阶段管线中，AI 导演发生在**阶段 0（需求澄清）之后、阶段 1（剧本解析）之前**的阶段 0.5。

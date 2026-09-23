@@ -1,3 +1,8 @@
+> **Language**: This document is in Chinese only. For English overview, see [README.md](../README.md).
+>
+> **语言说明**: 本文档仅提供中文版本。英文概述请查看 [README.md](../README.md)。
+
+---
 # 重拍协议 (Retake Protocol) — Seedance 2.5
 
 > 生成不是终点，是评估的起点。

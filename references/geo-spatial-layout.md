@@ -1,3 +1,8 @@
+> **Language**: This document is in Chinese only. For English overview, see [README.md](../README.md).
+>
+> **语言说明**: 本文档仅提供中文版本。英文概述请查看 [README.md](../README.md)。
+
+---
 # GEO 空间锁定模板
 
 > **问题**：角色瞬移、换位、镜头跳到错边——因为模型不记得上一镜谁站哪。

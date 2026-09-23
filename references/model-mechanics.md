@@ -1,3 +1,8 @@
+> **Language**: This document is in Chinese only. For English overview, see [README.md](../README.md).
+>
+> **语言说明**: 本文档仅提供中文版本。英文概述请查看 [README.md](../README.md)。
+
+---
 # 模型机制 (Model Mechanics) — 生成器如何思考
 
 > 理解这 **10** 大机制，你就能推导正确做法，覆盖没有规则的场景。

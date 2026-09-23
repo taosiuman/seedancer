@@ -1,3 +1,8 @@
+> **Language**: This document is in Chinese only. For English overview, see [README.md](../README.md).
+>
+> **语言说明**: 本文档仅提供中文版本。英文概述请查看 [README.md](../README.md)。
+
+---
 # 参考角色映射 (Reference Role Map) — Seedance 2.5
 
 > 每个参考素材分配一个主角色，明确说明不转移什么。

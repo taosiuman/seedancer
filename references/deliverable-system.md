@@ -1,3 +1,8 @@
+> **Language**: This document is in Chinese only. For English overview, see [README.md](../README.md).
+>
+> **语言说明**: 本文档仅提供中文版本。英文概述请查看 [README.md](../README.md)。
+
+---
 # 交付物系统
 
 > **定位**：本 Skill 产出五类标准化交付物。所有交付物统一组织到项目目录，确保任何人拿到项目文件夹，能复拍任何一镜。

@@ -10,7 +10,7 @@
 
 [![版本](https://img.shields.io/badge/version-7.0.0-blue.svg)](https://github.com/taosiuman/seedancer/releases)
 [![许可](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
-[![ClawHub](https://img.shields.io/badge/ClawHub-seedancer-orange.svg)](https://clawhub.ai/skills/seedancer)
+
 [![Seedance](https://img.shields.io/badge/Seedance-2.5-purple.svg)](https://seedance.ai)
 
 **[快速开始](#快速开始)** · **[核心模块](#核心模块)** · **[使用示例](#使用示例)** · **[更新日志](CHANGELOG.md)**
@@ -154,7 +154,8 @@
 ### 安装
 
 ```bash
-clawhub install seedancer
+# 在 OpenClaw agent 中加载 SKILL.md
+# 详见 https://github.com/taosiuman/seedancer
 ```
 
 ### 完整项目流程
@@ -184,11 +185,14 @@ clawhub install seedancer
 ### JSON API 自动化
 
 ```bash
-curl -X POST https://api.clawhub.ai/v1/skills/seedancer/execute \
-  -H "Content-Type: application/json" \
-  -d '{"input": "雨夜，赛博朋克街道，女主角悲伤",
-        "options": {"output_mode": "json", "duration": 15, "aspect_ratio": "16:9"}}'
+# 本地调用示例（需配合 agent runtime）
+# 注意: ClawHub API 已弃用，请使用本地 agent 调用
 ```
+
+**使用方式**:
+- 通过 OpenClaw agent 加载 SKILL.md
+- 在对话中直接描述需求
+- 或编写脚本调用 agent API（非 ClawHub 公共 API）
 
 ---
 
@@ -252,7 +256,6 @@ references/
 ## 🔗 链接
 
 **GitHub** · [taosiuman/seedancer](https://github.com/taosiuman/seedancer)  
-**ClawHub** · [seedancer](https://clawhub.ai/skills/seedancer)  
 **问题反馈** · [Report a bug](https://github.com/taosiuman/seedancer/issues)
 
 ---

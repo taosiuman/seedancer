@@ -1,3 +1,8 @@
+> **Language**: This document is in Chinese only. For English overview, see [README.md](../README.md).
+>
+> **语言说明**: 本文档仅提供中文版本。英文概述请查看 [README.md](../README.md)。
+
+---
 # Style Prefix
 
 > **逐字粘贴到每个视频提示词的 STYLE block 末尾。** Style Prefix 锁定全局视觉风格，确保跨镜头风格一致性。

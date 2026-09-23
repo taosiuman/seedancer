@@ -1,3 +1,8 @@
+> **Language**: This document is in Chinese only. For English overview, see [README.md](../README.md).
+>
+> **语言说明**: 本文档仅提供中文版本。英文概述请查看 [README.md](../README.md)。
+
+---
 # 模式说明与交互笔记（Mode Reference & Interaction Notes）— 即梦 Seedance 2.5 / Seedancer
 
 > **v4.0.0 升级说明**：全面适配 Seedance 2.5 模型。30秒直出、50个参考素材、4K输出、局部编辑、白模/绿幕参考、10+语言。

@@ -1,3 +1,8 @@
+> **Language**: This document is in Chinese only. For English overview, see [README.md](../README.md).
+>
+> **语言说明**: 本文档仅提供中文版本。英文概述请查看 [README.md](../README.md)。
+
+---
 # LIRA — 图像提示词优化系统
 
 > LIRA 是专精于 AI 图像生成的提示词优化系统。核心使命：把用户的任意输入转化为精准、可投产、不会静默失败的图像提示词。

@@ -1,3 +1,8 @@
+> **Language**: This document is in Chinese only. For English overview, see [README.md](../README.md).
+>
+> **语言说明**: 本文档仅提供中文版本。英文概述请查看 [README.md](../README.md)。
+
+---
 # 严格 QA 门禁增强 v1.0
 
 > 借鉴 ShotFunClaw `shotfun-drama-localization-pipeline` QA 规则

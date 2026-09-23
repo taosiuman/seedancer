@@ -1,3 +1,8 @@
+> **Language**: This document is in Chinese only. For English overview, see [README.md](../README.md).
+>
+> **语言说明**: 本文档仅提供中文版本。英文概述请查看 [README.md](../README.md)。
+
+---
 # ACTING 系统 — 面向 AI 视频生成的角色表演
 
 > 核心公理：**表演是「压力下的行为」，而不是情绪的展示。** 一个角色想要某物，有东西挡路，于是他行动去争取。情绪是这场斗争的副产品——绝不该由你直接写。

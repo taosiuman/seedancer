@@ -10,7 +10,7 @@
 
 [![Version](https://img.shields.io/badge/version-7.0.0-blue.svg)](https://github.com/taosiuman/seedancer/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
-[![ClawHub](https://img.shields.io/badge/ClawHub-seedancer-orange.svg)](https://clawhub.ai/skills/seedancer)
+
 [![Seedance](https://img.shields.io/badge/Seedance-2.5-purple.svg)](https://seedance.ai)
 
 **[Quick Start](#quick-start)** · **[Core Modules](#core-modules)** · **[Examples](#examples)** · **[Changelog](CHANGELOG.md)**
@@ -152,7 +152,8 @@ Gate 8  Quality inspection
 ### Install
 
 ```bash
-clawhub install seedancer
+# Load SKILL.md in your OpenClaw agent
+# See https://github.com/taosiuman/seedancer for details
 ```
 
 ### Full Production Flow
@@ -182,11 +183,14 @@ System: Skip P0-P2 → Gate 1 → Scene router (Atmosphere)
 ### JSON API Automation
 
 ```bash
-curl -X POST https://api.clawhub.ai/v1/skills/seedancer/execute \
-  -H "Content-Type: application/json" \
-  -d '{"input": "Rain night, cyberpunk street, protagonist melancholic",
-        "options": {"output_mode": "json", "duration": 15, "aspect_ratio": "16:9"}}'
+# Local usage example (requires agent runtime)
+# Note: ClawHub API is deprecated. Use local agent invocation instead.
 ```
+
+**Usage**:
+- Load SKILL.md in your OpenClaw agent
+- Describe your request in conversation
+- Or script agent API calls (not ClawHub public API)
 
 ---
 
@@ -250,7 +254,6 @@ Full attribution: [LICENSE](LICENSE)
 ## 🔗 Links
 
 **GitHub** · [taosiuman/seedancer](https://github.com/taosiuman/seedancer)  
-**ClawHub** · [seedancer](https://clawhub.ai/skills/seedancer)  
 **Issues** · [Report a bug](https://github.com/taosiuman/seedancer/issues)
 
 ---

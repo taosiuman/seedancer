@@ -366,7 +366,7 @@ Agent：
 ## 10. 参考
 
 - ShotFunClaw `scripts/core/workflow-runtime.js`
-- ShotFunClaw `references/stage-protocol.md`
+- ShotFunClaw 项目的 stage-protocol.md（**外部来源**，非本技能文件）
 - Seedancer `references/sequence-project-state.md`
 
 ---

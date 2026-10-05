@@ -1,4 +1,4 @@
-# Seedancer v8.0.0 — AI Film Director Operating System
+# Seedancer v9.0.0 — AI Film Director Operating System
 
 <p align="center">
   <a href="README.md"><b>English</b></a> · <a href="docs/README-cn.md">中文</a>
@@ -8,7 +8,7 @@
 
 **From Script to Screen — End-to-End AI Film Production Pipeline**
 
-[![Version](https://img.shields.io/badge/version-7.0.0-blue.svg)](https://github.com/taosiuman/seedancer/releases)
+[![Version](https://img.shields.io/badge/version-9.0.0-blue.svg)](https://github.com/taosiuman/seedancer/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
 [![Seedance](https://img.shields.io/badge/Seedance-2.5-purple.svg)](https://seedance.ai)
@@ -21,19 +21,21 @@
 
 ## 🎬 Overview
 
-**Seedancer** is not a prompt generator. It is a **director-grade AI film production operating system** — a complete workflow engine that transforms scripts into production-ready video prompts through **12 quality gates**, **10 core modules**, and **30+ reference documents**.
+**Seedancer** is not a prompt generator. It is a **director-grade AI film production operating system** — a complete workflow engine that transforms scripts into production-ready video prompts through **12 quality gates**, **10 core modules**, and **48 reference documents**.
 
-### ✨ What's New in v8.0.0
+### ✨ What's New in v9.0.0
 
-Five advanced director systems built on three integrated open-source skills:
+**结构重构版（MAJOR）**——不改创作语义，改的是"规范怎么被机器守住"：
 
-| System | Capability |
-|--------|-----------|
-| 🎭 **Scene Prototype Router** | 9 scene archetypes auto-detected via decision tree |
-| 📷 **Camera-Emotion Sync** | 6 emotions → camera type automatic mapping |
-| 🎬 **Performance Micro-Beat Catalog** | Emotions decomposed into muscle/breath/eye movement |
-| 💡 **Lighting Rules Engine** | Practicals-only doctrine + 60:30:10 color rule |
-| 📋 **JSON API Output Mode** | Structured bilingual output for automation pipelines |
+| 变化 | 说明 |
+|------|------|
+| 📋 **参考文档加载表** | 门控 → 必须加载的文件，取代旧索引；48 篇全部接线（v8 有 15 篇从未被入口引用） |
+| 🔍 **一致性检查器** | `scripts/check_consistency.py`：版本 / 元数据 / 死链 / 索引 / 接线 / 重复，14 项断言 |
+| ⚖️ **合规修复** | LICENSE 归因从 4 个来源补全到 8 个（此前 SKILL.md 声称"完整归因见 LICENSE"并不成立） |
+| 🧹 **入口去重** | SKILL.md 56KB → 41KB（−26%）：删的是与 references 重复的内容，硬门逐字保留 |
+| 🎯 **版本单一权威** | `_meta.json` 为唯一来源，其余 7 处为引用（此前 6 处漂移） |
+
+v8.0.0 的五大导演系统仍在，详述见各 reference（见《参考文档加载表》）。
 
 ---
 
@@ -59,7 +61,7 @@ Rigorous constraints ensuring prompt executability:
 - **Camera Design System** — Narrative function table + 3-element camera axis
 - **Output Format Gate** — Natural paragraph style + pronoun ban + media translation table
 
-### Five Director Systems (v8.0.0)
+### Five Director Systems (v7.0.0)
 
 ####  Scene Prototype Router
 
@@ -218,7 +220,7 @@ references/
 ├── geo-spatial-layout.md        # GEO spatial lock
 ├── style-prefix.md              # Style prefix
 ├── ai-director.md               # AI director methodology
-├── failure-codes.md             # Failure diagnostics (6 types, 33 codes)
+├── failure-codes.md             # Failure diagnostics (6 types + 5 gate codes = 38 codes)
 └── ...
 ```
 
@@ -228,12 +230,16 @@ references/
 
 | Version | Date | Highlights |
 |---------|------|-----------|
-| **v8.0.0** | 2026-09-23 | 33 improvements from ShotFunClaw research + SkillSpector audit fixes |
-| **v6.0.0** | 2026-08-24 | 5 hard gates: dialogue capacity, grouping, shot density, camera design, output format |
-| **v5.0.0** | 2026-08-14 | P0-P2 pre-production pipeline |
-| **v4.1.0** | 2026-08-13 | CINEDANCE / LIRA / ACTING / GEO / Style Prefix integration |
-| **v4.0.0** | 2026-08-09 | Seedance 2.5 full adaptation |
-| **v3.0.0** | 2026-06-22 | Architecture-level refactoring |
+| **v8.0.0** | 2026-09-10 | v9 重构前的稳定版（本次重构的基线） |
+| **v7.0.2** | 2026-09-01 | 补丁 |
+| **v7.0.1** | 2026-09-01 | 补丁 |
+| **v7.0.0** | 2026-08-24 | 五大导演系统（场景路由/摄影机-情绪/微节拍/光源/JSON API） |
+| **v6.0.0** | 2026-08-24 | 五大硬门（台词容量/分组/密度/运镜/输出格式） |
+| **v5.0.0** | 2026-08-14 | P0-P2 预生产管线 |
+| **v4.1.0** | 2026-08-13 | CINEDANCE / LIRA / ACTING / GEO / Style Prefix 整合 |
+| **v4.0.0** | 2026-06-22 | Seedance 2.5 适配 |
+| **v3.0.0** | 2026-06-22 | 架构级重构 |
+| **v9.0.0** | 2026-10-05 | 结构重构：加载表接线 · 一致性检查器 · 合规与版本单一权威（入口 −23%） |
 
 ---
 
@@ -260,7 +266,7 @@ Full attribution: [LICENSE](LICENSE)
 
 <div align="center">
 
-**🎬 Seedancer v8.0.0 — Where Scripts Become Frames**
+**🎬 Seedancer v9.0.0 — Where Scripts Become Frames**
 
 *Made with ❤️ for AI filmmakers*
 

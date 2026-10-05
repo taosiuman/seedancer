@@ -227,3 +227,21 @@
 ---
 
 **参考**：视觉图鉴详见 `references/qa-checklists.md` Part C；完整 16-block 架构详见 `references/cinedance-video-prompt.md`。
+
+
+---
+
+## §5 硬门类错误码（v6.0.0 新增；v9 从 SKILL.md 归位到此）
+
+> 这 5 个码此前**只写在 SKILL.md 的失败现象对照表里**，本文件缺失
+> （`REV-20261005-008` C-4）。v9 归位，使"诊断词汇"只有一处权威。
+
+| 错误码 | 现象 | 根因 | 解法所在 |
+| --- | --- | --- | --- |
+| `F-DIALOGUE-CAPACITY` | 台词被压缩 / 语速不合理 | 未做台词容量预检 | `dialogue-capacity.md` |
+| `F-GROUP-CONTINUITY` | 组尾不稳定 / 承接断裂 | 未遵守承接等式 | `grouping-density.md` |
+| `F-DENSITY` | 密度不足 / 空档过长 | 未过镜头密度四道门 | `grouping-density.md` |
+| `F-HIDDEN-CUT` | 隐藏切镜（单镜内多视点） | 违反"一镜一视点" | `grouping-density.md` |
+| `F-SPATIAL-VAGUE` | 模糊方位 / 代词指代 | 未遵守空间与指代硬门 | `output-format.md` |
+
+**合计**：6 类 + 5 个硬门码 = **38 个码**（v8.0.0 文档中"33 码"的计数已过时）。

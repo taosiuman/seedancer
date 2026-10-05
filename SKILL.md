@@ -3,54 +3,17 @@ name: seedancer
 description: "AI film production pipeline — generates structured video prompts for AI video generators (Seedance/Kling/Veo/Wan). Includes script analysis, camera-emotion sync, performance micro-beats, lighting rules, and 30+ reference docs. Primarily Chinese-language skill targeting Chinese AIGC video platforms. English speakers: see README.md. Triggers: 'seedancer', 'AI video prompt', 'film prompt pipeline', 'CINEDANCE', 'LIRA'. NOT for: general video generation requests, image generation, or non-AI filmmaking."
 license: MIT-0
 author: taosiuman
-version: 8.0.0
+version: 9.0.0
+tags: [seedance, video-generation, prompt-engineering, filmmaking, ai-director, seedance-2.5, cinedance, lira, acting, geo-spatial, aigc, multi-model, pre-production, character-assets, emotion-curve]
+platforms: [jimeng, doubao, volcano-engine, kling, veo]
 attribution: |
-  This skill incorporates content from:
-  1. seedance-2-prompt-engineering-skill by ClawHub user kn78900pfs4x1dyejyd8vj121s804aea (MIT-0)
-  2. Emily2040/seedance-2.0 (Seedance 2.0 Skill OS) by Iamemily2050 (MIT)
-     - references/model-mechanics.md
-     - references/anti-slop-lexicon.md
-     - references/retake-protocol.md
-     - references/reference-role-map.md
-     - references/sequence-project-state.md
-     - references/continuation-handoff.md
-  3. ifeihong/aigc-film-studio (AIGC Film Studio v3.2.0) by Feihong (MIT)
-     - references/cinedance-video-prompt.md
-     - references/lira-image-prompt.md
-     - references/acting-performance.md
-     - references/geo-spatial-layout.md
-     - references/style-prefix.md
-     - references/failure-codes.md
-     - references/deliverable-system.md
-     - references/ai-director.md
-  4. chaoge-assets-trial (Chaoge AI导演体验版 v1.3.0) by taosiuman (MIT-0)
-     - references/story-analysis.md
-     - references/emotion-curve.md
-     - references/creative-baseline.md
-     - references/character-assets.md
-     - references/prop-assets.md
-  5. seedance20-video-prompts V2.3 by Elio_AIGC (B站/抖音：Elio_AIGC)
-     - 台词容量预检系统 → references/dialogue-capacity.md
-     - 分组硬门 + 镜头密度四道门 → references/grouping-density.md
-     - 运镜设计系统 → references/camera-design.md
-     - 输出格式硬门 + 空间/人物指代硬门 + 媒介翻译表 → references/output-format.md
-  6. shotlist-builder by Claude Code Team (MIT)
-     - 场景原型路由系统 → references/scene-prototypes.md
-     - 摄影机-情绪同步系统 → references/camera-emotion-sync.md
-     - 表演微节拍目录 → references/performance-micro-beats.md
-     - 光源规则系统 → references/lighting-rules.md
-  7. seedance-director (skill_cn.md) by ClawHub (MIT)
-     - JSON API 输出模式 → references/json-api-mode.md
-  8. hellgrind 地狱磨砺 by taosiuman (MIT-0)
-     - ACTING 表演系统增强
-     - CINEDANCE 分镜系统增强
-     - LIRA 图像系统增强
-  Full attribution details in LICENSE file.
+  本技能整合 8 个上游开源来源；**完整归因（含逐文件映射与原始许可）见 LICENSE**。
+  来源：seedance-2-prompt-engineering-skill · Emily2040/seedance-2.0 · ifeihong/aigc-film-studio · chaoge-assets-trial · seedance20-video-prompts · shotlist-builder · seedance-director · hellgrind
 ---
 
-# Seedancer v8.0.0 — AIGC 影视导演操作系统
+# Seedancer v9.0.0 — AIGC 影视导演操作系统
 
-> 从**剧本解析**到**预生产资产**到**分镜生成**到**成片交付**的端到端制片操作系统。v7.0.0 新增 **五大导演系统**（整合自 shotlist-builder + seedance-director + hellgrind）：场景原型路由 + 摄影机-情绪同步 + 表演微节拍目录 + JSON API 输出模式 + 光源规则系统。保留 P0-P2 预生产管线 + 五大硬门系统（v6.0.0）+ CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 33 码。支持多模型（Seedance 2.5/Kling/Veo/GPT Image 2/NBP/Seedream），五类交付物标准化输出。
+> 从**剧本解析**到**预生产资产**到**分镜生成**到**成片交付**的端到端制片操作系统。v7.0.0 新增 **五大导演系统**（整合自 shotlist-builder + seedance-director + hellgrind）：场景原型路由 + 摄影机-情绪同步 + 表演微节拍目录 + JSON API 输出模式 + 光源规则系统。保留 P0-P2 预生产管线 + 五大硬门系统（v6.0.0）+ CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 38 码。支持多模型（Seedance 2.5/Kling/Veo/GPT Image 2/NBP/Seedream），五类交付物标准化输出。
 
 ---
 
@@ -70,83 +33,14 @@ attribution: |
 
 ## 🆕 v7.0.0 — 五大导演系统
 
-> 整合自 shotlist-builder + seedance-director (skill_cn.md) + hellgrind 三大技能。
-
-### 新系统总览
-
-| 系统 | 作用 | 参考文档 |
-|------|------|----------|
-| **场景原型路由** | 9种原型 + 决策树自动选型 | `scene-prototypes.md` |
-| **摄影机-情绪同步** | 6种情绪 → 摄影机类型/运动/焦段 | `camera-emotion-sync.md` |
-| **表演微节拍目录** | 每种情绪分解为肌肉/呼吸/眼神具体运动 | `performance-micro-beats.md` |
-| **JSON API 输出模式** | 结构化双语输出，可自动化 | `json-api-mode.md` |
-| **光源规则系统** | practicals-only + 60:30:10色彩 + 场景变体 | `lighting-rules.md` |
-
-### 场景原型路由
-
-所有场景自动归入 3 大类 9 种原型：
-
-**动作类**：追逐 → 对决 → 冲击
-**通用类**：旅程 → 氛围 → 揭示
-**对话类**：对峙 → 审讯 → 谈判
-
-每种原型有独立的摄影机焦点、空间动态和决策树。决策树从用户描述中自动判断走哪个分支。
-
-### 摄影机-情绪同步
-
-摄影机是焦点角色的情绪分身。6 种情绪对应不同的摄影机类型：
-
-| 情绪 | 摄影机类型 | 中文写法 |
-|------|-----------|----------|
-| 愤怒/紧张 | 手持呼吸，不稳定 | 画面有明显呼吸式漂移、上下微抖 |
-| 平静/控制 | 手持呼吸，平滑 | 极细微的、规律的呼吸式微动 |
-| 悲伤/脆弱 | 手持，缓慢低位 | 呼吸节奏放慢，极轻微下沉感 |
-| 震惊/揭示 | 静止 + 慢推/慢拉 | 开始严格静止，0.5秒后极缓慢移动 |
-| 动作 | 60fps 180°快门 | 流畅运动，快门范围内运动模糊 |
-| 终拍/判词 | 俯拍定格 | 严格正上方俯拍，0.3-0.5秒freeze |
-
-情绪变化时摄影机同步分阶段变化，绑定到编号表演节拍（① ② ③ ...）。
-
-### 表演微节拍目录
-
-**铁律**：泛化情绪 → 坏提示词。具体肌肉/呼吸/眼神 → 好提示词。
-
-每种情绪分解为具体的肌肉运动：
-- 愤怒：咬肌搏动、颈动脉脉搏、鼻翼扩张、瞳孔收缩
-- 焦虑：喉结吞咽、台词前短促浅吸气、舔润下唇
-- 悲伤：眼角外缘下垂、湿润带眼神光但不流泪
-- 震惊：身体冻结0.3-0.5秒、瞳孔扩张、延迟急促鼻吸气
-
-每句台词有前节拍（吞咽/吸气）+ 中 emphasis + 后节拍（0.5秒凝视）。
-
-### JSON API 输出模式
-
-可选输出模式。返回 JSON 数组包含 EN + ZH 两个提示词对象：
-
-```json
-[{"lang":"en","prompt":"..."},{"lang":"zh","prompt":"..."}]
-```
-
-提示词内嵌 5 个分节标签：Style & Mood / Narrative Summary / Dynamic Description / Static Description / Audio。
-
-中文硬上限 1800 字符。含完整反垃圾词汇表（EN 30+ / ZH 20+ 禁用词）。
-
-### 光源规则系统
-
-**practicals-only 铁律**：严格仅使用场景内实际存在的光源（屏幕、窗户、实用灯具）。禁止一切电影补光。
-
-- 摄影机始终在人物的阴影侧（shadow side）拍摄
-- 色彩 60:30:10 — 主色/辅色/点缀色
-- 全程大气薄雾 haze，禁止可见光束（god rays）
-- 场景变体：夜景/地下基地/日外/夜外/暖室内各有独立灯光条款
-
-### 反垃圾词汇表
-
-**EN 禁用**：breathtaking, stunning, captivating, mesmerizing, masterfully, meticulously, exquisitely, cinematic masterpiece, visual feast, seamlessly, effortlessly, flawlessly, cutting-edge, groundbreaking 等 30+ 词
-
-**ZH 禁用**：令人叹为观止、精心打造、匠心独运、视觉盛宴、完美呈现、极致体验、震撼人心等 20+ 词
-
----
+| 系统 | 一句话 | 详述 |
+| --- | --- | --- |
+| 场景原型路由 | 9 类场景原型按决策树自动判定 | `scene-prototypes.md` |
+| 摄影机-情绪同步 | 6 种情绪 → 机位/运动自动映射 | `camera-emotion-sync.md` |
+| 表演微节拍目录 | 情绪拆解到肌肉/呼吸/眼神 | `performance-micro-beats.md` |
+| JSON API 输出模式 | 结构化双语输出，供自动化管线消费 | `json-api-mode.md` |
+| 光源规则系统 | 实用光源至上 + 60:30:10 配色 | `lighting-rules.md` |
+📎 加载：`references/scene-prototypes.md`（五大导演系统 阶段必须读）
 
 ## v6.0.0 — 五大硬门系统
 
@@ -187,7 +81,7 @@ P0 项目接收（自动，不询问）
 → P2a 角色资产（依赖图 → 批次生产 → 9:16确认稿 → 16:9设定板）
 → P2b 关键道具母板（3:4产品档案照）
 → 【预生产完成，进入正式制片管线】
-→ 10 门控路由 → 6 阶段标准流程 → 交付物输出
+→ 12 门控路由 → 6 阶段标准流程 → 交付物输出
 ```
 
 ### P0-P2 五大阶段
@@ -232,6 +126,8 @@ P0A 展示后固定询问：
 【请确认】以上 P0A 剧本解析与创作基准（包含全片情绪曲线图）是否确认？
 【确认后下一步】建立 P1 全片摄影风格、环境色彩策略与声音圣经。
 ```
+📎 加载：`references/story-analysis.md`（P0A 十项剧本解析 阶段必须读）
+📎 加载：`references/emotion-curve.md`（P0A 十项剧本解析 阶段必须读）
 
 ### P1 创作基准
 
@@ -243,6 +139,7 @@ P0A 展示后固定询问：
 4. **环境色彩策略**
 5. **人物声音气质基准**
 6. **音乐圣经**
+📎 加载：`references/creative-baseline.md`（P1 创作基准 阶段必须读）
 
 ### P2a 角色资产
 
@@ -252,12 +149,14 @@ P0A 展示后固定询问：
 2. 第 1 批 9:16 单人确认稿
 3. 后续批次依赖解锁
 4. 全部确认后一次性生成 16:9 角色设定板
+📎 加载：`references/character-assets.md`（P2a 角色资产 阶段必须读）
 
 ### P2b 关键道具母板
 
 读取 `references/prop-assets.md`：统一 3:4 竖构图，单件产品档案照。
 
 ---
+📎 加载：`references/prop-assets.md`（P2b 关键道具母板 阶段必须读）
 
 ## 🆕 台词容量预检系统
 
@@ -447,6 +346,7 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 ## 🆕 运镜设计系统
 
 > 完整规则：`references/camera-design.md`
+📎 加载：`references/camera-and-styles.md`（运镜设计 阶段必须读）
 
 ### 主动运镜三要素（缺一不可）
 
@@ -456,18 +356,11 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 
 ### 运镜功能表
 
-| move | 叙事功能 | 方向段写法 | 最小时长 |
-|---|---|---|---|
-| `fixed` | 对峙/阅读/微表情/压制 | — | 按对白或读取 |
-| `fast_push_in` | 破门/冲撞/惊变 | 向前快速推近 | ≥1s |
-| `push_in` | 逼近/压迫升级 | 向前推近 | ≥1s |
-| `slow_push_in` | 揭露/点破/凝视 | 缓慢向前推近 | **≥3s** |
-| `follow` | 报信/人物冲入 | 跟随 @X 向前跟拍 | ≥1s |
-| `track` | 落座/连续移动 | 横向侧跟 @X | ≥1s |
-| `pan` | 视线转移/发现 | 摇向 @X | ≥1s |
-| `rise` | 登场揭示（脚→脸） | 缓慢向上升起 | **≥3s** |
-| `pull_back` | 收尾/疏离/全景 | 缓慢向后拉远 | **≥3s** |
-| `arc` | 关系重组（仅开阔空间） | 绕 @X 缓慢弧形环绕 | **≥3s** |
+完整运镜功能表（含最小时长）见 `references/camera-design.md`；本入口只保留**硬约束**：
+
+- 主动运镜三要素（缺一不可）：动机 · 方向 · 落点
+- **缓慢运镜 ≥3s**；**每镜 ≤2 个运动分量**；摄影机与动词之间不得插逗号
+- 主轴登记是硬性要求（不登记不得写分镜）
 
 ### 关键规则
 
@@ -484,6 +377,7 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 
 > 完整规则：`references/output-format.md`
 
+<!-- dup-allow-start: 输出格式硬门簇（完整文件顺序 / 四项事实 / 时间码 / 台词写法 / 空间与人物指代词表 / 媒介翻译表 / 体量控制）为**契约原文**，必须与 output-format.md 逐字一致 —— 故 D1 跳过本区；改动需两侧同改 ; target=output-format.md -->
 ### 完整文件顺序（区块名逐字使用）
 
 ```markdown
@@ -499,6 +393,7 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 使用临时状态引用：... / 无。
 建议补做状态资产：... / 无。
 
+临时资产引用说明：当前为临时资产引用版，建议后续补做正式多状态资产库。 / 不适用。
 ## 参数确认
 - 画幅比例：...
 - 视频类型：...
@@ -616,6 +511,8 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 
 ---
 
+<!-- dup-allow-end -->
+
 ## 失败现象对照表
 
 | 失败现象 | 错误码 | 根因 | 解法所在 |
@@ -625,7 +522,7 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 | 表演像死人/假 | `F-PERFORMANCE` | 写感受非行为 | `acting-performance.md` |
 | 图像崩坏/多指 | `F-MATERIAL` | 模型弱点未规避 | `lira-image-prompt.md` |
 | 巨人越画越矮 | — (SCALE LAW) | 缺尺度锚点 | SCALE LAW 段 |
-| 多出人物/克隆家具 | `F-DUP-SUBJECT` / `F-DPROP-DUP` | 约束缺失 | EXACT N + POSITIVE CONSTRAINTS |
+| 多出人物/克隆家具 | `F-DUP-SUBJECT` / `F-PROP-DUP` | 约束缺失 | EXACT N + POSITIVE CONSTRAINTS |
 | 自带配乐 | `F-AUDIO-POLLUTION` | 缺 `SFX only. No music.` | 技术标签收尾 |
 | 模型自创台词 | `F-DIALOGUE-TEXT` | 缺硬封锁 | 引号内台词 + 静默约束 |
 | 🆕 台词被压缩/语速不合理 | `F-DIALOGUE-CAPACITY` | 未做容量预检 | `dialogue-capacity.md` |
@@ -634,9 +531,10 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 | 🆕 隐藏切镜 | `F-HIDDEN-CUT` | 单镜内多视点 | `grouping-density.md` |
 | 🆕 模糊方位/代词指代 | `F-SPATIAL-VAGUE` | 未遵守硬门 | `output-format.md` |
 
-完整诊断：`references/failure-codes.md`（6 类 33 码 + 责任层决策树）
+完整诊断：`references/failure-codes.md`（6 类 38 码 + 责任层决策树）
 
 ---
+📎 加载：`references/acting-performance.md`（失败现象对照表 阶段必须读）
 
 ## 九条黄金规则
 
@@ -652,243 +550,23 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 
 ---
 
-## 🆕 新模型能力速览 (v7.1.0)
+## 🆕 新模型能力速览
 
-> 2026-07-31 起，MiniMax H3 与 Seedance 2.0 Mini 上线，带来新能力。
-
-### MiniMax H3 关键能力
-
-| 能力 | 说明 | 应用场景 |
-|------|------|----------|
-| **原生立体声** | 音视频联合生成，输出原生立体声 | 需要空间感的场景（环境音、音乐、对话） |
-| **2K 默认分辨率** | 无需超分，原生 2K 输出 | 高分辨率交付、投影、大屏 |
-| **原生多镜头建模** | 单次生成包含多个镜头的序列 | 广告、产品演示、快速原型 |
-| **In-Context Regeneration** | 模型在上下文内重建高分辨率输出，保留细节 | 文字渲染、品牌 logo、精细纹理 |
-| **跨模态参考** | 从视频 A 取运镜、从图像 B 取角色、从音频 C 取声音 | 复杂创意参考、风格迁移 |
-| **V2V 运动转移** | 从参考视频提取运动模式应用到新角色/场景 | 动作参考、舞蹈、物理交互 |
-| **开源权重** | 模型权重开放，可本地部署与定制 | 私有化部署、定制训练 |
-
-**H3 定价优势**：2K ~$0.061/秒，768p ~$0.036/秒（低于主流模型 1/3 - 1/2）
-
-### Seedance 2.0 Mini
-
-- **4K 输出支持**：轻量变体，支持 4K 原生输出
-- **快速迭代**：适合需要快速生成多个版本的场景
-- **高分辨率交付**：直接输出 4K，无需后期超分
-
----
+各模型能力差异见 `references/model-mechanics.md`（模型机制与能力矩阵）。
 
 ## 🆕 并发控制协议 (v8.0.0)
 
-> 防止API限流和资源耗尽
+**批量并发生成时，必须先加载 `references/concurrency-control.md`**（并发表、令牌桶、指数退避、
+限流保护的完整实现均在该文件；本入口不重复）。
 
-### 并发限制
-
-| 任务类型 | 默认并发 | 环境变量 |
-|---------|---------|----------|
-| 图片生成 | 30 | `SEEDANCER_IMAGE_CONCURRENCY` |
-| 视频生成 | 50 | `SEEDANCER_VIDEO_CONCURRENCY` |
-| 视频分析 | 10 | `SEEDANCER_ANALYSIS_CONCURRENCY` |
-| 音频生成 | 20 | `SEEDANCER_AUDIO_CONCURRENCY` |
-
-### 并发策略
-
-#### 1. 令牌桶算法
-
-```javascript
-class ConcurrencyLimiter {
-  constructor(maxConcurrent) {
-    this.maxConcurrent = maxConcurrent;
-    this.currentConcurrent = 0;
-    this.queue = [];
-  }
-
-  async acquire() {
-    if (this.currentConcurrent < this.maxConcurrent) {
-      this.currentConcurrent++;
-      return true;
-    }
-    
-    return new Promise(resolve => {
-      this.queue.push(resolve);
-    });
-  }
-
-  release() {
-    this.currentConcurrent--;
-    if (this.queue.length > 0) {
-      this.currentConcurrent++;
-      const next = this.queue.shift();
-      next();
-    }
-  }
-}
-```
-
-#### 2. 批量任务并发
-
-```javascript
-async function executeBatch(tasks, limiter) {
-  const results = [];
-  
-  for (const task of tasks) {
-    await limiter.acquire();
-    
-    try {
-      const result = await task.execute();
-      results.push(result);
-    } finally {
-      limiter.release();
-    }
-  }
-  
-  return results;
-}
-```
-
-### 限流保护
-
-#### 1. 指数退避
-
-```javascript
-async function retryWithBackoff(fn, maxRetries = 3) {
-  for (let i = 0; i < maxRetries; i++) {
-    try {
-      return await fn();
-    } catch (error) {
-      if (error.code === 429) { // Rate limit
-        const delay = Math.pow(2, i) * 1000; // 1s, 2s, 4s
-        await new Promise(resolve => setTimeout(resolve, delay));
-      } else {
-        throw error;
-      }
-    }
-  }
-  throw new Error('Max retries exceeded');
-}
-```
-
-#### 2. 错误处理
-
-- 429 Too Many Requests: 自动重试，指数退避
-- 503 Service Unavailable: 自动重试，固定延迟
-- 其他错误: 记录日志，继续执行
-
----
+hard stops：并发上限按平台档位；退避必须有上限；限流触发即降速而非重试风暴。
 
 ## 多模型支持
 
 ### 🆕 进度状态查询协议 (v8.0.0)
 
-> 提供项目进度的实时查询能力
-
-### 查询接口
-
-#### 1. 项目总览查询
-
-```json
-{
-  "project": {
-    "id": "project-001",
-    "name": "项目名称",
-    "status": "in-progress",
-    "startTime": "2026-09-10T10:00:00Z",
-    "estimatedCompletion": "2026-09-10T18:00:00Z"
-  },
-  "progress": {
-    "total": 100,
-    "completed": 45,
-    "failed": 2,
-    "pending": 53
-  },
-  "currentTask": {
-    "id": "task-045",
-    "type": "video-generation",
-    "startTime": "2026-09-10T14:30:00Z"
-  }
-}
-```
-
-#### 2. 分镜进度查询
-
-```json
-{
-  "storyboard": {
-    "total": 10,
-    "completed": 7,
-    "failed": 0,
-    "pending": 3
-  },
-  "details": [
-    {
-      "id": "storyboard-001",
-      "status": "completed",
-      "videoStatus": "completed",
-      "videoUrl": "https://..."
-    }
-  ]
-}
-```
-
-#### 3. 资产生成进度查询
-
-```json
-{
-  "assets": {
-    "total": 20,
-    "completed": 15,
-    "failed": 1,
-    "pending": 4
-  },
-  "details": [
-    {
-      "id": "asset-001",
-      "type": "image",
-      "status": "completed",
-      "url": "https://..."
-    }
-  ]
-}
-```
-
-### 状态定义
-
-| 状态 | 含义 |
-|-----|------|
-| pending | 待处理 |
-| running | 运行中 |
-| completed | 已完成 |
-| failed | 失败 |
-| cancelled | 已取消 |
-
-### 实时更新机制
-
-#### 1. WebSocket 推送
-
-```javascript
-// 服务端
-const ws = new WebSocketServer({ port: 8080 });
-
-ws.on('connection', (socket) => {
-  // 推送进度更新
-  socket.send(JSON.stringify({
-    type: 'progress-update',
-    data: getProjectProgress()
-  }));
-});
-```
-
-#### 2. 轮询查询
-
-```javascript
-// 客户端
-setInterval(async () => {
-  const progress = await fetch('/api/progress').then(r => r.json());
-  updateUI(progress);
-}, 5000); // 每5秒查询一次
-```
-
----
+**批量执行期间查询进度：加载 `references/progress-query.md`**（三种查询接口、状态定义、
+实时更新机制在该文件）。
 
 ## 🆕 模型自动选择系统 (v8.0.0)
 
@@ -942,38 +620,17 @@ setInterval(async () => {
 
 ---
 
-### 视频生成模型
+### 视频 / 图像生成模型
 
-| 模型 | 厂商 | 单次最大时长 | 核心优势 | 适用场景 |
-|---|---|---|---|---|
-| **Seedance 2.5** | 字节跳动 | **30秒** | 长叙事、多参考图、真人感、局部编辑 | 复杂动作与长对白 |
-| **Seedance 2.0** | 字节跳动 | 15秒 | 多镜头叙事、角色一致性 | 性价比高 |
-| **Kling 3.0** | 快手 | 15秒 | 物理精确、角色一致性、深度多模态指令解析、跨任务整合 | 动作与物理交互 |
-| **Kling 3.0 Omni** | 快手 | 15秒 | 原生音画同步、唇形同步、**视频背景替换**、Native Audio 特征解耦、视觉身份与声线双重绑定、复杂多场景转场高一致性、智能分镜系统、多语混说、4K 编辑管线（2026-06-17 升级） | 对白镜、场景替换、专业编辑 |
-| **Veo 3.1** | Google | 8秒 | 原生音频生成、电影级画质、**4K输出**、原生9:16竖屏 | 短氛围镜、专业级输出 |
+**模型清单、时长上限与定价：加载 `references/model-mechanics.md` 与 `modes-and-recipes.md`**（单一权威，本入口不重复维护）。
 
-| **MiniMax H3** | MiniMax (海螺AI) | 15秒 | **原生立体声**、**2K 分辨率**、指令遵循强、文字/品牌渲染精准、V2V 运动转移、**原生多镜头建模**、In-Context Regeneration（高分辨率重建）、开源权重 | 广告/电商/品牌渲染/多模态交叉参考 |
-| **Wan 3.0** | 阿里巴巴 | 2-15秒 | 全模态输入、720P/1080P、5主体参考、元素增删替换 | 多模态参考生成、灵活编辑 |
-
-- 用户未指定时，默认推荐 **Seedance 2.5**
-- **视频模型选用前，必须先询问用户**
-
-> 🆕 **Seedance 2.0 Mini** — 新轻量变体，支持 4K 输出，适合快速迭代与高分辨率交付场景（2026-08 上线）
-
-### 图像生成模型
-
-| 模型 | 厂商 | 最擅长 |
-|---|---|---|
-| **GPT Image 2** | OpenAI | 极致照片真实感、提示词遵循 |
-| **Nano Banana Pro (NBP)** | Google | 帧编辑（永远首选）、文字渲染、道具 |
-| **Nano Banana 2** | Google | 文字渲染、角色一致性 |
-| **Seedream 5.0 Pro** | 字节跳动 | 图层分离、商业视觉、与 Seedance 配合 |
-
----
+🔴 **硬规则**：**视频模型选用前必须先询问用户**，不得自行选定。
+📎 加载：`references/model-catalog.md`（视频 / 图像生成模型 阶段必须读）
 
 ## 运营循环 (Operating Loop)
 
 每个请求经过 **12 个门控**（v6.0.0 新增门控 7A 和门控 7B），按顺序执行：
+📎 加载：`references/failure-codes.md`（运营循环 阶段必须读）
 
 ### 门控 0: 预生产检测
 
@@ -1068,6 +725,7 @@ setInterval(async () => {
 - 🆕 **时间码检查** — 是否整数、连续、不重叠、末镜结束=组时长
 
 ---
+📎 加载：`references/anti-slop-lexicon.md`（质量检查 阶段必须读）
 
 ## 核心流程 (6 阶段标准流程)
 
@@ -1078,10 +736,12 @@ setInterval(async () => {
 ### 阶段二：导演交互 — 🔴 不可跳过
 
 必须向用户确认：视觉风格基调、时长策略、超自然规律、生成模式、视频模型。
+📎 加载：`references/ai-director.md`（导演交互 阶段必须读）
 
 ### 阶段三：资产变量表建立
 
 将所有可复用元素抽象为变量引用。资产建立遵循 LIRA 系统。
+📎 加载：`references/reference-role-map.md`（资产变量表 阶段必须读）
 
 ### 阶段四：全局基础设定
 
@@ -1099,6 +759,7 @@ setInterval(async () => {
 🆕 🎯 运镜主轴：[稳定观察/逐渐逼近/逐渐疏离/跟随行动/空间揭示/群像压迫]
 ━━━━━━━━━━━━━━━━━━━━━
 ```
+📎 加载：`references/geo-spatial-layout.md`（阶段四：全局基础设定 阶段必须读）
 
 ### 阶段五：时间片分镜脚本 — 🆕 硬门强化
 
@@ -1120,6 +781,7 @@ setInterval(async () => {
 8. 时间码整数秒、连续、不重叠
 9. 组尾 = 可继承稳定状态
 10. 承接等式成立
+📎 加载：`references/cinedance-video-prompt.md`（时间片分镜脚本 阶段必须读）
 
 ### 阶段六：提示词审核与执行 — 🔴 不可跳过
 
@@ -1135,6 +797,7 @@ setInterval(async () => {
 | 提示词本身有误 | 修正提示词 + 重新生成 |
 
 ### 阶段七：生成后评估与迭代（重拍协议）
+📎 加载：`references/retake-protocol.md`（生成后评估与迭代 阶段必须读）
 
 #### 六判定取景
 
@@ -1151,6 +814,7 @@ setInterval(async () => {
 当项目超过单次生成时长，进入序列项目管理。详见 `references/sequence-project-state.md`。
 
 ---
+📎 加载：`references/continuation-handoff.md`（序列项目管理 阶段必须读）
 
 ## CINEDANCE 16-block 提示词架构
 
@@ -1187,6 +851,7 @@ setInterval(async () => {
 详见 `references/style-prefix.md`。
 
 ---
+📎 加载：`references/style-prefix.md`（Style Prefix 阶段必须读）
 
 ## 交付物体系
 
@@ -1199,6 +864,8 @@ setInterval(async () => {
 | 交付物总清单 | 文件索引 + 检查表 | `08-delivery/deliverable-manifest.md` |
 
 ---
+📎 加载：`references/deliverable-system.md`（交付物体系 阶段必须读）
+📎 加载：`references/lira-image-prompt.md`（交付物体系 阶段必须读）
 
 ## 矛盾检测规则
 
@@ -1245,194 +912,49 @@ setInterval(async () => {
 
 ## Seedance 2.5 平台限额速查
 
-| 参数 | 限额 |
-|------|------|
-| 单次生成时长 | 4-30 秒 |
-| 参考素材总数 | ≤50 个 |
-| 图片参考 | ≤30 张 |
-| 视频参考 | ≤10 段 |
-| 音频参考 | ≤10 段 |
-| 输出分辨率 | 最高 4K |
-| 口型同步语言 | 10+ 种 |
-| 局部编辑 | ✅ 时间戳精准控制 |
-| 白模参考 | ✅ Maya/Blender |
-| 绿幕参考 | ✅ |
-| 文字渲染 | ✅ 大幅改善 |
+限额、模式与配方**以 `references/modes-and-recipes.md` 为唯一权威**（本入口不再重复维护数字）。
 
----
+## 参考文档加载表（门控 → 必须加载）
 
-## 参考文档
+> **本表是 references/ 的强制入口**：到对应门控/阶段时**必须**加载右侧文件，再继续；
+> 未过加载不计为已过门。触发时机均为正文中真实存在的标题（`I3` 断言，禁止“未定位”兜底）。
+> 全部文档摘要见 `references/INDEX.md`。
 
-| 文档 | 说明 | 版本 |
-|------|------|------|
-| `references/scene-prototypes.md` 🆕 | 场景原型路由：9种原型 + 3大决策树 | v7.0.0 |
-| `references/camera-emotion-sync.md` 🆕 | 摄影机-情绪同步：6种情绪映射 | v7.0.0 |
-| `references/performance-micro-beats.md` 🆕 | 表演微节拍目录：情绪分解为肌肉运动 | v7.0.0 |
-| `references/json-api-mode.md` 🆕 | JSON API 输出模式 + 反垃圾词表 | v7.0.0 |
-| `references/lighting-rules.md` 🆕 | 光源规则系统：practicals-only + 色彩比例 | v7.0.0 |
-| `references/dialogue-capacity.md` 🆕 | 台词容量预检系统 | v6.0.0 |
-| `references/grouping-density.md` 🆕 | 分组硬门 + 镜头密度四道门 | v6.0.0 |
-| `references/camera-design.md` 🆕 | 运镜设计系统 | v6.0.0 |
-| `references/output-format.md` 🆕 | 输出格式 + 空间/指代硬门 + 媒介翻译 | v6.0.0 |
-| `references/story-analysis.md` | P0A 十项剧本解析 | v5.0.0 |
-| `references/emotion-curve.md` | 全片情绪曲线自动可视化 | v5.0.0 |
-| `references/creative-baseline.md` | P1 摄影/色彩/声音创作基准 | v5.0.0 |
-| `references/character-assets.md` | P2a 角色依赖图 + 批次生产 | v5.0.0 |
-| `references/prop-assets.md` | P2b 关键道具母板 | v5.0.0 |
-| `references/cinedance-video-prompt.md` | CINEDANCE 16-block 视频提示词 | v4.1.0 |
-| `references/lira-image-prompt.md` | LIRA 4-D 图像提示词优化 | v4.1.0 |
-| `references/acting-performance.md` | ACTING 角色表演系统 | v4.1.0 |
-| `references/geo-spatial-layout.md` | GEO 空间锁定 | v4.1.0 |
-| `references/style-prefix.md` | Style Prefix 三条根条款 | v4.1.0 |
-| `references/ai-director.md` | AI 导演方法论 | v4.1.0 |
-| `references/failure-codes.md` | 失败诊断 6 类 33 码 | v4.1.0 |
-| `references/deliverable-system.md` | 交付物系统 | v4.1.0 |
-| `references/model-mechanics.md` | 10 大模型机制 | v4.0.0 |
-| `references/anti-slop-lexicon.md` | 空洞质量词黑名单 | v3.0.0 |
-| `references/retake-protocol.md` | 重拍协议 | v3.0.0 |
-| `references/reference-role-map.md` | 参考角色映射 | v4.0.0 |
-| `references/sequence-project-state.md` | 序列项目状态管理 | v3.0.0 |
-| `references/continuation-handoff.md` | 续接交接协议 | v3.0.0 |
-| `references/modes-and-recipes.md` | 模式说明与交互笔记 | v2.0.0 |
-| `references/camera-and-styles.md` | 镜头语言与视觉风格词汇表 | v2.0.0 |
-| `references/recipes.md` | 提示词配方库 | v2.0.0 |
+| 门控 / 阶段（触发时机） | 必须加载 |
+| --- | --- |
+| 🆕 v7.0.0 — 五大导演系统 | `camera-emotion-sync.md`、`json-api-mode.md`、`lighting-rules.md`、`performance-micro-beats.md`、`scene-prototypes.md` |
+| 硬门总览 | `camera-design.md`、`dialogue-capacity.md`、`grouping-density.md`、`output-format.md` |
+| P0-P2 五大阶段 | `character-assets.md`、`creative-baseline.md`、`emotion-curve.md`、`prop-assets.md`、`story-analysis.md` |
+| P0 项目接收（自动执行） | `project-workbench.md` |
+| P1 创作基准 | `visual-bible.md` |
+| 🆕 运镜设计系统 | `camera-and-styles.md` |
+| 失败现象对照表 | `acting-performance.md`、`failure-codes.md`、`geo-spatial-layout.md`、`lira-image-prompt.md` |
+| 🆕 新模型能力速览 | `model-mechanics.md` |
+| 🆕 并发控制协议 (v8.0.0) | `concurrency-control.md` |
+| 🆕 进度状态查询协议 (v8.0.0) | `progress-query.md` |
+| 视频 / 图像生成模型 | `model-catalog.md`、`modes-and-recipes.md`、`recipes.md` |
+| 运营循环 (Operating Loop) | `checkpoint-resume.md` |
+| 门控 3: 模式选择 (Mode Gate) | `execution-modes.md` |
+| 门控 6: 安全门控 (Safety Gate) | `asset-whitelist.md` |
+| 门控 8: 质量检查 (Quality Pass) | `ai-self-check-repair.md`、`anti-slop-lexicon.md`、`cost-gates.md`、`eight-item-self-check.md`、`qa-strict-gates.md` |
+| 阶段二：导演交互 — 🔴 不可跳过 | `ai-director.md` |
+| 阶段三：资产变量表建立 | `reference-role-map.md` |
+| 阶段五：时间片分镜脚本 — 🆕 硬门强化 | `cinedance-video-prompt.md`、`shared-boundary-storyboard.md` |
+| 阶段七：生成后评估与迭代（重拍协议） | `retake-protocol.md`、`structured-failure-report.md`、`video-analysis-pipeline.md` |
+| 阶段八：序列项目管理 | `continuation-handoff.md`、`sequence-project-state.md` |
+| Style Prefix | `style-prefix.md` |
+| 交付物体系 | `content-fingerprint.md`、`deliverable-system.md` |
+| 快速参考（检查清单） | `qa-checklists.md` |
 
----
+> 维护：新增 reference 必须同时登记本表与 `references/INDEX.md`（`scripts/check_consistency.py` 的 `I1`/`I2`/`I3` 精确断言）。
 
 ## 变更日志
 
-### v7.1.0 (2026-09-10)
+完整版本历史见 **`CHANGELOG.md`**（唯一权威）；v7.x 时期发布说明存档见 `release-notes.md`。
 
-**新增 MiniMax H3 模型支持**
-- ✅ MiniMax H3（2026-07-31 发布）：原生立体声、2K 分辨率、15秒时长、原生多镜头建模、V2V 运动转移、In-Context Regeneration 高分辨率重建、开源权重
-- ✅ H3 擅长指令遵循、文字/品牌渲染精准、跨模态参考（从视频 A 取运镜、从图像 B 取角色、从音频 C 取声音）
-- ✅ H3 定价优势：2K 视频 ~$0.061/秒，768p ~$0.036/秒，远低于主流模型
-- ✅ 适用场景：广告/电商/品牌渲染/多模态交叉参考
+## 快速参考（检查清单）
 
-**新增 Seedance 2.0 Mini 变体**
-- ✅ Seedance 2.0 Mini：轻量变体，支持 4K 输出（2026-08 上线）
-- ✅ 适合快速迭代与高分辨率交付场景
+四张检查清单（预生产 / 硬门 / 提示词构建 / 生成后评估）**统一收在 `references/qa-checklists.md`**，
+并按 Part A–E 组织（含 v9 新增的工程侧清单）。出片前逐部分过，不要凭记忆。
 
-### v7.0.4 (2026-09-06)
-
-**Kling 3.0 Omni 编辑管线升级信息更新**
-- ✅ Kling 3.0 Omni 2026-06-17 编辑管线升级：4K 编辑输入/输出、一致性增强、3-15 秒编辑范围
-- ✅ Kling 3.0 新增智能分镜系统、多语混说、主体参考/角色定向驱动
-- ✅ 来源：Atlas Cloud AI (June 2026)、快手官方
-
-**搜索发现**：
-- Seedance 2.5 已正式发布（2026-07 上线），技能已完整支持
-- Veo 3.1、Wan 3.0 暂无新更新信息
-
-### v6.0.0 (2026-08-24)
-
-**新增五大硬门系统** — 整合自 Elio_AIGC Seedance 2.0 Prompts V2.3（SKILL制作者：B站/抖音：Elio_AIGC）
-
-**新增 6 个硬门**：
-- ✅ **台词容量预检** — 最低时长公式 + 语速四档 + 视觉读取锚点 + 容量判定
-- ✅ **分组硬门** — 模型适配时长上限 + 拆组规则 + 组尾稳定态 + 承接等式
-- ✅ **镜头密度四道门** — Smin/Bmin/新反馈/Gmax + 短漫剧三档 + 关键路径承载
-- ✅ **运镜设计系统** — 10种运镜叙事功能表 + 三要素 + 每场运镜主轴
-- ✅ **输出格式硬门** — 自然段写法 + 四项事实 + 时间码规范 + 台词嵌入
-- ✅ **空间/人物指代硬门** — 禁止模糊方位 + 禁止代词 + 视听术语双语
-
-**新增 2 个门控**：
-- ✅ **门控 7A: 台词容量预检** — 不过此门不进入分镜
-- ✅ **门控 7B: 分组与密度门控** — 不过此门不输出分镜
-
-**新增 4 个参考文档**：
-- ✅ `references/dialogue-capacity.md` — 台词容量预检系统
-- ✅ `references/grouping-density.md` — 分组硬门 + 镜头密度四道门
-- ✅ `references/camera-design.md` — 运镜设计系统
-- ✅ `references/output-format.md` — 输出格式 + 空间/指代硬门 + 媒介翻译
-
-**新增 5 个错误码**：
-- ✅ `F-DIALOGUE-CAPACITY` — 台词被压缩/语速不合理
-- ✅ `F-GROUP-CONTINUITY` — 组尾不稳定/承接断裂
-- ✅ `F-DENSITY` — 密度不足/空档过长
-- ✅ `F-HIDDEN-CUT` — 隐藏切镜
-- ✅ `F-SPATIAL-VAGUE` — 模糊方位/代词指代
-
-**强化**：
-- ✅ 黄金规则 5条 → 9条
-- ✅ 矛盾检测 4层 → 6层
-- ✅ 门控 8 质量检查新增 5 项硬门检查
-- ✅ 阶段五 分镜写作全面硬门化
-- ✅ 失败现象对照表新增 5 项
-
-**来源**：整合 seedance20-video-prompts V2.3 by Elio_AIGC（B站/抖音：Elio_AIGC）
-
-### v5.0.0 (2026-08-14)
-
-新增 P0-P2 预生产管线。详见 v5.0.0 变更记录。
-
-### v4.1.0 (2026-08-13)
-
-整合 AIGC Film Studio 体系。
-
-### v4.0.0 (2026-08-09)
-
-Seedance 2.5 全面适配。
-
-### v3.0.0 (2026-06-22)
-
-架构级重构 — 8 门控路由 + 重拍协议 + 序列项目管理。
-
----
-
-## 快速参考
-
-### 预生产检查清单 (P0-P2)
-
-- [ ] P0 项目基准卡已输出
-- [ ] P0A 十项剧本解析完整
-- [ ] 情绪曲线图已生成
-- [ ] P0A 已获得创作者确认
-- [ ] P1 创作基准已输出
-- [ ] P1 已获得创作者确认
-- [ ] P2a 角色生产清单已确认
-- [ ] 9:16 确认稿逐批确认
-- [ ] 16:9 设定板整批确认
-- [ ] P2b 关键道具清单已确认
-- [ ] 道具母板逐件确认
-- [ ] 预生产结束，进入制片管线
-
-### 🆕 硬门检查清单 (v6.0.0)
-
-- [ ] 台词容量预检已过（门控 7A）
-- [ ] 分组与密度已过（门控 7B）
-- [ ] 每组时长 ≤ 模型上限
-- [ ] 组尾 = 可继承稳定状态
-- [ ] 承接等式成立
-- [ ] 四道密度门同时通过
-- [ ] 每镜四项事实齐全
-- [ ] 主动运镜三要素齐全
-- [ ] 正文无人物代词（引号内豁免）
-- [ ] 无模糊方位词
-- [ ] 时间码整数秒、连续、不重叠
-- [ ] 末镜结束秒 = 组时长
-
-### 提示词构建检查清单
-
-- [ ] 单变量原则
-- [ ] 具体视觉化
-- [ ] 双保险：参数 + 视觉翻译
-- [ ] 六层矛盾检测
-- [ ] CINEDANCE 16-block 架构完整
-- [ ] Style Prefix 逐字粘贴
-- [ ] GEO 空间锁定已写入
-- [ ] 视频模型已询问用户
-- [ ] 运镜主轴已登记
-
-### 生成后评估检查清单
-
-- [ ] 六判定：保留/后期修复/局部编辑/重生成/重写
-- [ ] 错误码命名问题
-- [ ] 责任层定位
-- [ ] 单变量规则
-- [ ] 预算检查
-- [ ] 镜头日志完整
-
----
-
-**🎬 Seedancer v7.1.0 — 从剧本到成片的端到端制片操作系统。P0-P2 预生产管线 + 五大硬门系统 + 五大导演系统 + CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 33 码。多模型支持（Seedance 2.5/2.0 Mini/Kling 3.0/Veo 3.1/MiniMax H3/Wan 3.0），五类交付物。**
+**🎬 Seedancer v9.0.0 — 从剧本到成片的端到端制片操作系统。P0-P2 预生产管线 + 五大硬门系统 + 五大导演系统 + CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 38 码。多模型支持（Seedance 2.5/2.0 Mini/Kling 3.0/Veo 3.1/MiniMax H3/Wan 3.0），五类交付物。**

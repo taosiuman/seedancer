@@ -1,3 +1,69 @@
+# Seedancer v9.0.0 更新日志
+
+_发布日期：2026-10-05_
+
+> **定位**：MAJOR —— 入口契约与目录结构变化；**创作语义（硬门/错误码/模板）未变**。
+
+---
+
+## 🚀 本次重构做了什么
+
+### 1. 参考文档"接线"（修复最严重的结构缺陷）
+- 新增 **《参考文档加载表（门控 → 必须加载）》** 取代旧的「参考文档」索引
+- 15 篇 v8 孤儿文档接入真实门控；加载表覆盖全部 reference（门控名可判定）
+- 新增 `references/INDEX.md`（含加载门控列；由 `I1`/`I2`/`I3` 断言守护，**不是**自动生成）
+
+### 2. 一致性机制（此前完全缺失）
+- 新增 `scripts/check_consistency.py`（零依赖，14 项断言）：
+  版本多处一致 · `_meta.json` 合法 · frontmatter 字段 · 元数据对齐 · **归因合规** ·
+  死链 · 孤儿/接线 · 索引完整性 · 大段重复 · 体积预算 · **硬门锚点**
+- 基线实测：**5 FAIL + 2 WARN** → 重构后 **0 FAIL**
+
+### 3. 合规修复（最高优先级）
+- `LICENSE` 归因从 **4 个来源补全到 8 个**（补 Elio_AIGC / shotlist-builder / seedance-director / hellgrind）
+- 此前 `SKILL.md` 写着 "Full attribution details in LICENSE file"，而 LICENSE 只覆盖一半来源
+
+### 4. 元数据与版本
+- `_meta.json`：从"YAML 伪装成 .json"改为**合法 JSON**
+- `SKILL.md` frontmatter 补 `tags` / `platforms`（与 `_meta.json` 对齐）
+- **版本单一权威 = `_meta.json`**；此前版本号在 6+ 处各自维护且互相矛盾（页脚 7.1.0 / 徽章 7.0.0 / LICENSE v5.0.0）
+- 版本历史表改以 **git tag 日期**为唯一事实
+
+### 5. 引用完整性与去重
+- 死链 **10 处 → 0**；新建 `references/qa-checklists.md`（**门控 8 的落点，此前被 6 处引用却不存在**）
+- `SKILL.md` 去重：五大导演系统摘要 / 并发控制协议（89% 逐字重复）/ 进度查询 / 模型表 /
+  平台限额速查 / 内嵌变更日志（80 行）/ 末尾 4 张检查清单 → 全部改为指针
+- 入口体积 **56037 → 43243 字节（−23%）**；**硬门逐字保留**（28 条锚点由脚本断言）
+
+### 6. 错误码归位
+- 5 个只写在入口的错误码（`F-DIALOGUE-CAPACITY` / `F-GROUP-CONTINUITY` / `F-DENSITY` /
+  `F-HIDDEN-CUT` / `F-SPATIAL-VAGUE`）迁入 `references/failure-codes.md`（唯一权威）
+- 码数更正：**33 → 38**；修正码名漂移 `F-DPROP-DUP` → `F-PROP-DUP`
+
+---
+
+## ⚠️ 破坏性变更（迁移说明）
+
+| 变化 | v8 的位置 | v9 的位置 |
+| --- | --- | --- |
+| 参考文档索引 | SKILL.md「参考文档」表（只列 31 篇） | **《参考文档加载表》** + `references/INDEX.md`（48 篇） |
+| 并发控制协议 | SKILL.md 全文（与 reference 89% 重复） | `references/concurrency-control.md`（指针） |
+| 进度状态查询 | SKILL.md 全文 | `references/progress-query.md`（指针） |
+| 模型清单 / 平台限额 | SKILL.md 表（多处维护） | `references/model-mechanics.md`、`modes-and-recipes.md`（唯一权威） |
+| 变更日志 | SKILL.md 内嵌 80 行 + CHANGELOG + release-notes | **`CHANGELOG.md` 唯一权威**（后者标为历史存档） |
+| 质检清单 | SKILL.md 末尾 4 张表 | `references/qa-checklists.md`（Part A–E） |
+| 错误码 | 5 个只在 SKILL.md | `references/failure-codes.md` §5（38 码） |
+| 归因 | SKILL.md frontmatter 40 行 | `LICENSE`（完整版）+ frontmatter 指针 |
+
+**未删除任何 reference 文件**；被移走内容均有落点（v9 复审曾发现 4 处无落点，已恢复：模型能力/清单 → `references/model-catalog.md`；v7.1.0/v7.0.4 日志 → 本文件历史段；提示词构建清单 → `references/qa-checklists.md`）。
+
+## 🔒 兼容性
+
+- 硬门、判据、模板、话术**逐字保留**（28 条硬门锚点由脚本断言，缺一即构建失败）
+- 输出格式契约区（区块名逐字使用 / 词表 / 媒介翻译表）**与 `output-format.md` 模板**逐行一致**（由 `D2` 逐行断言）**（显式白名单）
+
+---
+
 # Seedancer v8.0.0 更新日志
 
 _发布日期：2026-09-10_
@@ -199,3 +265,86 @@ project-workbench.md          # 项目工作台
 ---
 
 **完整变更日志**: `CHANGELOG.md`
+
+---
+
+## 📜 历史版本（v4–v7.1，自 v8 SKILL.md 逐字迁移）
+
+### v7.1.0 (2026-09-10)
+
+**新增 MiniMax H3 模型支持**
+- ✅ MiniMax H3（2026-07-31 发布）：原生立体声、2K 分辨率、15秒时长、原生多镜头建模、V2V 运动转移、In-Context Regeneration 高分辨率重建、开源权重
+- ✅ H3 擅长指令遵循、文字/品牌渲染精准、跨模态参考（从视频 A 取运镜、从图像 B 取角色、从音频 C 取声音）
+- ✅ H3 定价优势：2K 视频 ~$0.061/秒，768p ~$0.036/秒，远低于主流模型
+- ✅ 适用场景：广告/电商/品牌渲染/多模态交叉参考
+
+**新增 Seedance 2.0 Mini 变体**
+- ✅ Seedance 2.0 Mini：轻量变体，支持 4K 输出（2026-08 上线）
+- ✅ 适合快速迭代与高分辨率交付场景
+
+### v7.0.4 (2026-09-06)
+
+**Kling 3.0 Omni 编辑管线升级信息更新**
+- ✅ Kling 3.0 Omni 2026-06-17 编辑管线升级：4K 编辑输入/输出、一致性增强、3-15 秒编辑范围
+- ✅ Kling 3.0 新增智能分镜系统、多语混说、主体参考/角色定向驱动
+- ✅ 来源：Atlas Cloud AI (June 2026)、快手官方
+
+**搜索发现**：
+- Seedance 2.5 已正式发布（2026-07 上线），技能已完整支持
+- Veo 3.1、Wan 3.0 暂无新更新信息
+
+### v6.0.0 (2026-08-24)
+
+**新增五大硬门系统** — 整合自 Elio_AIGC Seedance 2.0 Prompts V2.3（SKILL制作者：B站/抖音：Elio_AIGC）
+
+**新增 6 个硬门**：
+- ✅ **台词容量预检** — 最低时长公式 + 语速四档 + 视觉读取锚点 + 容量判定
+- ✅ **分组硬门** — 模型适配时长上限 + 拆组规则 + 组尾稳定态 + 承接等式
+- ✅ **镜头密度四道门** — Smin/Bmin/新反馈/Gmax + 短漫剧三档 + 关键路径承载
+- ✅ **运镜设计系统** — 10种运镜叙事功能表 + 三要素 + 每场运镜主轴
+- ✅ **输出格式硬门** — 自然段写法 + 四项事实 + 时间码规范 + 台词嵌入
+- ✅ **空间/人物指代硬门** — 禁止模糊方位 + 禁止代词 + 视听术语双语
+
+**新增 2 个门控**：
+- ✅ **门控 7A: 台词容量预检** — 不过此门不进入分镜
+- ✅ **门控 7B: 分组与密度门控** — 不过此门不输出分镜
+
+**新增 4 个参考文档**：
+- ✅ `references/dialogue-capacity.md` — 台词容量预检系统
+- ✅ `references/grouping-density.md` — 分组硬门 + 镜头密度四道门
+- ✅ `references/camera-design.md` — 运镜设计系统
+- ✅ `references/output-format.md` — 输出格式 + 空间/指代硬门 + 媒介翻译
+
+**新增 5 个错误码**：
+- ✅ `F-DIALOGUE-CAPACITY` — 台词被压缩/语速不合理
+- ✅ `F-GROUP-CONTINUITY` — 组尾不稳定/承接断裂
+- ✅ `F-DENSITY` — 密度不足/空档过长
+- ✅ `F-HIDDEN-CUT` — 隐藏切镜
+- ✅ `F-SPATIAL-VAGUE` — 模糊方位/代词指代
+
+**强化**：
+- ✅ 黄金规则 5条 → 9条
+- ✅ 矛盾检测 4层 → 6层
+- ✅ 门控 8 质量检查新增 5 项硬门检查
+- ✅ 阶段五 分镜写作全面硬门化
+- ✅ 失败现象对照表新增 5 项
+
+**来源**：整合 seedance20-video-prompts V2.3 by Elio_AIGC（B站/抖音：Elio_AIGC）
+
+### v5.0.0 (2026-08-14)
+
+新增 P0-P2 预生产管线。详见 v5.0.0 变更记录。
+
+### v4.1.0 (2026-08-13)
+
+整合 AIGC Film Studio 体系。
+
+### v4.0.0 (2026-06-22)
+
+Seedance 2.5 全面适配。
+
+### v3.0.0 (2026-06-22)
+
+架构级重构 — 8 门控路由 + 重拍协议 + 序列项目管理。
+
+---

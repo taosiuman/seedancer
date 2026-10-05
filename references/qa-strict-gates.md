@@ -284,7 +284,7 @@ Seedancer 现有的 QA 检查（门控 8）主要关注提示词质量。借鉴 
 ## 8. 参考
 
 - ShotFunClaw `shotfun-drama-localization-pipeline/SKILL.md` - QA 规则
-- ShotFunClaw `references/stage-protocol.md` - 阶段状态机
+- ShotFunClaw 项目的 stage-protocol.md（**外部来源**，非本技能文件）- 阶段状态机
 - Seedancer `references/output-format.md` - 输出格式硬门
 
 ---

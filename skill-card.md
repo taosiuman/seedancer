@@ -26,9 +26,9 @@ Mitigation: Use original names, generic visual descriptions, explicit negative c
 
 ## Reference(s): <br>
 - [ClawHub skill page](https://clawhub.ai/dandysuper/seedance-2-prompt-engineering-skill) <br>
-- [Seedance 2.0 Prompt Recipes](artifact/references/recipes.md) <br>
-- [Modes and Interaction Notes](artifact/references/modes-and-recipes.md) <br>
-- [Camera Language & Visual Styles Vocabulary](artifact/references/camera-and-styles.md) <br>
+- [Seedance 2.0 Prompt Recipes](references/recipes.md) <br>
+- [Modes and Interaction Notes](references/modes-and-recipes.md) <br>
+- [Camera Language & Visual Styles Vocabulary](references/camera-and-styles.md) <br>
 
 
 ## Skill Output: <br>
@@ -38,7 +38,7 @@ Mitigation: Use original names, generic visual descriptions, explicit negative c
 **Other Properties Related to Output:** [Produces Seedance mode selection, asset mapping, timecoded prompt beats, negative constraints, and generation settings.] <br>
 
 ## Skill Version(s): <br>
-2.0.0 (source: server release evidence) <br>
+9.0.0（本目录所载版本；上游来源版本见 LICENSE） (source: server release evidence) <br>
 
 ## Ethical Considerations: <br>
 Users should evaluate whether this skill is appropriate for their environment, review any generated or modified files before relying on them, and apply their organization's safety, security, and compliance requirements before deployment. <br>

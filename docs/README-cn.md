@@ -1,4 +1,4 @@
-# Seedancer v8.0.0 — AIGC 影视导演操作系统
+# Seedancer v9.0.0 — AIGC 影视导演操作系统
 
 <p align="center">
   <a href="../README.md"><b>English</b></a> · <a href="README-cn.md">中文</a>
@@ -8,12 +8,12 @@
 
 **从剧本到成片的端到端智能制片管线**
 
-[![版本](https://img.shields.io/badge/version-7.0.0-blue.svg)](https://github.com/taosiuman/seedancer/releases)
-[![许可](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
+[![版本](https://img.shields.io/badge/version-9.0.0-blue.svg)](https://github.com/taosiuman/seedancer/releases)
+[![许可](https://img.shields.io/badge/license-MIT-green.svg)](../LICENSE)
 
 [![Seedance](https://img.shields.io/badge/Seedance-2.5-purple.svg)](https://seedance.ai)
 
-**[快速开始](#快速开始)** · **[核心模块](#核心模块)** · **[使用示例](#使用示例)** · **[更新日志](CHANGELOG.md)**
+**[快速开始](#快速开始)** · **[核心模块](#核心模块)** · **[使用示例](#使用示例)** · **[更新日志](../CHANGELOG.md)**
 
 </div>
 
@@ -220,7 +220,7 @@ references/
 ── geo-spatial-layout.md        # GEO 空间锁定
 ├── style-prefix.md              # Style Prefix
 ├── ai-director.md               # AI 导演方法论
-├── failure-codes.md             # 失败诊断（6 类 33 码）
+├── failure-codes.md             # 失败诊断（6 类 38 码）
 └── ...
 ```
 
@@ -230,12 +230,16 @@ references/
 
 | 版本 | 日期 | 亮点 |
 |------|------|------|
-| **v7.0.0** | 2026-08-24 | 5 大导演系统：场景路由、摄影机-情绪同步、微节拍、光源规则、JSON API |
-| **v6.0.0** | 2026-08-24 | 5 大硬门系统：台词容量、分组、密度、运镜设计、输出格式 |
+| **v8.0.0** | 2026-09-10 | v9 重构前的稳定版（本次重构的基线） |
+| **v7.0.2** | 2026-09-01 | 补丁 |
+| **v7.0.1** | 2026-09-01 | 补丁 |
+| **v7.0.0** | 2026-08-24 | 五大导演系统 |
+| **v6.0.0** | 2026-08-24 | 五大硬门系统 |
 | **v5.0.0** | 2026-08-14 | P0-P2 预生产管线 |
 | **v4.1.0** | 2026-08-13 | CINEDANCE / LIRA / ACTING / GEO / Style Prefix 整合 |
-| **v4.0.0** | 2026-08-09 | Seedance 2.5 全面适配 |
+| **v4.0.0** | 2026-06-22 | Seedance 2.5 全面适配 |
 | **v3.0.0** | 2026-06-22 | 架构级重构 |
+| **v9.0.0** | 2026-10-05 | 结构重构：加载表接线 · 一致性检查器 · 合规与版本单一权威（入口 −23%） |
 
 ---
 
@@ -249,7 +253,7 @@ references/
 - **Elio_AIGC** — 五大硬门系统
 - **Emily2040/seedance-2.0** — 模型机制 + 反空洞词典
 
-完整归属声明见 [LICENSE](LICENSE)。
+完整归属声明见 [LICENSE](../LICENSE)。
 
 ---
 
@@ -262,7 +266,7 @@ references/
 
 <div align="center">
 
-**🎬 Seedancer v8.0.0 — 从剧本到成片的端到端智能制片管线**
+**🎬 Seedancer v9.0.0 — 从剧本到成片的端到端智能制片管线**
 
 *Made with ❤️ for AI filmmakers*
 

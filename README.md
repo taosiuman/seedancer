@@ -1,4 +1,4 @@
-# Seedancer v9.0.2 — AI Film Director Operating System
+# Seedancer v10.0.0 — AI Film Director Operating System
 
 <p align="center">
   <a href="README.md"><b>English</b></a> · <a href="docs/README-cn.md">中文</a>
@@ -8,7 +8,7 @@
 
 **From Script to Screen — End-to-End AI Film Production Pipeline**
 
-[![Version](https://img.shields.io/badge/version-9.0.2-blue.svg)](https://github.com/taosiuman/seedancer/releases)
+[![Version](https://img.shields.io/badge/version-10.0.0-blue.svg)](https://github.com/taosiuman/seedancer/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
 [![Seedance](https://img.shields.io/badge/Seedance-2.5-purple.svg)](https://seedance.ai)
@@ -23,17 +23,28 @@
 
 **Seedancer** is not a prompt generator. It is a **director-grade AI film production operating system** — a complete workflow engine that transforms scripts into production-ready video prompts through **12 quality gates**, **10 core modules**, and **48 reference documents**.
 
-### ✨ What's New in v9.0.0
+### ✨ What's New in v10.0.0
+
+**检查器硬化版（MAJOR）**——不改创作语义，改的是"规范怎么被机器守住"（详见 `CHANGELOG.md`）：
+
+| 变化 | 说明 |
+|------|------|
+| 🔬 **检查器 16 → 19 项** | `A2`（**阻塞**：7 个关键小节的**内容行**必须存在，此前只查"短语在不在"）、`A3`（WARN：规范枚举顺序）、`A4`（**阻塞**：文件内指针层级成立） |
+| 🧾 **G2 可断点** | 每个检查组开跑前向 stderr 打 `[RUN ] …` —— 中断时最后一行即断点 |
+| 🧹 **入口规则改名（迁移必读）** | 「四项事实」在入口 **5 处 → 2 处**；三处规则名改为「**每镜必要条件**」并加**文件内指针**。**四要素与硬门语义未变**；定义节标题仍为「每镜四项事实（缺一不可）」（术语错位为已知技术债） |
+| 🧪 **攻击测试** | `tests/attack_test.py`：**31 必拦场景 + 7 类"必须不报错"的合法写法 + 24 类显式已知漏检**，在临时副本上变异 |
+
+### 📜 历史：What's New in v9.0.0
 
 **结构重构版（MAJOR）**——不改创作语义，改的是"规范怎么被机器守住"：
 
 | 变化 | 说明 |
 |------|------|
 | 📋 **参考文档加载表** | 门控 → 必须加载的文件，取代旧索引；48 篇全部接线（v8 有 15 篇从未被入口引用） |
-| 🔍 **一致性检查器** | `scripts/check_consistency.py`：版本 / 元数据 / 死链 / 索引 / 接线 / 重复，14 项断言 |
+| 🔍 **一致性检查器** | `scripts/check_consistency.py`：版本 / 元数据 / 死链 / 索引 / 接线 / 重复 / 硬门按节 / **关键小节内容行** / **规范枚举顺序** / **文件内指针层级**，**现版 19 项断言**（实测；含 `A2`/`A3`/`A4`）。逐步状态输出到 stderr（`[RUN ]`），中断可见断点 |
 | ⚖️ **合规修复** | LICENSE 归因从 4 个来源补全到 8 个（此前 SKILL.md 声称"完整归因见 LICENSE"并不成立） |
-| 🧹 **入口去重** | SKILL.md 56KB → 41KB（−26%）：删的是与 references 重复的内容，硬门逐字保留 |
-| 🎯 **版本单一权威** | `_meta.json` 为唯一来源，其余 7 处为引用（此前 6 处漂移） |
+| 🧹 **入口去重** | SKILL.md 瘦身：v8 记录 **56,037 字节** → v9.0.0 发布时 **43,243 字节** → 当前 **43,678 字节**（实测 2026-10-06，含 D7 的 5→2 重写，比 D7 前 **+78 字节**）；删的是与 references 重复的内容，硬门逐字保留 |
+| 🎯 **版本单一权威** | `_meta.json` 为唯一来源，其余 **9 处**版本戳由检查器 `V1` 断言守护（此前 6 处漂移） |
 
 v8.0.0 的五大导演系统仍在，详述见各 reference（见《参考文档加载表》）。
 
@@ -196,7 +207,7 @@ System: Skip P0-P2 → Gate 1 → Scene router (Atmosphere)
 
 ---
 
-## 📁 Reference Documents (30+)
+## 📁 Reference Documents (48)
 
 ```
 references/
@@ -239,7 +250,7 @@ references/
 | **v4.1.0** | 2026-08-13 | CINEDANCE / LIRA / ACTING / GEO / Style Prefix 整合 |
 | **v4.0.0** | 2026-06-22 | Seedance 2.5 适配 |
 | **v3.0.0** | 2026-06-22 | 架构级重构 |
-| **v9.0.0** | 2026-10-05 | 结构重构：加载表接线 · 一致性检查器 · 合规与版本单一权威（入口 −23%） |
+| **v9.0.0** | 2026-10-05 | 结构重构：加载表接线 · 一致性检查器 · 合规与版本单一权威（入口 56,037 → 43,243 字节） |
 
 ---
 
@@ -266,7 +277,7 @@ Full attribution: [LICENSE](LICENSE)
 
 <div align="center">
 
-**🎬 Seedancer v9.0.2 — Where Scripts Become Frames**
+**🎬 Seedancer v10.0.0 — Where Scripts Become Frames**
 
 *Made with ❤️ for AI filmmakers*
 

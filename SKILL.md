@@ -3,7 +3,7 @@ name: seedancer
 description: "AI film production pipeline — turns scripts into structured shot plans and generation prompts for AI video and image platforms (Seedance/Kling/Veo/Wan/GPT Image/Seedream). Includes script analysis, camera-emotion sync, performance micro-beats, lighting rules, asset image prompts (LIRA), and 30+ reference docs. Primarily Chinese-language skill targeting Chinese AIGC platforms. English speakers: see README.md. Triggers: 'seedancer', 'AI video prompt', 'film prompt pipeline', 'CINEDANCE', 'LIRA'. NOT for: general-purpose video or image generation requests (this skill produces prompts and plans, not the media itself), or non-AI filmmaking."
 license: MIT-0
 author: taosiuman
-version: 9.0.2
+version: 10.0.0
 tags: [seedance, video-generation, prompt-engineering, filmmaking, ai-director, seedance-2.5, cinedance, lira, acting, geo-spatial, aigc, multi-model, pre-production, character-assets, emotion-curve]
 platforms: [jimeng, doubao, volcano-engine, kling, veo]
 attribution: |
@@ -11,7 +11,7 @@ attribution: |
   来源：seedance-2-prompt-engineering-skill · Emily2040/seedance-2.0 · ifeihong/aigc-film-studio · chaoge-assets-trial · seedance20-video-prompts · shotlist-builder · seedance-director · hellgrind
 ---
 
-# Seedancer v9.0.2 — AIGC 影视导演操作系统
+# Seedancer v10.0.0 — AIGC 影视导演操作系统
 
 > 从**剧本解析**到**预生产资产**到**分镜生成**到**成片交付**的端到端制片操作系统。v7.0.0 新增 **五大导演系统**（整合自 shotlist-builder + seedance-director + hellgrind）：场景原型路由 + 摄影机-情绪同步 + 表演微节拍目录 + JSON API 输出模式 + 光源规则系统。保留 P0-P2 预生产管线 + 五大硬门系统（v6.0.0）+ CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 38 码。支持多模型（Seedance 2.5/Kling/Veo/GPT Image 2/NBP/Seedream），五类交付物标准化输出。
 
@@ -65,7 +65,7 @@ attribution: |
 4. **四道密度门必须同时通过** — Smin + Bmin + 每镜新反馈 + Gmax。
 5. **正文禁止人物代词** — 我/你/他/她/他们/她们/本人/其/对方/自己（原台词引号内豁免）。
 6. **禁止模糊方位词** — 一侧/一边/某侧/斜侧/门边/桌旁/不远处（必须带明确参照主体）。
-7. **每镜四项事实缺一不可** — 视觉起点 + 观察关系 + 构图落位 + 摄影机状态。
+7. **每镜必要条件缺一不可** — 视觉起点 + 观察关系 + 构图落位 + 摄影机状态（定义见 §输出格式硬门）。
 8. **主动运镜三要素缺一不可** — 起始观察点 + 运动轨迹方向 + 停止结果。
 
 ---
@@ -735,7 +735,7 @@ hard stops：并发上限按平台档位；退避必须有上限；限流触发�
 - **错误码诊断** — 用 `references/failure-codes.md` 命名问题
 - 🆕 **代词检查** — 正文是否有我/你/他/她（引号内豁免）
 - 🆕 **方位检查** — 是否有模糊方位词
-- 🆕 **四项事实检查** — 每镜是否有视觉起点+观察关系+构图落位+摄影机状态
+- 🆕 **每镜必要条件检查** — 每镜是否写全必要条件（定义见 §输出格式硬门）
 - 🆕 **运镜三要素检查** — 主动运镜是否有起始+轨迹+停止
 - 🆕 **时间码检查** — 是否整数、连续、不重叠、末镜结束=组时长
 
@@ -790,7 +790,7 @@ hard stops：并发上限按平台档位；退避必须有上限；限流触发�
 2. 分组与密度已过（门控 7B）
 3. 每组使用输出格式硬门的结构
 4. 每镜写一个连续自然段（按发生顺序）
-5. 每镜四项事实缺一不可
+5. 每镜必要条件缺一不可（定义见 §输出格式硬门）
 6. 主动运镜三要素缺一不可
 7. 禁止代词、禁止模糊方位
 8. 时间码整数秒、连续、不重叠
@@ -972,4 +972,4 @@ hard stops：并发上限按平台档位；退避必须有上限；限流触发�
 四张检查清单（预生产 / 硬门 / 提示词构建 / 生成后评估）**统一收在 `references/qa-checklists.md`**，
 并按 Part A–E 组织（含 v9 新增的工程侧清单）。出片前逐部分过，不要凭记忆。
 
-**🎬 Seedancer v9.0.2 — 从剧本到成片的端到端制片操作系统。P0-P2 预生产管线 + 五大硬门系统 + 五大导演系统 + CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 38 码。多模型支持（Seedance 2.5/2.0 Mini/Kling 3.0/Veo 3.1/MiniMax H3/Wan 3.0），五类交付物。**
+**🎬 Seedancer v10.0.0 — 从剧本到成片的端到端制片操作系统。P0-P2 预生产管线 + 五大硬门系统 + 五大导演系统 + CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 38 码。多模型支持（Seedance 2.5/2.0 Mini/Kling 3.0/Veo 3.1/MiniMax H3/Wan 3.0），五类交付物。**

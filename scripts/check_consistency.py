@@ -1,6 +1,34 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""check_consistency.py — seedancer 一致性 + 硬门检查器（v3，零依赖）
+"""check_consistency.py — seedancer 一致性 + 硬门检查器（v5，零依赖）
+
+v5 相对 v4 的新增（`PLAN-20261006-001` 的 G2 与 G3'）：
+  · G2 **脚本执行可靠性**：每个**检查组**开跑前向 **stderr** 打 `[RUN ] <编号> <说明>` 并 flush
+       —— 中断时最后一行就是断点（此前只在最后汇总，中断后看不出跑到哪）；`--quiet` 时不打。
+       打在 stderr 是为了**保住 stdout 的解析契约**（`--json` 只走 stdout）。
+       （粒度是**按检查组**：19 项 → 10 个检查组 + 1 个收尾行 = 11 行 `[RUN ]`，不是逐条 —— 由 `REV-20261006-023` W6 指出措辞）
+  · G3' **规范枚举一致性（A3）**：同一"硬门要素集"在任何**同行枚举**处必须**完整且同序**。
+       我最初判定原 G3（"把「四项事实」在入口的 5 处删到 2 处"）**不可达**，理由是三条约束 ——
+       该结论**已被 `REV-20261006-025` 证伪**（其中两条归因错、一条误用"下沉即失能"）。
+       故原 G3 **已实施（用户决策 D7）**：保留契约区注释与定义节标题，另三处改为**文件内指针**。
+       本断言（A3）是与之配套的"把重复变成受守护的一致性"（**WARN 级**）。
+  · `A4` **文件内指针可解析**（TD-10）：`见 §主 · 子` 的主标题必须**唯一存在**；
+       带 `· 子` 时，子标题必须是**比主标题更深层级**、且落在**主标题范围内**的标题。
+       动因：D7 重写时我写的指针 `见 §输出格式硬门 · 镜头自然段写法` **字符串比对能过**，
+       但那个「·」想表达的层级关系并不成立 —— 引用类断言此前从不"实地走一遍"
+       （`REV-20261006-027` W2-a）。
+       ⚠️ **A4 不能保证"被指向的内容真的在那里"**（那是语义问题）：它只验"标题存在且层级关系成立"。
+       故 `CHANGELOG`/`COMPAT` 中说它"防错位指针"是**过高表述**，已收敛（见各文件）。
+  （本版合计 **19 项**）
+
+v4 相对 v3 的新增（依据 RETRO-20261006-008 模式 4「检查器假绿」+ 攻击测试实证）：
+  · A2  关键小节的**内容行**必须存在 —— v3 的 A1 只断言"短语在节内存在"，
+        删掉整段内容只留标题时仍会 PASS（tests/attack_test.py 实测 6/6 漏网）。
+        现由 SECTION_CONTENT 逐节断言：①必需内容行逐字存在 ②**该节标题在同级必须唯一**
+        （防"清空真段体 + 文末追加同名诱饵段"绕过）③**非标题内容行数 ≥ 必需词数**
+        （防"整张表换成一句罗列"式掏空）。攻击测试守护该断言。
+        ⚠️ 仍**不保证语义完整**：A2 是**字面子串存在性**，同义改写、删掉定义只留小标题、
+           同一关键词在别行再次出现 —— 这三种仍可能漏检（见下方「已知限制」）。
 
 v3 相对 v2 的新增（依据 ClawHub 安全评审 [SDI-1] 与 v9.0.1 发布复盘）：
   · V3  skill-card.md 的「Skill Version(s)」字段必须 == 权威版本（v2 的已知盲区）
@@ -8,15 +36,17 @@ v3 相对 v2 的新增（依据 ClawHub 安全评审 [SDI-1] 与 v9.0.1 发布�
 
 v2 相对 v1 的修复（依据 REV-20261005-010 的"假绿"清单）：
   · M3  改用 json.loads 按键精确比较（v1 对 JSON 格式的 _meta.json 完全空转）
-  · M4  来源清单改为从 _meta.json.upstream_sources **推导**并与 LICENSE 双向核对（v1 是硬编码 8 token）
+  · M4  来源清单改为从 _meta.json.upstream_sources **推导**并与 LICENSE **单向**核对
+        （即 upstream_sources ⊆ LICENSE；v1 是硬编码 8 token。早先此处误写"双向"，已更正）
   · I1  INDEX 与加载表都改为**集合精确匹配**（v1 用 OR + 子串，与文档矛盾）
   · I3  加载表条目改为**集合精确**；每个触发时机必须在 SKILL.md 的**加载表之外**真实出现
         （v1 只做子串匹配，28 篇塞进一行"(未定位)"即骗过）
   · D1  修滑窗计量（v1 每命中 +8 导致 12 行报"≥296 行"）；白名单改为**契约检查**：
         标注必须写明 target=<file>，且**围栏模板里的区块名与两张词表**必须在 target 中逐字存在
+        （由 D2 断言：模板逐行 + CONTRACT_KEY_LINES 逐条）
   · V1  取**全部**版本戳比对（v1 只取首末），并纳入 README/docs 标题行
   · A*  新增 28 条**硬门锚点**断言（此前只存在于一次性施工脚本，声明"缺一即构建失败"无实现）
-  · K1  预算：>32KB WARN，>48KB FAIL
+  · K1  预算：>44KB WARN，>52KB FAIL
 
 用法：
     python scripts/check_consistency.py [--json] [--quiet]
@@ -29,8 +59,31 @@ v2 相对 v1 的修复（依据 REV-20261005-010 的"假绿"清单）：
   · M4 为**单向**（_meta.upstream_sources ⊆ LICENSE）；LICENSE 多出的来源不会被报出
   · I1/I2/I3 依赖**表格格式**（首列为触发时机、次列反引号文件名）；换格式会误报
   · D1 只比 SKILL.md ↔ references，reference 之间互抄不查；且为 WARN 级
-  · A1 是"关键短语在应有节内存在"，不等于该节完整（删一半仍可能通过）
-  · K1 只测入口体积，references/ 总量无上限
+  · A1 是"关键短语在应有节内存在"，**不等于该节完整**（删掉整节而短语在别处仍出现 → 不报）
+  · A2 覆盖 SECTION_CONTENT 里的 7 节，且为**字面子串**判据。已实证的**残余漏检**（`REV-20261006-018/021`）：
+    ① **删掉定义只留小标题**（`2. **观察关系**`）不报；
+    ② **占位行凑数**（1 行必需词 + N 行"（占位）"）满足"行数下限"但不报；
+    ③ **语义反转**（把 `=` 改成 `≠`、加"禁止"）仍按字面通过；
+    ④ **把词藏进代码围栏 / `>` 引用块**能冒充内容 —— **设计使然**：硬门等式本就写在围栏里，
+       剥离围栏会把合法内容判成缺失（实测误红），故不剥离；
+    ⑤ **未列入 SECTION_CONTENT 的小节**仍可被"删内容留标题"（需要覆盖请加入该表并同步 `tests/attack_test.py`）
+    （已加固而**不再漏检**的：同义改写必需词→**会报红**；清空段体+**2–6 级**同名诱饵段→报红；
+    **HTML 注释**包词→报红）
+  · A2 **会误拦合法改写**：把必需词换成同义词（`视觉起点`→`画面起点`）→ 报"缺内容行"；
+    把该节降成 4 级标题 → 报"节缺失"；把 4 行合并成 3 行 → 报"内容行 3 < 必需词 4"。
+    这是"字面锁"的固有代价：**对行数/字节敏感、对语义无感** —— 既拦不住掏空，也拦得住等价改写。改前请同步本表
+  · A2 的标题唯一性按 **2–6 级**统计；但 `SECTION_CONTENT` 的键本身若被改名（如加空格/半角括号）会报"节缺失"
+  · A3 只守护 `ENUM_GUARDS` 里的要素集（当前仅「四项事实」），且**只在"整行完整包含全部键"时**校验**顺序**；
+    **部分枚举（少一个键）完全不在判据内**；不判"是否多出其它要素"；跨行枚举不查；
+    代码围栏内的整行枚举**算内容**（与 `A2` 取舍一致）
+  · A3 为 **WARN 级**（不阻塞构建）—— 它由"分隔符启发式"两度收紧而来，
+    历史版本分别被 `REV-20261006-024`（假红）与 `REV-20261006-025`（11 个反例）证伪；
+    现行版**删去一切分隔符猜测**，宁可少报不可误报
+  · A3 与 A2 对 HTML 注释的处理已统一（A3 整篇剥、A2 整段剥）；此前**跨行注释**两侧双标（`REV-20261006-026`）
+  · G2 的逐步状态打在 **stderr**（`--quiet` 不打印）；`--json` 的 stdout 契约不受影响；
+    粒度是**按检查组**（19 项 → 10 个检查组 + 1 收尾行），不是逐条
+  · D2 只取**契约区首个围栏**模板，且逐行比对**跳过 <12 字符的行**（短行不校验）
+  · K1 只测入口体积，references/ 总量无上限；且 K1 的 WARN 分支不升级为 FAIL
 """
 
 from __future__ import annotations
@@ -220,7 +273,8 @@ def check_metadata(rep):
             diffs.append("%s: frontmatter=%s vs _meta=%s" % (key, a, b))
     rep.add("M3", "frontmatter 与 _meta.json 逐字段一致", FAIL, not diffs,
             "；".join(diffs) if diffs else "4 个关键字段一致")
-    # M4：来源清单由 _meta.json 推导，与 LICENSE 双向核对
+    # M4：来源清单由 _meta.json 推导，与 LICENSE **单向**核对（upstream_sources ⊆ LICENSE）
+    #     （早先此处注释误写"双向"，与 docstring 及实现不符 —— 由 REV-20261006-017/020 抓出并更正）
     sources = meta.get("upstream_sources") or []
     lic = read(os.path.join(ROOT, "LICENSE"))
     if not sources:
@@ -343,15 +397,24 @@ def check_duplication(rep, threshold=40):
         if not os.path.isfile(target_p):
             rep.add("D2", "契约区目标文件存在", FAIL, False, "references/%s 不存在" % tm.group(1))
         else:
-            tgt_lines = {l.strip() for l in read(target_p).splitlines() if len(l.strip()) >= 12}
+            tgt_text = read(target_p)
+            tgt_lines = {l.strip() for l in tgt_text.splitlines() if len(l.strip()) >= 12}
             tpl = re.search(r"(?ms)```[a-z]*\n(.*?)```", contract)
             body = tpl.group(1) if tpl else contract
             miss_lines = [l.strip() for l in body.splitlines()
                           if len(l.strip()) >= 12 and l.strip() not in tgt_lines]
-            rep.add("D2", "契约区模板每一行都在目标文件中（逐行）", FAIL, not miss_lines,
-                    "目标 %s 缺 %d 行：%s" % (tm.group(1), len(miss_lines),
-                                              " ｜ ".join(miss_lines[:3])) if miss_lines
-                    else "模板 %d 行全部存在于 %s" % (len(body.splitlines()), tm.group(1)))
+            # 区块名 + 两张词表锚点：必须逐字存在于 target（此前 CONTRACT_KEY_LINES 定义后**零引用**，
+            # 声明了"契约区逐字校验"却完全空转 —— 由 REV-20261006-017/018 抓出并在此接上）
+            miss_keys = [k for k in CONTRACT_KEY_LINES if k not in tgt_text]
+            problems = ([("模板缺 %d 行：%s" % (len(miss_lines), " ｜ ".join(miss_lines[:3])))
+                         if miss_lines else ""]
+                        + [("缺区块名/词表 %d 条：%s" % (len(miss_keys), " ｜ ".join(miss_keys[:3])))
+                           if miss_keys else ""])
+            problems = [p for p in problems if p]
+            rep.add("D2", "契约区（模板逐行 + 区块名/词表锚点）都在目标文件中", FAIL, not problems,
+                    "目标 %s：%s" % (tm.group(1), "；".join(problems)) if problems
+                    else "模板 %d 行 + 锚点 %d 条全部存在于 %s"
+                         % (len(body.splitlines()), len(CONTRACT_KEY_LINES), tm.group(1)))
 
 
 # ---------- A / K ----------
@@ -368,6 +431,31 @@ ANCHOR_SECTION = {
     "交付物体系": "交付物体系", "视频模型选用前必须先询问用户": "模型自动选择系统",
     "失败现象对照表": "失败现象对照表", "参考文档加载表": "参考文档加载表",
 }
+
+# A2：关键小节必须包含这些**内容行**（防「删内容留标题」的假绿）
+#     本轮 G1 新增；对应版本号升级与否见 `PLAN-20261006-001` §4 的 D2（**未确认前不写死版本号**）
+# 守护：tests/attack_test.py（在**临时副本**上变异，不再原地改写本技能目录）
+SECTION_CONTENT = {
+    "每镜四项事实（缺一不可）": ["视觉起点", "观察关系", "构图落位", "摄影机状态"],
+    "主动运镜三要素（缺一不可）": ["起始观察点", "运动轨迹方向", "停止结果"],
+    "承接等式": ["上一组末尾空间状态", "下一组人物空间站位"],
+    "时间码规范": ["整数秒", "不重叠", "组时长"],
+    "台词写法": ["逐字嵌入", "引号"],
+    "硬门总览": ["台词容量", "分组硬门", "镜头密度", "运镜设计"],
+    "核心硬规则（不可跳过）": ["台词容量预检先于分组", "组尾必须是可继承稳定状态", "承接等式"],
+}
+
+# A3（G3'）：规范枚举一致性 —— 同一"硬门要素集"在任何**同行枚举**处必须完整且同序。
+#   为什么这么写（而不是按 G3 原计划删重复）：见 check_canonical_enumerations 的 docstring。
+ENUM_GUARDS = {
+    "四项事实": SECTION_CONTENT["每镜四项事实（缺一不可）"],
+}
+
+# G2：是否打印 `[RUN ]` 逐步状态（stderr）。由 main() 按 `--quiet` 设置。
+TRACE = True
+
+# A4：文件内指针的显式语法 —— `见 §<主标题>[ · <子标题>]`（见 check_pointer_resolution）
+POINTER_RE = re.compile(r"见\s*§\s*([^（(）)。,，;；\s·]+)(?:\s*·\s*([^（(）)。,，;；\s]+))?")
 
 
 def sections_of(skill):
@@ -398,8 +486,109 @@ def check_anchors(rep):
         elif a not in secs[hit[0]]:
             wrong.append("%s(不在节「%s」内)" % (a, hit[0]))
     problems = missing + wrong
-    rep.add("A1", "硬门锚点按节存在（%d 条，删整节即失败）" % len(ANCHORS), FAIL, not problems,
+    rep.add("A1", "硬门锚点按节存在（%d 条，按节定位）" % len(ANCHORS), FAIL, not problems,
             "问题项：%s" % "；".join(problems[:6]) if problems else "%d 条均在其应有节内" % len(ANCHORS))
+
+
+def sections_by_level(skill, level=3):
+    """按指定标题级别切段 → {标题(去 #): 段文本}（遇同级或更高级标题即结束）。"""
+    out, cur, buf = {}, None, []
+    for line in skill.splitlines():
+        m = re.match(r"^(#{2,6})\s+(.*)$", line)
+        if m:
+            lv = len(m.group(1))
+            if lv == level:
+                if cur:
+                    out[cur] = "\n".join(buf)
+                cur = m.group(2).strip()
+                buf = [line]
+                continue
+            if lv < level and cur:
+                out[cur] = "\n".join(buf)
+                cur, buf = None, []
+                continue
+        if cur:
+            buf.append(line)
+    if cur:
+        out[cur] = "\n".join(buf)
+    return out
+
+
+def heading_occurrences(skill, levels=(2, 3, 4, 5, 6)):
+    """统计**同名**标题在指定级别集合内的出现次数 → {标题: 次数}。
+
+    用于防"重复标题诱饵"绕过 A2。
+    v0.3.0（F3，`REV-20261006-021`）：由只统计 2/3 级改为 **2–6 级全覆盖** ——
+    此前用**4 级**同名标题当诱饵可绕过（`dup_level4_decoy` 实测假绿）。
+    """
+    counts = {}
+    for line in skill.splitlines():
+        m = re.match(r"^(#{2,6})\s+(.*)$", line)
+        if m and len(m.group(1)) in levels:
+            name = m.group(2).strip()
+            counts[name] = counts.get(name, 0) + 1
+    return counts
+
+
+def strip_comments_whole(text):
+    """**整篇**剥离 HTML 注释（含跨行注释）。
+
+    `strip_markup` 是**逐行**调用的（对单行注释有效，对**跨行**注释无效）；
+    A2 在**整段**上调用 `strip_markup` 故能剥掉跨行注释 —— 两侧曾因此**双标**
+    （`REV-20261006-026`）。A3 改为整篇先剥一次，使两侧对注释的处理一致。
+    """
+    return re.sub(r"(?s)<!--.*?-->", "", text)
+
+
+def strip_markup(text):
+    """剥离 **HTML 注释** 与 **代码围栏标记行**（保留围栏内的内容行）。
+
+    v0.3.0（F4，`REV-20261006-021`）：A2 原先直接在原始文本里找必需词，
+    于是"把词塞进 `<!-- -->`"就能冒充内容。现剥离 HTML 注释后再判。
+    ⚠️ **刻意不剥离代码围栏内容与 `>` 引用块**：本技能的硬门等式**本身就写在围栏里**
+      （如「承接等式」的 `上一组末尾空间状态 = 下一组人物空间站位`），
+      剥离它们会把**合法内容**判成缺失（实测误红）。代价是：
+      "把词藏进代码块/引用块"仍能冒充内容 —— 已列入文件头「已知限制」。
+    """
+    t = re.sub(r"(?s)<!--.*?-->", "", text)
+    return "\n".join(l for l in t.splitlines() if not l.lstrip().startswith("```"))
+
+
+def check_section_content(rep):
+    """A2：关键小节的**内容行**必须存在，且该节标题（2–6 级）必须**唯一**。
+
+    防三类假绿（`REV-20261006-018/019/021` 实证）：
+      ① 删内容留标题（原 v3 的 A1 拦不住）；
+      ② **重复标题诱饵**：清空真段体 + 追加同名段（`sections_by_level` 是 dict，后者覆盖前者）；
+      ③ **把词藏进注释/代码围栏/引用块** 冒充内容。
+    另加「非标题内容行数 ≥ 必需词数」，拦"整张表换成一句罗列关键词"式掏空。
+    判据为**字面子串**：拦不住语义掏空与占位凑数（见文件头「已知限制」）。
+    """
+    skill = skill_text()
+    h3 = sections_by_level(skill, 3)
+    h2 = sections_by_level(skill, 2)
+    occ = heading_occurrences(skill)
+    problems = []
+    for heading, keys in SECTION_CONTENT.items():
+        total_occ = occ.get(heading, 0)
+        if total_occ == 0:
+            problems.append("%s(节缺失)" % heading)
+            continue
+        if total_occ > 1:
+            problems.append("%s(标题重复 ×%d —— 疑似同名诱饵段)" % (heading, total_occ))
+            continue
+        sec = h3.get(heading) or h2.get(heading) or ""
+        body = [l for l in strip_markup(sec).splitlines()
+                if l.strip() and not l.lstrip().startswith("#")]
+        absent = [k for k in keys if k not in "\n".join(body)]
+        if absent:
+            problems.append("%s(缺内容行:%s)" % (heading, "、".join(absent)))
+        elif len(body) < len(keys):
+            problems.append("%s(内容行 %d < 必需词 %d，疑似被概括掏空)" % (heading, len(body), len(keys)))
+    rep.add("A2", "关键小节内容行存在（%d 节；标题唯一 + 行数下限 + 必需词）" % len(SECTION_CONTENT),
+            FAIL, not problems,
+            "问题项：%s" % "；".join(problems[:6]) if problems
+            else "%d 个小节：标题唯一、行数达标、必需词齐全" % len(SECTION_CONTENT))
 
 
 def check_budget(rep):
@@ -415,23 +604,156 @@ def check_budget(rep):
                 "当前 %.1f KB（目标 ≤44KB；v8.0.0 = 54.7KB）" % kb)
 
 
+def check_canonical_enumerations(rep):
+    """A3（G3'）：**规范枚举顺序** —— 当某一行**完整包含**某个硬门要素集时，其顺序必须与规范一致。
+
+    为什么需要：审计发现「四项事实」在入口出现 **5 处**，存在**不一致风险**。
+    「删到 2 处」（原 G3）经 `REV-20261006-025` 证明**可达**（用**文件内指针**），
+    并**已于 v10.0.0 由用户决策 D7 执行**（见 `PLAN §1.3`；`SKILL.md` 现仅 2 处）。
+    本断言是配套的"把重复变成受守护的一致性"（**WARN 级**）。
+
+    ⚠️ **本判据经过两次收紧（过程留痕，勿当"一次写对"）**：
+      · v5 首版：凡同行出现 ≥2 个键 → 必须完整且同序。被 `REV-20261006-024` 抓到
+        **假红**（散文 `视觉起点与观察关系需一一对应。` 被判失败）。
+      · v5 第二版：加"相邻键之间只能是分隔符"的启发式 → 被 `REV-20261006-025` 抓到
+        **11 个反例**：顿号散文 / 括号 / **表格行**（`|` 被当分隔符）/ 全角逗号 → 假红；
+        全角 `＋` / `→` 当分隔符 → 假绿。**该启发式已被删除**。
+      · 现行版（第三版）：**不做任何分隔符猜测**，只处理"整行完整包含全部键"这一**无歧义**情形，
+        且**降级为 WARN**（不再阻塞构建）—— 宁可少报，不可误报。
+
+    判据（现行）：先把**整篇**的 HTML 注释剥掉、按行处理；若某行**包含全部**规范键，
+    则要求它们**按规范顺序**出现、且**每个键只出现一次**。
+    残余（如实声明）：**部分枚举**（少一个键）完全不在判据内（`A2` 只对 7 个受守护小节兜底）；
+    代码围栏内的整行枚举**算内容**（与 `A2` 的取舍一致）。
+    """
+    skill = strip_comments_whole(skill_text())          # 整篇剥注释 → 与 A2 判据一致（修跨行注释双标）
+    problems = []
+    for name, keys in ENUM_GUARDS.items():
+        for i, line in enumerate(skill.splitlines(), 1):
+            if not all(k in line for k in keys):
+                continue
+            pos = [line.find(k) for k in keys]
+            if pos != sorted(pos):
+                problems.append("L%d %s：顺序与规范不符" % (i, name))
+            elif len(set(pos)) != len(pos):
+                problems.append("L%d %s：有键重复出现" % (i, name))
+    rep.add("A3", "规范枚举顺序（%s；整行完整包含时校验）" % "／".join(ENUM_GUARDS), WARN,
+            not problems,
+            "问题项：%s" % "；".join(problems[:4]) if problems
+            else "所有「整行完整包含」处均按规范顺序")
+
+
+def heading_texts(skill):
+    """返回文档里所有 `##`–`######` 标题的文本（去掉 # 与首尾空白）。"""
+    return [m.group(1).strip() for m in re.finditer(r"(?m)^#{2,6}\s+(.*)$", skill)]
+
+
+def heading_spans(skill):
+    """返回按出现顺序的标题列表 `[(level, text, line_idx)]`（`##`–`######`）。"""
+    out = []
+    for i, line in enumerate(skill.splitlines()):
+        m = re.match(r"^(#{2,6})\s+(.*)$", line)
+        if m:
+            out.append((len(m.group(1)), m.group(2).strip(), i))
+    return out
+
+
+def check_pointer_resolution(rep):
+    """A4（TD-10）：**文件内指针的层级关系必须成立**。
+
+    背景（`REV-20261006-027` W2-a）：D7 重写时我写了指针 `见 §输出格式硬门 · 镜头自然段写法` ——
+    **字符串比对能过**，但那个「·」想表达的层级关系并不成立（`镜头自然段写法` 与
+    `每镜四项事实` 在 `SKILL.md` 里是**同级小节**）。**引用类断言此前只看"字符串是否出现"，
+    从不"实地走一遍"。**
+
+    指针语法：`见 §<主标题>`，可带 `· <子标题>` 表示"在**主标题范围内**的某个更深层级标题"。
+    （本判据匹配**任何包含该形状的文本**，因此 `参见 §X` / `详见 §X` 也会被检查 —— 这是有意的：
+    它们同样是指针。）
+
+    判据：
+      · `§<主标题>` 必须能匹配到**唯一**一个标题（按"标题文本包含"匹配，容忍 emoji/装饰）；
+        匹配 0 个 → 悬空引用；匹配 ≥2 个 → 歧义。
+      · 带 `· <子标题>` 时，该子标题必须①级别**比主标题更深** ②出现在**主标题的范围内**
+        （即主标题之后、下一个同级或更高级标题之前）。
+
+    ⚠️ **A4 不能保证"被指向的内容真的在那里"**（语义问题）：例如 `§输出格式硬门 · 镜头自然段写法`
+      在层级上**是成立的**（后者确实是前者的子节），所以原错位指针**仍会被 A4 判通过** ——
+      它错的是"定义并不在 `镜头自然段写法` 这一节里"，这超出字面判据能表达的范围。
+    作用域：只扫 **`SKILL.md`**。
+    """
+    skill = skill_text()
+    spans = heading_spans(skill)
+    problems = []
+    for i, line in enumerate(skill.splitlines(), 1):
+        for m in POINTER_RE.finditer(line):
+            main, sub = m.group(1), (m.group(2) or "").strip()
+            hit = [(idx, lvl, txt) for idx, (lvl, txt, _ln) in enumerate(spans) if main in txt]
+            if not hit:
+                problems.append("L%d 「§%s」无对应标题" % (i, main))
+                continue
+            if len(hit) > 1:
+                problems.append("L%d 「§%s」匹配 %d 个标题（歧义）" % (i, main, len(hit)))
+            if not sub:
+                continue
+            mi, mlvl, _mtxt = hit[0]
+            end = len(spans)
+            for j in range(mi + 1, len(spans)):
+                if spans[j][0] <= mlvl:
+                    end = j
+                    break
+            in_range = [t for (lvl, t, _ln) in spans[mi + 1:end] if lvl > mlvl and sub in t]
+            if not in_range:
+                problems.append("L%d 「§%s · %s」子标题不在主标题范围内的更深层级（疑似层级错位）"
+                                % (i, main, sub))
+    rep.add("A4", "文件内指针层级成立（见 §主 · 子）", FAIL, not problems,
+            "问题项：%s" % "；".join(problems[:4]) if problems
+            else "所有 `见 §…` 指针的主标题唯一、子标题层级成立")
+
+
+def trace(cid, what):
+    """G2（脚本执行可靠性）：把"执行到哪一步"打到 **stderr**（保住 stdout 契约），
+    并 flush —— 中断时最后一行 `[RUN ]` 就是断点。`--quiet` 时不打印。"""
+    if TRACE:
+        print("[RUN ] %-9s %s" % (cid, what), file=sys.stderr, flush=True)
+
+
 def main(argv=None):
+    global TRACE
+    if not os.path.isfile(os.path.join(ROOT, "SKILL.md")):
+        print("用法/环境错误：SKILL.md 不存在于 %s" % ROOT, file=sys.stderr)
+        return 2
     argv = list(sys.argv[1:] if argv is None else argv)
+    TRACE = "--quiet" not in argv
     rep = Report()
+    trace("V1–V4", "版本戳一致性（含 skill-card）")
     version = check_versions(rep)
+    trace("M1–M4", "元数据 / 来源合规")
     check_metadata(rep)
+    trace("L1", "相对路径引用（死链）")
     check_links(rep)
+    trace("I1–I3", "索引与加载表接线")
     check_index(rep)
+    trace("D1–D2", "逐字重复与契约区")
     check_duplication(rep)
+    trace("A1", "硬门锚点按节存在")
     check_anchors(rep)
+    trace("A2", "关键小节内容行")
+    check_section_content(rep)
+    trace("A3", "规范枚举一致性")
+    check_canonical_enumerations(rep)
+    trace("A4", "文件内指针层级成立")
+    check_pointer_resolution(rep)
+    trace("K1", "入口体积预算")
     check_budget(rep)
+    trace("—", "全部检查项执行完毕")
 
     if "--json" in argv:
         print(json.dumps({"version": version, "fail": len(rep.fails), "warn": len(rep.warns),
                           "items": rep.items}, ensure_ascii=False, indent=2))
     else:
         quiet = "--quiet" in argv
-        print("== seedancer 一致性检查 v3（权威版本：%s）" % version)
+        if not quiet:            # --quiet 的契约是"只保留 RESULT 行"（由 REV-20261006-029 D1 指出 banner 残留）
+            print("== seedancer 一致性检查 v5（权威版本：%s）" % version)
         for i in rep.items:
             if i["ok"] and quiet:
                 continue

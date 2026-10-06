@@ -1,4 +1,4 @@
-# Seedancer v9.0.2 — AIGC 影视导演操作系统
+# Seedancer v10.0.0 — AIGC 影视导演操作系统
 
 <p align="center">
   <a href="../README.md"><b>English</b></a> · <a href="README-cn.md">中文</a>
@@ -8,7 +8,7 @@
 
 **从剧本到成片的端到端智能制片管线**
 
-[![版本](https://img.shields.io/badge/version-9.0.2-blue.svg)](https://github.com/taosiuman/seedancer/releases)
+[![版本](https://img.shields.io/badge/version-10.0.0-blue.svg)](https://github.com/taosiuman/seedancer/releases)
 [![许可](https://img.shields.io/badge/license-MIT-green.svg)](../LICENSE)
 
 [![Seedance](https://img.shields.io/badge/Seedance-2.5-purple.svg)](https://seedance.ai)
@@ -23,9 +23,20 @@
 
 **Seedancer** 不是一个提示词生成器，而是一套**导演级 AI 影视制片操作系统**——完整的导演工作流引擎。
 
-它将剧本自动转化为生产级视频提示词，内置 **12 大门控系统**、**10 大核心模块**、**30+ 参考文档**，覆盖从项目预生产到最终交付的全流程自动化。
+它将剧本自动转化为生产级视频提示词，内置 **12 大门控系统**、**10 大核心模块**、**48 参考文档**，覆盖从项目预生产到最终交付的全流程自动化。
 
-### ✨ v8.0.0 新增
+### ✨ v10.0.0 新增
+
+**检查器硬化版（MAJOR）**——不改创作语义（详见 `CHANGELOG.md`）：
+
+| 变化 | 说明 |
+|------|------|
+| 🔬 **检查器 16 → 19 项** | `A2`（**阻塞**：7 个关键小节的**内容行**必须存在）、`A3`（WARN：规范枚举顺序）、`A4`（**阻塞**：文件内指针层级成立） |
+| 🧾 **G2 可断点** | 每个检查组开跑前向 stderr 打 `[RUN ] …`，中断可见断点 |
+| 🧹 **入口规则改名（迁移必读）** | 「四项事实」在入口 **5 处 → 2 处**；三处规则名改为「每镜必要条件」并加文件内指针。**四要素与硬门语义未变** |
+| 🧪 **攻击测试** | **31 必拦场景 + 7 类合法写法 + 24 类已知漏检**，在临时副本上变异 |
+
+### 📜 历史：v8.0.0 新增
 
 整合三大开源技能，新增 **5 大导演系统**：
 
@@ -196,7 +207,7 @@
 
 ---
 
-## 📁 参考文档 (30+)
+## 📁 参考文档 (48)
 
 ```
 references/
@@ -266,7 +277,7 @@ references/
 
 <div align="center">
 
-**🎬 Seedancer v9.0.2 — 从剧本到成片的端到端智能制片管线**
+**🎬 Seedancer v10.0.0 — 从剧本到成片的端到端智能制片管线**
 
 *Made with ❤️ for AI filmmakers*
 

@@ -160,7 +160,7 @@ Style & Mood: ... Dynamic Description: A man (<<<image_1>>>) walks through the f
 
 两种语言均**不按年龄**描述角色。
 
-**规避的触发词**：
+**需要替换以提升模型理解的词**（**不用于规避安全策略**）：
 - EN: boy, girl, child, kid, young, teen, little
 - ZH: 男孩, 女孩, 孩子, 少年, 少女, 小孩, 年轻
 

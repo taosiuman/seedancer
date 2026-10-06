@@ -3,7 +3,7 @@ name: seedancer
 description: "AI film production pipeline — generates structured video prompts for AI video generators (Seedance/Kling/Veo/Wan). Includes script analysis, camera-emotion sync, performance micro-beats, lighting rules, and 30+ reference docs. Primarily Chinese-language skill targeting Chinese AIGC video platforms. English speakers: see README.md. Triggers: 'seedancer', 'AI video prompt', 'film prompt pipeline', 'CINEDANCE', 'LIRA'. NOT for: general video generation requests, image generation, or non-AI filmmaking."
 license: MIT-0
 author: taosiuman
-version: 9.0.0
+version: 9.0.1
 tags: [seedance, video-generation, prompt-engineering, filmmaking, ai-director, seedance-2.5, cinedance, lira, acting, geo-spatial, aigc, multi-model, pre-production, character-assets, emotion-curve]
 platforms: [jimeng, doubao, volcano-engine, kling, veo]
 attribution: |
@@ -11,7 +11,7 @@ attribution: |
   来源：seedance-2-prompt-engineering-skill · Emily2040/seedance-2.0 · ifeihong/aigc-film-studio · chaoge-assets-trial · seedance20-video-prompts · shotlist-builder · seedance-director · hellgrind
 ---
 
-# Seedancer v9.0.0 — AIGC 影视导演操作系统
+# Seedancer v9.0.1 — AIGC 影视导演操作系统
 
 > 从**剧本解析**到**预生产资产**到**分镜生成**到**成片交付**的端到端制片操作系统。v7.0.0 新增 **五大导演系统**（整合自 shotlist-builder + seedance-director + hellgrind）：场景原型路由 + 摄影机-情绪同步 + 表演微节拍目录 + JSON API 输出模式 + 光源规则系统。保留 P0-P2 预生产管线 + 五大硬门系统（v6.0.0）+ CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 38 码。支持多模型（Seedance 2.5/Kling/Veo/GPT Image 2/NBP/Seedream），五类交付物标准化输出。
 
@@ -676,6 +676,21 @@ hard stops：并发上限按平台档位；退避必须有上限；限流触发�
 
 ### 门控 6: 安全门控 (Safety Gate)
 
+**🔴 安全与数据边界（v9.0.1 新增，优先级最高，先于本节其它检查）**
+
+涉及**真人素材**（照片/视频/声纹等）时，**必须先过 `references/asset-whitelist.md` §0 的四项确认**：
+① **权利与同意**（本人同意；未成年须监护人）② **授权范围**（用途/期限/地域/是否允许二次训练）
+③ **数据边界**（传哪些文件、给哪个外部服务、是否必须出本机）④ **留存与撤回**（留存期限/删除方式/撤回路径）。
+
+**未过四项确认，不得把素材上传到任何外部服务。**
+
+- 未成年人 / 公众人物 / 未授权第三方 / 证件·医疗·私密影像：**默认拒绝上传**，需用户明示授权。
+- **数据最小化**：只传必需素材、剥离元数据、优先脱敏或 AI 生成替代。
+- **禁止规避平台机制**：不得用同义词替换、变形、切片、改元数据等方式绕过平台安全/审核/合规；
+  被拦截时**按要求修改内容或停止**，并如实告知用户。
+- **留痕**：四项确认结果记入项目工作台；交付说明列出「传了什么、给了谁、留多久、怎么撤回」。
+
+
 涉及 IP、肖像、品牌、真实人物 → 先处理安全问题再生成。
 
 ### 门控 7: 提示词构建 (Prompt Build)
@@ -957,4 +972,4 @@ hard stops：并发上限按平台档位；退避必须有上限；限流触发�
 四张检查清单（预生产 / 硬门 / 提示词构建 / 生成后评估）**统一收在 `references/qa-checklists.md`**，
 并按 Part A–E 组织（含 v9 新增的工程侧清单）。出片前逐部分过，不要凭记忆。
 
-**🎬 Seedancer v9.0.0 — 从剧本到成片的端到端制片操作系统。P0-P2 预生产管线 + 五大硬门系统 + 五大导演系统 + CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 38 码。多模型支持（Seedance 2.5/2.0 Mini/Kling 3.0/Veo 3.1/MiniMax H3/Wan 3.0），五类交付物。**
+**🎬 Seedancer v9.0.1 — 从剧本到成片的端到端制片操作系统。P0-P2 预生产管线 + 五大硬门系统 + 五大导演系统 + CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 38 码。多模型支持（Seedance 2.5/2.0 Mini/Kling 3.0/Veo 3.1/MiniMax H3/Wan 3.0），五类交付物。**

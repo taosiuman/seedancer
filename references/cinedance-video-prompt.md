@@ -346,7 +346,8 @@ Locked-off tripod, perfectly still — no handheld, no push, no zoom, no reframe
 . 动作只用**肯定式**——模型忽略 `does NOT fall on his back`，甚至反着做；写 `falls on his stomach`
 2. 角色从**第一帧就在画面里**；除非要求，绝不看镜头
 3. **角色外貌用视觉特征描述**——用体型、服装、发型、步态代替数字年龄（如 `a teenager` → `a lanky figure in an oversized school blazer, round face, short messy hair`）。视频模型对数字年龄不敏感，但对外貌视觉特征敏感。这也是避免生成内容被平台内容策略误判的有效做法。
-4. 维护**模型友好词汇表**（视频模型对某些词响应差或有副作用）：`dark` → `low key lighting`；`jolting` → `rapid handheld motion`。这些替换让模型更准确地理解意图，而非规避安全策略。
+4. 维护**模型友好词汇表**（视频模型对某些词响应差或有副作用）：`dark` → `low key lighting`；`jolting` → `rapid handheld motion`。**这些替换只用于让模型更准确地理解创作意图**：`dark` 与 `low key lighting` 描述的是同一件事，只是后者对模型更明确。
+⚠️ **合规边界（v9.0.1 强化）**：**不得**用词表替换规避平台的安全、审核或合规机制；若某词汇被平台安全策略拦截，必须按平台提示**修改创作内容或停止**，不得换同义词绕过。
 
 **状态非过渡**：描述角色**已在**动作状态——mid-throw、mid-punch、mid-pace、mid-argument——而非到达的过程。
 

@@ -1,3 +1,33 @@
+# Seedancer v9.0.2 更新日志
+
+_发布日期：2026-10-06_
+
+> **定位**：元数据一致性修复（PATCH）—— **不改创作语义**。
+
+## 🔧 针对平台评审与发布复盘的修复
+
+ClawHub 安全评审的 `[SDI-1] unexpected`（v9.0.1 遗留一条）与 v9.0.1 发布复盘各指出一处问题，本版处置：
+
+### 1. 消除 frontmatter 与图像能力的表述矛盾（`[SDI-1]`）
+- `SKILL.md` frontmatter 原写 `NOT for: ... image generation`，但技能核心含 **LIRA 图像提示词系统**、
+  角色/道具**资产生图提示词**、**图像模型路由**（GPT Image 2 / Seedream 5.0 Pro）—— 声明与能力自相矛盾
+- 改为：`NOT for: general-purpose video or image generation requests (this skill produces prompts and plans,
+  not the media itself), or non-AI filmmaking.` —— 明确"产出提示词/计划，不产出媒体本身"
+- 描述同步补全图像侧能力（asset image prompts / LIRA）与模型清单
+
+### 2. `skill-card.md` 元数据漂移修复
+- 版本戳 `9.0.0` → `9.0.2`（此前未随 v9.0.0 / v9.0.1 更新）
+- Publisher `dandysuper`（上游原作者）→ `taosiuman`（本技能当前发布者）
+- Description / Use Case / Output / Known Risks / Reference 对齐当前技能能力与安全整改
+  （补"真人素材同意 + 留存"风险项，指向 `references/asset-whitelist.md` §0）
+
+### 3. 一致性检查器 v2 → v3
+- 新增 **V3**：`skill-card.md` 的「Skill Version(s)」必须 == 权威版本
+- 新增 **V4**：`skill-card.md` 的 Publisher 必须 == `_meta.json` 的 `author`
+- （此前 `skill-card.md` 是 `V1` 的已知盲区；现已明确覆盖）
+
+---
+
 # Seedancer v9.0.1 更新日志
 
 _发布日期：2026-10-06_

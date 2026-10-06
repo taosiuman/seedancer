@@ -52,6 +52,7 @@
 | S6 | **按 `REV-20261005-009/010/011` 整改**：恢复 4 处丢失内容（`model-catalog.md` 新建、v7.1.0/v7.0.4 日志、提示词构建清单）；20 条加载行写进真实操作段落（取消 `(未定位)` 兜底）；**检查器重写为 v2**（M3 JSON 精确比较、M4 由 `_meta.upstream_sources` 推导、I1/I2/I3 集合精确 + 触发真实性、D1 修计量、**新增 A1 硬门锚点 28 条**、D2 契约锚点校验）；接入父仓库 CI | `seedancer_consistency_s6*.out` |
 
 > **S6 复查基线**：`scripts/check_consistency.py` v2 = **14 项全绿**（唯一 WARN 为 K1 体积 42.1KB vs 目标 32KB）。
+> **v9.0.2 复查基线**：`scripts/check_consistency.py` v3 = **16 项全绿（0 FAIL / 0 WARN）**，入口 42.6 KB。
 
 ## 3.1 检查器版本史
 
@@ -59,6 +60,7 @@
 | --- | --- |
 | v1 | 11 项；被 `REV-20261005-010` 证明 M3 空转、I1 与文档矛盾（OR）、I3 子串可骗、D1 计量错、白名单可包整份文档 |
 | **v2** | 14 项；上述 5 处全部重写为**精确断言**；新增 `A1`（28 条硬门锚点）与 `D2`（契约区锚点在目标文件逐字存在） |
+| **v3** | 16 项；新增 `V3`（`skill-card.md` 版本戳 == 权威版本）与 `V4`（`skill-card.md` Publisher == `_meta.json.author`），补齐 `skill-card.md` 此前作为 V1 盲区的缺口（v9.0.2） |
 
 ## 3. 未决
 

@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""check_consistency.py — seedancer 一致性 + 硬门检查器（v2，零依赖）
+"""check_consistency.py — seedancer 一致性 + 硬门检查器（v3，零依赖）
+
+v3 相对 v2 的新增（依据 ClawHub 安全评审 [SDI-1] 与 v9.0.1 发布复盘）：
+  · V3  skill-card.md 的「Skill Version(s)」字段必须 == 权威版本（v2 的已知盲区）
+  · V4  skill-card.md 的 Publisher 必须 == _meta.json 的 author
 
 v2 相对 v1 的修复（依据 REV-20261005-010 的"假绿"清单）：
   · M3  改用 json.loads 按键精确比较（v1 对 JSON 格式的 _meta.json 完全空转）
@@ -21,6 +25,7 @@ v2 相对 v1 的修复（依据 REV-20261005-010 的"假绿"清单）：
 已知限制（如实声明，勿当成"已覆盖"）：
   · V1 只比对**版本戳**（_meta/VERSION/frontmatter/标题戳/末戳/徽章/CHANGELOG），
     **不覆盖** COMPAT.md、release-notes.md、references/ 内页脚 —— 这些位置仍可能残留旧版本号
+    （skill-card.md 自 v3 起改由 V3/V4 覆盖，不再属于 V1 盲区）
   · M4 为**单向**（_meta.upstream_sources ⊆ LICENSE）；LICENSE 多出的来源不会被报出
   · I1/I2/I3 依赖**表格格式**（首列为触发时机、次列反引号文件名）；换格式会误报
   · D1 只比 SKILL.md ↔ references，reference 之间互抄不查；且为 WARN 级
@@ -165,6 +170,27 @@ def check_versions(rep):
     rep.add("V2", "CHANGELOG 有当前版本的结构化条目", FAIL, bool(pat.search(ch)),
             "未找到形如 '# Seedancer v%s 更新日志' 或表格行的条目" % authority if not pat.search(ch)
             else "已找到结构化条目")
+    # V3/V4：skill-card.md 的版本戳与 Publisher 必须与权威元数据一致
+    # （v3 新增；此前 skill-card.md 是 V1 的已知盲区 —— 见文件头"已知限制"）
+    sc_p = os.path.join(ROOT, "skill-card.md")
+    if os.path.isfile(sc_p):
+        sc = read(sc_p)
+        mv = re.search(r"^##\s*Skill Version\(s\):[^\n]*\n(.+)$", sc, re.M)
+        vm = re.search(r"(\d+\.\d+\.\d+)", mv.group(1)) if mv else None
+        got_v = vm.group(1) if vm else "(未找到)"
+        rep.add("V3", "skill-card.md 版本戳 == 权威版本", FAIL, got_v == authority,
+                "skill-card.md 版本=%s vs 权威=%s" % (got_v, authority) if got_v != authority
+                else "skill-card.md 版本一致（%s）" % got_v)
+        author = str(meta.get("author", "")).strip()
+        pub = sc.split("## Publisher:", 1)[1].split("###", 1)[0] if "## Publisher:" in sc else ""
+        pm = re.search(r"clawhub\.ai/user/([A-Za-z0-9_\-]+)", pub)
+        got_p = pm.group(1) if pm else "(未找到)"
+        rep.add("V4", "skill-card.md Publisher == _meta.json author", FAIL,
+                bool(author) and got_p == author,
+                "publisher=%s vs author=%s" % (got_p, author) if got_p != author
+                else "Publisher 一致（%s）" % got_p)
+    else:
+        rep.add("V3", "skill-card.md 版本戳 == 权威版本", FAIL, False, "skill-card.md 不存在")
     return authority
 
 
@@ -405,7 +431,7 @@ def main(argv=None):
                           "items": rep.items}, ensure_ascii=False, indent=2))
     else:
         quiet = "--quiet" in argv
-        print("== seedancer 一致性检查 v2（权威版本：%s）" % version)
+        print("== seedancer 一致性检查 v3（权威版本：%s）" % version)
         for i in rep.items:
             if i["ok"] and quiet:
                 continue

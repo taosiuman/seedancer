@@ -1,4 +1,4 @@
-# Seedancer v9.0.1 — AIGC 影视导演操作系统
+# Seedancer v9.0.2 — AIGC 影视导演操作系统
 
 <p align="center">
   <a href="../README.md"><b>English</b></a> · <a href="README-cn.md">中文</a>
@@ -8,7 +8,7 @@
 
 **从剧本到成片的端到端智能制片管线**
 
-[![版本](https://img.shields.io/badge/version-9.0.1-blue.svg)](https://github.com/taosiuman/seedancer/releases)
+[![版本](https://img.shields.io/badge/version-9.0.2-blue.svg)](https://github.com/taosiuman/seedancer/releases)
 [![许可](https://img.shields.io/badge/license-MIT-green.svg)](../LICENSE)
 
 [![Seedance](https://img.shields.io/badge/Seedance-2.5-purple.svg)](https://seedance.ai)
@@ -266,7 +266,7 @@ references/
 
 <div align="center">
 
-**🎬 Seedancer v9.0.1 — 从剧本到成片的端到端智能制片管线**
+**🎬 Seedancer v9.0.2 — 从剧本到成片的端到端智能制片管线**
 
 *Made with ❤️ for AI filmmakers*
 

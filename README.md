@@ -1,4 +1,4 @@
-# Seedancer v9.0.1 — AI Film Director Operating System
+# Seedancer v9.0.2 — AI Film Director Operating System
 
 <p align="center">
   <a href="README.md"><b>English</b></a> · <a href="docs/README-cn.md">中文</a>
@@ -8,7 +8,7 @@
 
 **From Script to Screen — End-to-End AI Film Production Pipeline**
 
-[![Version](https://img.shields.io/badge/version-9.0.1-blue.svg)](https://github.com/taosiuman/seedancer/releases)
+[![Version](https://img.shields.io/badge/version-9.0.2-blue.svg)](https://github.com/taosiuman/seedancer/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
 [![Seedance](https://img.shields.io/badge/Seedance-2.5-purple.svg)](https://seedance.ai)
@@ -266,7 +266,7 @@ Full attribution: [LICENSE](LICENSE)
 
 <div align="center">
 
-**🎬 Seedancer v9.0.1 — Where Scripts Become Frames**
+**🎬 Seedancer v9.0.2 — Where Scripts Become Frames**
 
 *Made with ❤️ for AI filmmakers*
 

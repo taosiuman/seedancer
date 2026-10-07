@@ -31,7 +31,7 @@ attribution: |
 
 ---
 
-## 🆕 v7.0.0 — 五大导演系统
+## v7.0.0 — 五大导演系统
 
 | 系统 | 一句话 | 详述 |
 | --- | --- | --- |
@@ -158,7 +158,7 @@ P0A 展示后固定询问：
 ---
 📎 加载：`references/prop-assets.md`（P2b 关键道具母板 阶段必须读）
 
-## 🆕 台词容量预检系统
+## 台词容量预检系统
 
 > 完整规则：`references/dialogue-capacity.md`
 
@@ -191,7 +191,7 @@ P0A 展示后固定询问：
 
 ---
 
-## 🆕 分组硬门
+## 分组硬门
 
 > 完整规则：`references/grouping-density.md`
 
@@ -233,7 +233,7 @@ P0A 展示后固定询问：
 
 ---
 
-## 🆕 镜头密度四道门
+## 镜头密度四道门
 
 > 完整规则：`references/grouping-density.md`
 
@@ -311,21 +311,6 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 
 ---
 
-## Language Policy / 语言政策
-
-**This skill is primarily designed for Chinese-language AIGC video platforms (Seedance/Kling/Wan).**
-
-| 用户输入语言 | 提示词语言 | 说明文字语言 |
-|---|---|---|
-| 中文 | **中文** | 中文 |
-| 英文 | **英文** | 英文 |
-| 日文 | **日文** | 日文 |
-| 其他语言 | 英文 | 英文 |
-
-**Note**: All reference documents are currently in Chinese only. English speakers should refer to README.md for overview. For other languages, the system will default to English prompts.
-
----
-
 ## 语言路由
 
 > **Language Notice**: This skill's reference documents are primarily in Chinese. English speakers: see README.md for overview. The skill supports generating prompts in multiple languages based on user input.
@@ -343,7 +328,7 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 
 ---
 
-## 🆕 运镜设计系统
+## 运镜设计系统
 
 > 完整规则：`references/camera-design.md`
 📎 加载：`references/camera-and-styles.md`（运镜设计 阶段必须读）
@@ -373,7 +358,7 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 
 ---
 
-## 🆕 输出格式硬门
+## 输出格式硬门
 
 > 完整规则：`references/output-format.md`
 
@@ -457,7 +442,7 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 
 ---
 
-## 🆕 空间与人物指代硬门
+## 空间与人物指代硬门
 
 > 完整规则：`references/output-format.md`
 
@@ -487,7 +472,7 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 
 ---
 
-## 🆕 媒介翻译表
+## 媒介翻译表
 
 | 媒介 | 内部推演 | 正文输出 |
 |---|---|---|
@@ -500,7 +485,7 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 
 ---
 
-## 🆕 体量控制
+## 体量控制
 
 - 每组不超过 **1800 汉字**
 - 每镜只承担一个主要目的
@@ -525,11 +510,11 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 | 多出人物/克隆家具 | `F-DUP-SUBJECT` / `F-PROP-DUP` | 约束缺失 | EXACT N + POSITIVE CONSTRAINTS |
 | 自带配乐 | `F-AUDIO-POLLUTION` | 缺 `SFX only. No music.` | 技术标签收尾 |
 | 模型自创台词 | `F-DIALOGUE-TEXT` | 缺硬封锁 | 引号内台词 + 静默约束 |
-| 🆕 台词被压缩/语速不合理 | `F-DIALOGUE-CAPACITY` | 未做容量预检 | `dialogue-capacity.md` |
-| 🆕 组尾不稳定/承接断裂 | `F-GROUP-CONTINUITY` | 未遵守承接等式 | `grouping-density.md` |
-| 🆕 密度不足/空档过长 | `F-DENSITY` | 未过四道门 | `grouping-density.md` |
-| 🆕 隐藏切镜 | `F-HIDDEN-CUT` | 单镜内多视点 | `grouping-density.md` |
-| 🆕 模糊方位/代词指代 | `F-SPATIAL-VAGUE` | 未遵守硬门 | `output-format.md` |
+| 台词被压缩/语速不合理 | `F-DIALOGUE-CAPACITY` | 未做容量预检 | `dialogue-capacity.md` |
+| 组尾不稳定/承接断裂 | `F-GROUP-CONTINUITY` | 未遵守承接等式 | `grouping-density.md` |
+| 密度不足/空档过长 | `F-DENSITY` | 未过四道门 | `grouping-density.md` |
+| 隐藏切镜 | `F-HIDDEN-CUT` | 单镜内多视点 | `grouping-density.md` |
+| 模糊方位/代词指代 | `F-SPATIAL-VAGUE` | 未遵守硬门 | `output-format.md` |
 
 完整诊断：`references/failure-codes.md`（6 类 38 码 + 责任层决策树）
 
@@ -543,32 +528,30 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 3. **一次只改一处。** 提示词是工作机；整段重写会丢掉已生效的部分。
 4. **给模型更少自由。** 用角落不用房间、用锚点不用空场、用地图不用猜、一镜一动作。
 5. **镜头不行就简化镜头，不简化文字。** 拆成两镜、删动作、换角度。
-6. 🆕 **台词先算再写。** 台词容量预检不过，不进入分镜。
-7. 🆕 **组尾必须稳定。** 承接等式不成立，不进入下一组。
-8. 🆕 **密度必须达标。** 四道门不过，不交付。
-9. 🆕 **禁止代词和模糊方位。** 正文出现代词或模糊方位，立即修正。
+6. **台词先算再写。** 台词容量预检不过，不进入分镜。
+7. **组尾必须稳定。** 承接等式不成立，不进入下一组。
+8. **密度必须达标。** 四道门不过，不交付。
+9. **禁止代词和模糊方位。** 正文出现代词或模糊方位，立即修正。
 
 ---
 
-## 🆕 新模型能力速览
+## 新模型能力速览
 
 各模型能力差异见 `references/model-mechanics.md`（模型机制与能力矩阵）。
 
-## 🆕 并发控制协议 (v8.0.0)
+## 并发控制协议
 
 **批量并发生成时，必须先加载 `references/concurrency-control.md`**（并发表、令牌桶、指数退避、
 限流保护的完整实现均在该文件；本入口不重复）。
 
 hard stops：并发上限按平台档位；退避必须有上限；限流触发即降速而非重试风暴。
 
-## 多模型支持
-
-### 🆕 进度状态查询协议 (v8.0.0)
+### 进度状态查询协议
 
 **批量执行期间查询进度：加载 `references/progress-query.md`**（三种查询接口、状态定义、
 实时更新机制在该文件）。
 
-## 🆕 模型自动选择系统 (v8.0.0)
+## 模型自动选择系统
 
 > 借鉴 ShotFunClaw `task-selector.js` 设计，基于场景/预算/能力自动推荐模型。
 
@@ -697,7 +680,7 @@ hard stops：并发上限按平台档位；退避必须有上限；限流触发�
 
 使用 **CINEDANCE 16-block 架构**。
 
-### 🆕 门控 7A: 台词容量预检 (Dialogue Capacity Gate)
+### 门控 7A: 台词容量预检 (Dialogue Capacity Gate)
 
 **加载**：`references/dialogue-capacity.md`
 
@@ -711,7 +694,7 @@ hard stops：并发上限按平台档位；退避必须有上限；限流触发�
 
 **铁律**：不过此门，不进入分镜写作。
 
-### 🆕 门控 7B: 分组与密度门控 (Grouping & Density Gate)
+### 门控 7B: 分组与密度门控 (Grouping & Density Gate)
 
 **加载**：`references/grouping-density.md`
 
@@ -733,11 +716,11 @@ hard stops：并发上限按平台档位；退避必须有上限；限流触发�
 - **单变量检查** — 每次只改一个东西
 - **预算检查** — 这个镜头值得再试一次吗？
 - **错误码诊断** — 用 `references/failure-codes.md` 命名问题
-- 🆕 **代词检查** — 正文是否有我/你/他/她（引号内豁免）
-- 🆕 **方位检查** — 是否有模糊方位词
-- 🆕 **每镜必要条件检查** — 每镜是否写全必要条件（定义见 §输出格式硬门）
-- 🆕 **运镜三要素检查** — 主动运镜是否有起始+轨迹+停止
-- 🆕 **时间码检查** — 是否整数、连续、不重叠、末镜结束=组时长
+- **代词检查** — 正文是否有我/你/他/她（引号内豁免）
+- **方位检查** — 是否有模糊方位词
+- **每镜必要条件检查** — 每镜是否写全必要条件（定义见 §输出格式硬门）
+- **运镜三要素检查** — 主动运镜是否有起始+轨迹+停止
+- **时间码检查** — 是否整数、连续、不重叠、末镜结束=组时长
 
 ---
 📎 加载：`references/anti-slop-lexicon.md`（质量检查 阶段必须读）
@@ -771,12 +754,12 @@ hard stops：并发上限按平台档位；退避必须有上限；限流触发�
 📝 文字渲染：[需要出现的文字内容 + 位置 + 字体风格]
 🗺️ GEO 空间锁定：[GEO SPATIAL LAYOUT，每场景写一次逐镜粘贴]
 🎨 Style Prefix：[逐字粘贴到每个提示词末尾]
-🆕 🎯 运镜主轴：[稳定观察/逐渐逼近/逐渐疏离/跟随行动/空间揭示/群像压迫]
+🎯 运镜主轴：[稳定观察/逐渐逼近/逐渐疏离/跟随行动/空间揭示/群像压迫]
 ━━━━━━━━━━━━━━━━━━━━━
 ```
 📎 加载：`references/geo-spatial-layout.md`（阶段四：全局基础设定 阶段必须读）
 
-### 阶段五：时间片分镜脚本 — 🆕 硬门强化
+### 阶段五：时间片分镜脚本 — 硬门强化
 
 > 本阶段整合 Elio V2.3 的分组硬门、密度门控、运镜设计、输出格式。
 > 加载：`dialogue-capacity.md` + `grouping-density.md` + `camera-design.md` + `output-format.md`
@@ -840,7 +823,7 @@ hard stops：并发上限按平台档位；退避必须有上限；限流触发�
 4.  FIRST FRAME & SPATIAL BLOCKING — 第一帧谁站哪
 5.  FORMAT MODE           — 单镜 or 硬切、时长
 6.  OPTICS                — 镜头（FOV 对角线视角）+ 对焦计划
-7.  CAMERA                — 摄影机怎么动（🆕 整合运镜设计系统）
+7.  CAMERA                — 摄影机怎么动（整合运镜设计系统）
 8.  ACTION TIMING         — 动作逐拍、按秒
 9.  PHYSICS               — 重量、接触、一切运动的惯性
 10. LIGHTING              — 单一光源逻辑
@@ -889,8 +872,8 @@ hard stops：并发上限按平台档位；退避必须有上限；限流触发�
 2. 情绪连续性检测
 3. 物理连续性检测
 4. 口型与台词一致性检测
-5. 🆕 **台词容量检测** — 最低时长是否超过组时长
-6. 🆕 **密度与承接检测** — 四道门是否通过、承接等式是否成立
+5. **台词容量检测** — 最低时长是否超过组时长
+6. **密度与承接检测** — 四道门是否通过、承接等式是否成立
 
 ---
 
@@ -925,7 +908,7 @@ hard stops：并发上限按平台档位；退避必须有上限；限流触发�
 
 ---
 
-## Seedance 2.5 平台限额速查
+## 平台限额（见权威文件）
 
 限额、模式与配方**以 `references/modes-and-recipes.md` 为唯一权威**（本入口不再重复维护数字）。
 
@@ -937,16 +920,16 @@ hard stops：并发上限按平台档位；退避必须有上限；限流触发�
 
 | 门控 / 阶段（触发时机） | 必须加载 |
 | --- | --- |
-| 🆕 v7.0.0 — 五大导演系统 | `camera-emotion-sync.md`、`json-api-mode.md`、`lighting-rules.md`、`performance-micro-beats.md`、`scene-prototypes.md` |
+| v7.0.0 — 五大导演系统 | `camera-emotion-sync.md`、`json-api-mode.md`、`lighting-rules.md`、`performance-micro-beats.md`、`scene-prototypes.md` |
 | 硬门总览 | `camera-design.md`、`dialogue-capacity.md`、`grouping-density.md`、`output-format.md` |
 | P0-P2 五大阶段 | `character-assets.md`、`creative-baseline.md`、`emotion-curve.md`、`prop-assets.md`、`story-analysis.md` |
 | P0 项目接收（自动执行） | `project-workbench.md` |
 | P1 创作基准 | `visual-bible.md` |
-| 🆕 运镜设计系统 | `camera-and-styles.md` |
+| 运镜设计系统 | `camera-and-styles.md` |
 | 失败现象对照表 | `acting-performance.md`、`failure-codes.md`、`geo-spatial-layout.md`、`lira-image-prompt.md` |
-| 🆕 新模型能力速览 | `model-mechanics.md` |
-| 🆕 并发控制协议 (v8.0.0) | `concurrency-control.md` |
-| 🆕 进度状态查询协议 (v8.0.0) | `progress-query.md` |
+| 新模型能力速览 | `model-mechanics.md` |
+| 并发控制协议 | `concurrency-control.md` |
+| 进度状态查询协议 | `progress-query.md` |
 | 视频 / 图像生成模型 | `model-catalog.md`、`modes-and-recipes.md`、`recipes.md` |
 | 运营循环 (Operating Loop) | `checkpoint-resume.md` |
 | 门控 3: 模式选择 (Mode Gate) | `execution-modes.md` |
@@ -954,22 +937,16 @@ hard stops：并发上限按平台档位；退避必须有上限；限流触发�
 | 门控 8: 质量检查 (Quality Pass) | `ai-self-check-repair.md`、`anti-slop-lexicon.md`、`cost-gates.md`、`eight-item-self-check.md`、`qa-strict-gates.md` |
 | 阶段二：导演交互 — 🔴 不可跳过 | `ai-director.md` |
 | 阶段三：资产变量表建立 | `reference-role-map.md` |
-| 阶段五：时间片分镜脚本 — 🆕 硬门强化 | `cinedance-video-prompt.md`、`shared-boundary-storyboard.md` |
+| 阶段五：时间片分镜脚本 — 硬门强化 | `cinedance-video-prompt.md`、`shared-boundary-storyboard.md` |
 | 阶段七：生成后评估与迭代（重拍协议） | `retake-protocol.md`、`structured-failure-report.md`、`video-analysis-pipeline.md` |
 | 阶段八：序列项目管理 | `continuation-handoff.md`、`sequence-project-state.md` |
 | Style Prefix | `style-prefix.md` |
 | 交付物体系 | `content-fingerprint.md`、`deliverable-system.md` |
-| 快速参考（检查清单） | `qa-checklists.md` |
+| 文档导航 | `qa-checklists.md` |
 
 > 维护：新增 reference 必须同时登记本表与 `references/INDEX.md`（`scripts/check_consistency.py` 的 `I1`/`I2`/`I3` 精确断言）。
 
-## 变更日志
+## 文档导航
 
-完整版本历史见 **`CHANGELOG.md`**（唯一权威）；v7.x 时期发布说明存档见 `release-notes.md`。
-
-## 快速参考（检查清单）
-
-四张检查清单（预生产 / 硬门 / 提示词构建 / 生成后评估）**统一收在 `references/qa-checklists.md`**，
-并按 Part A–E 组织（含 v9 新增的工程侧清单）。出片前逐部分过，不要凭记忆。
-
-**🎬 Seedancer v10.0.0 — 从剧本到成片的端到端制片操作系统。P0-P2 预生产管线 + 五大硬门系统 + 五大导演系统 + CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 38 码。多模型支持（Seedance 2.5/2.0 Mini/Kling 3.0/Veo 3.1/MiniMax H3/Wan 3.0），五类交付物。**
+- 完整版本历史见 **`CHANGELOG.md`**（唯一权威）
+- 四张检查清单（预生产 / 硬门 / 提示词构建 / 生成后评估）统一收在 `references/qa-checklists.md`，按 Part A–E 组织。出片前逐部分过，不要凭记忆。

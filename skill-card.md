@@ -39,7 +39,7 @@ Mitigation: Use original names, generic visual descriptions, explicit negative c
 **Other Properties Related to Output:** [Chinese-first; supports bilingual prompt output; produces mode selection, asset mapping, timecoded prompt beats, negative constraints, and generation settings.] <br>
 
 ## Skill Version(s): <br>
-10.0.0（本目录所载版本；上游来源版本见 LICENSE） (source: frontmatter, VERSION, ClawHub release) <br>
+10.0.1（本目录所载版本；上游来源版本见 LICENSE） (source: frontmatter, VERSION, ClawHub release) <br>
 
 ## Ethical Considerations: <br>
 Users should evaluate whether this skill is appropriate for their environment, review any generated or modified files before relying on them, and apply their organization's safety, security, and compliance requirements before deployment. <br>

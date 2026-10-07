@@ -3,7 +3,7 @@ name: seedancer
 description: "AI film production pipeline — turns scripts into structured shot plans and generation prompts for AI video and image platforms (Seedance/Kling/Veo/Wan/GPT Image/Seedream). Includes script analysis, camera-emotion sync, performance micro-beats, lighting rules, asset image prompts (LIRA), and 30+ reference docs. Primarily Chinese-language skill targeting Chinese AIGC platforms. English speakers: see README.md. Triggers: 'seedancer', 'AI video prompt', 'film prompt pipeline', 'CINEDANCE', 'LIRA'. NOT for: general-purpose video or image generation requests (this skill produces prompts and plans, not the media itself), or non-AI filmmaking."
 license: MIT-0
 author: taosiuman
-version: 10.0.0
+version: 10.0.1
 tags: [seedance, video-generation, prompt-engineering, filmmaking, ai-director, seedance-2.5, cinedance, lira, acting, geo-spatial, aigc, multi-model, pre-production, character-assets, emotion-curve]
 platforms: [jimeng, doubao, volcano-engine, kling, veo]
 attribution: |
@@ -11,7 +11,7 @@ attribution: |
   来源：seedance-2-prompt-engineering-skill · Emily2040/seedance-2.0 · ifeihong/aigc-film-studio · chaoge-assets-trial · seedance20-video-prompts · shotlist-builder · seedance-director · hellgrind
 ---
 
-# Seedancer v10.0.0 — AIGC 影视导演操作系统
+# Seedancer v10.0.1 — AIGC 影视导演操作系统
 
 > 从**剧本解析**到**预生产资产**到**分镜生成**到**成片交付**的端到端制片操作系统。v7.0.0 新增 **五大导演系统**（整合自 shotlist-builder + seedance-director + hellgrind）：场景原型路由 + 摄影机-情绪同步 + 表演微节拍目录 + JSON API 输出模式 + 光源规则系统。保留 P0-P2 预生产管线 + 五大硬门系统（v6.0.0）+ CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 38 码。支持多模型（Seedance 2.5/Kling/Veo/GPT Image 2/NBP/Seedream），五类交付物标准化输出。
 

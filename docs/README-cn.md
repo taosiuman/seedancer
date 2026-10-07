@@ -1,4 +1,4 @@
-# Seedancer v10.0.0 — AIGC 影视导演操作系统
+# Seedancer v10.0.1 — AIGC 影视导演操作系统
 
 <p align="center">
   <a href="../README.md"><b>English</b></a> · <a href="README-cn.md">中文</a>
@@ -8,7 +8,7 @@
 
 **从剧本到成片的端到端智能制片管线**
 
-[![版本](https://img.shields.io/badge/version-10.0.0-blue.svg)](https://github.com/taosiuman/seedancer/releases)
+[![版本](https://img.shields.io/badge/version-10.0.1-blue.svg)](https://github.com/taosiuman/seedancer/releases)
 [![许可](https://img.shields.io/badge/license-MIT-green.svg)](../LICENSE)
 
 [![Seedance](https://img.shields.io/badge/Seedance-2.5-purple.svg)](https://seedance.ai)
@@ -25,7 +25,7 @@
 
 它将剧本自动转化为生产级视频提示词，内置 **12 大门控系统**、**10 大核心模块**、**48 参考文档**，覆盖从项目预生产到最终交付的全流程自动化。
 
-### ✨ v10.0.0 新增
+### ✨ v10.0.1 新增
 
 **检查器硬化版（MAJOR）**——不改创作语义（详见 `CHANGELOG.md`）：
 
@@ -241,7 +241,7 @@ references/
 
 | 版本 | 日期 | 亮点 |
 |------|------|------|
-| **v10.0.0** | 2026-10-06 | 检查器增强（A2 断言 + 攻击测试 + 规则单源试点） |
+| **v10.0.1** | 2026-10-06 | 检查器增强（A2 断言 + 攻击测试 + 规则单源试点） |
 | **v9.0.2** | 2026-10-06 | 元数据一致性修复（frontmatter 表述 + skill-card 漂移 + 检查器 v3） |
 | **v9.0.1** | 2026-10-06 | 安全与数据边界整改（真人素材同意/留存门 + 消除规避措辞） |
 
@@ -272,7 +272,7 @@ references/
 
 <div align="center">
 
-**🎬 Seedancer v10.0.0 — 从剧本到成片的端到端智能制片管线**
+**🎬 Seedancer v10.0.1 — 从剧本到成片的端到端智能制片管线**
 
 *Made with ❤️ for AI filmmakers*
 

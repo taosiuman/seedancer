@@ -1,4 +1,4 @@
-# Seedancer v10.0.0 — AI Film Director Operating System
+# Seedancer v10.0.1 — AI Film Director Operating System
 
 <p align="center">
   <a href="README.md"><b>English</b></a> · <a href="docs/README-cn.md">中文</a>
@@ -8,7 +8,7 @@
 
 **From Script to Screen — End-to-End AI Film Production Pipeline**
 
-[![Version](https://img.shields.io/badge/version-10.0.0-blue.svg)](https://github.com/taosiuman/seedancer/releases)
+[![Version](https://img.shields.io/badge/version-10.0.1-blue.svg)](https://github.com/taosiuman/seedancer/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
 [![Seedance](https://img.shields.io/badge/Seedance-2.5-purple.svg)](https://seedance.ai)
@@ -23,7 +23,7 @@
 
 **Seedancer** is not a prompt generator. It is a **director-grade AI film production operating system** — a complete workflow engine that transforms scripts into production-ready video prompts through **12 quality gates**, **10 core modules**, and **48 reference documents**.
 
-### ✨ What's New in v10.0.0
+### ✨ What's New in v10.0.1
 
 **检查器硬化版（MAJOR）**——不改创作语义，改的是"规范怎么被机器守住"（详见 `CHANGELOG.md`）：
 
@@ -241,7 +241,7 @@ references/
 
 | Version | Date | Highlights |
 |---------|------|-----------|
-| **v10.0.0** | 2026-10-06 | 检查器增强（A2 断言 + 攻击测试 + 规则单源试点） |
+| **v10.0.1** | 2026-10-06 | 检查器增强（A2 断言 + 攻击测试 + 规则单源试点） |
 | **v9.0.2** | 2026-10-06 | 元数据一致性修复（frontmatter 表述 + skill-card 漂移 + 检查器 v3） |
 | **v9.0.1** | 2026-10-06 | 安全与数据边界整改（真人素材同意/留存门 + 消除规避措辞） |
 
@@ -272,7 +272,7 @@ Full attribution: [LICENSE](LICENSE)
 
 <div align="center">
 
-**🎬 Seedancer v10.0.0 — Where Scripts Become Frames**
+**🎬 Seedancer v10.0.1 — Where Scripts Become Frames**
 
 *Made with ❤️ for AI filmmakers*
 

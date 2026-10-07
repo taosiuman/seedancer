@@ -1,3 +1,42 @@
+# Seedancer v10.0.1 更新日志
+
+_发布日期：2026-10-06_
+
+> **定位**：大扫除（删除死代码 + 合并重复 + 清理陈旧标记 + 修正一致性）
+
+## A 组（删除死代码）
+
+- 删 `scripts/setup_seedance_prompt_workspace.sh`（0 引用）
+- 删 `assets/templates/`（空目录）
+- 删 `scripts/__pycache__/`（编译产物）
+- 删 `release-notes.md`（CHANGELOG 是唯一权威）
+
+## B 组（合并重复）
+
+- 合并两张语言路由表（`Language Policy` + `语言路由` → `语言路由`）
+- README 版本表收缩为近 3 版 + 指向 CHANGELOG
+
+## C 组（陈旧标记清理）
+
+- 删 SKILL.md 40 处 `🆕` + INDEX.md 11 处 `🆕`
+- 删 5 处历史版本号（`(v8.0.0)` 等）
+- 删空壳标题 `## 多模型支持`
+- 改标题 `平台限额速查` → `平台限额（见权威文件）`
+- 合并尾部两个指针章节为 `## 文档导航`
+
+## D 组（一致性修正）
+
+- README `Five Director Systems (v7.0.0)` vs CN `(v8.0.0)` → 统一 v7.0.0
+- README 历史锚点 `v9.0.0` vs CN `v8.0.0` → 统一 v9.0.0
+
+## 验证
+
+- 检查器 19 项 PASS
+- 攻击测试 6/6 拦住
+- 净减 275 行（+67/-342）
+
+---
+
 # Seedancer v10.0.0 更新日志
 
 _发布日期：2026-10-06_

@@ -5,7 +5,7 @@ license: MIT-0
 author: taosiuman
 version: 10.0.1
 tags: [seedance, video-generation, prompt-engineering, filmmaking, ai-director, seedance-2.5, cinedance, lira, acting, geo-spatial, aigc, multi-model, pre-production, character-assets, emotion-curve]
-platforms: [jimeng, doubao, volcano-engine, kling, veo]
+platforms: [jimeng, doubao, volcano-engine, kling, veo, wan, gpt-image, seedream]
 attribution: |
   本技能整合 8 个上游开源来源；**完整归因（含逐文件映射与原始许可）见 LICENSE**。
   来源：seedance-2-prompt-engineering-skill · Emily2040/seedance-2.0 · ifeihong/aigc-film-studio · chaoge-assets-trial · seedance20-video-prompts · shotlist-builder · seedance-director · hellgrind
@@ -13,7 +13,7 @@ attribution: |
 
 # Seedancer v10.0.1 — AIGC 影视导演操作系统
 
-> 从**剧本解析**到**预生产资产**到**分镜生成**到**成片交付**的端到端制片操作系统。v7.0.0 新增 **五大导演系统**（整合自 shotlist-builder + seedance-director + hellgrind）：场景原型路由 + 摄影机-情绪同步 + 表演微节拍目录 + JSON API 输出模式 + 光源规则系统。保留 P0-P2 预生产管线 + 五大硬门系统（v6.0.0）+ CINEDANCE 16-block + LIRA 4-D + ACTING + GEO + Style Prefix + SCALE LAW + AI 导演 + 失败诊断 38 码。支持多模型（Seedance 2.5/Kling/Veo/GPT Image 2/NBP/Seedream），五类交付物标准化输出。
+> 从**剧本解析**到**预生产资产**到**分镜生成**到**成片交付**的端到端制片操作系统。核心能力：P0-P2 预生产管线 · 五大硬门系统（台词容量 / 分组 / 镜头密度 / 运镜 / 输出格式）· 五大导演系统（场景原型路由、摄影机-情绪同步、表演微节拍、JSON API 输出、光源规则）· CINEDANCE 16-block · LIRA 4-D · ACTING / GEO / Style Prefix / SCALE LAW · AI 导演 · 失败诊断 38 码。支持多模型（Seedance / Kling / Veo / Wan / GPT Image / Nano Banana / Seedream），五类交付物标准化输出。硬门公式可用 `scripts/seedancer_calc.py` 机算复核；版本历史见 `CHANGELOG.md`。
 
 ---
 
@@ -81,7 +81,7 @@ P0 项目接收（自动，不询问）
 → P2a 角色资产（依赖图 → 批次生产 → 9:16确认稿 → 16:9设定板）
 → P2b 关键道具母板（3:4产品档案照）
 → 【预生产完成，进入正式制片管线】
-→ 12 门控路由 → 6 阶段标准流程 → 交付物输出
+→ 12 门控路由 → 8 阶段标准流程 → 交付物输出
 ```
 
 ### P0-P2 五大阶段
@@ -189,6 +189,8 @@ P0A 展示后固定询问：
 
 **禁止**：先写镜头，再用加速语速、重叠时间码、隐藏切镜或删除反应来修补。
 
+**机算复核**：`./SKILL.sh dialogue "原台词" --pace slow` 或 `./SKILL.sh check-group --model <模型> --duration <秒> --line "…"`；规划取区间上界，结果与本节公式不一致时以本节为准并修脚本。
+
 ---
 
 ## 分组硬门
@@ -203,6 +205,8 @@ P0A 展示后固定询问：
 | Seedance 2.5 | 30秒 | **30秒** |
 | Kling 3.0 | 15秒 | **15秒** |
 | Veo 3 | 8秒 | **8秒** |
+
+> 数值以 `references/modes-and-recipes.md` 为准；二者不一致时以权威文件为准，并同步本表与 `scripts/seedancer_calc.py`（`tests/test_calc.py` 校验三者一致）。
 
 ### 拆组规则
 
@@ -260,6 +264,8 @@ Bmin >= Smin
 | 12秒 | 5 | 7 | 8 |
 | 15秒 | 6 | 8 | 10 |
 | 30秒 (Seedance 2.5) | 12 | 16 | 20 |
+
+机算：`./SKILL.sh smin <T> <档位>`；分镜定稿前用 `check-group --shots <N>` 一次跑完时长、台词、Smin 三道门。
 
 ### 四道门必须同时通过
 
@@ -341,11 +347,7 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 
 ### 运镜功能表
 
-完整运镜功能表（含最小时长）见 `references/camera-design.md`；本入口只保留**硬约束**：
-
-- 主动运镜三要素（缺一不可）：动机 · 方向 · 落点
-- **缓慢运镜 ≥3s**；**每镜 ≤2 个运动分量**；摄影机与动词之间不得插逗号
-- 主轴登记是硬性要求（不登记不得写分镜）
+完整运镜功能表（含叙事功能、方向段写法、最小时长）见 `references/camera-design.md`。三要素口径以上一节为唯一定义，硬约束统一列在下方「关键规则」。
 
 ### 关键规则
 
@@ -354,7 +356,7 @@ In every frame <对象>'s silhouette is at least <N> TIMES the height of the hum
 - 每镜最多 2 个运动分量
 - 狭窄空间（走廊、车内、电梯）禁用环绕与弧轨，改用侧跟或横移
 - **「摄影机」与运动动词之间不得插入逗号**
-- 每场登记一次运镜主轴：稳定观察/逐渐逼近/逐渐疏离/跟随行动/空间揭示/群像压迫
+- 每场登记一次运镜主轴（不登记不得写分镜）：稳定观察/逐渐逼近/逐渐疏离/跟随行动/空间揭示/群像压迫
 
 ---
 
@@ -613,7 +615,7 @@ hard stops：并发上限按平台档位；退避必须有上限；限流触发�
 ## 运营循环 (Operating Loop)
 
 每个请求经过 **12 个门控**（v6.0.0 新增门控 7A 和门控 7B），按顺序执行：
-📎 加载：`references/failure-codes.md`（运营循环 阶段必须读）
+📎 加载：`references/checkpoint-resume.md`（运营循环 阶段必须读）
 
 ### 门控 0: 预生产检测
 
@@ -700,7 +702,7 @@ hard stops：并发上限按平台档位；退避必须有上限；限流触发�
 
 检查项：
 1. 按拆组规则分组（时长上限、场景跳跃、动作目标）
-2. 每组时长 ≤ 模型上限（Seedance 2.5=30s, 2.0=15s, Veo=8s）
+2. 每组时长 ≤ 模型上限（Seedance 2.5=30s, 2.0=15s, Kling 3.0=15s, Veo 3=8s）
 3. 组尾是否为可继承稳定状态
 4. 承接等式是否成立
 5. 判定密度档位（ordinary / action_reversal / fight）
@@ -725,7 +727,7 @@ hard stops：并发上限按平台档位；退避必须有上限；限流触发�
 ---
 📎 加载：`references/anti-slop-lexicon.md`（质量检查 阶段必须读）
 
-## 核心流程 (6 阶段标准流程)
+## 核心流程 (8 阶段标准流程)
 
 ### 阶段一：剧本解构 + 序列分类
 
@@ -765,7 +767,7 @@ hard stops：并发上限按平台档位；退避必须有上限；限流触发�
 > 加载：`dialogue-capacity.md` + `grouping-density.md` + `camera-design.md` + `output-format.md`
 
 两种模式：
-- **时间片模式**：单镜头内情绪递进（0-10s, 11-20s, 21-30s）
+- **时间片模式**：单镜头内情绪递进（0-10s, 10-20s, 20-30s，首尾相接不留空档）
 - **镜头组模式**：多镜头剪辑（按组分段）
 
 **分镜写作硬门**：
@@ -806,6 +808,7 @@ hard stops：并发上限按平台档位；退避必须有上限；限流触发�
 | **局部编辑** | 只有局部元素有问题 | 用局部编辑协议 |
 | **重生成** | 运气不好 | 同提示词，新种子 |
 | **重写** | 同一问题出现 2 次以上 | 改提示词 |
+| **换模式** | 当前模式无法满足需求 | 换生成模式（如 T2V→I2V/R2V） |
 
 ### 阶段八：序列项目管理
 
@@ -881,15 +884,17 @@ hard stops：并发上限按平台档位；退避必须有上限；限流触发�
 
 ### 景别 (Shot Size)
 
-| 中文 | 英文 | 焦段对应 |
+| 中文 | 英文 | 常用焦段（参考） |
 |------|------|---------|
 | 大全景 | Extreme Long Shot | ≤24mm |
 | 全景 | Full Shot | 25-35mm |
 | 中景 | Medium Shot | 36-55mm |
 | 中近景 | Medium Close-up | 56-79mm |
-| 近景 | Close-up | 80-120mm |
-| 特写 | Close-up Detail | 121-200mm |
+| 近景 | Close Shot | 80-120mm |
+| 特写 | Close-up | 121-200mm |
 | 大特写 | Extreme Close-up | >200mm |
+
+> 景别由**机位距离 × 焦段**共同决定，上表只是常见搭配、不是一一对应：同一 85mm 贴近是特写、远离是中景。正文始终写「焦段 + 景别」（如 `85mm近景`）。
 
 ### 镜头运动 (Camera Movement)
 
@@ -905,6 +910,8 @@ hard stops：并发上限按平台档位；退避必须有上限；限流触发�
 | 升起 | Crane Up | **≥3s** |
 | 拉远 | Pull Back | **≥3s** |
 | 环绕 | Orbit / Arc | **≥3s** |
+
+> 最小时长以 `references/camera-design.md` 为准；凡含缓慢类词（缓慢/慢速/徐徐/慢推/慢摇/慢移/渐近/渐远）的运镜一律 ≥3s。
 
 ---
 

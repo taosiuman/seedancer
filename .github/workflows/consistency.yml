@@ -1,0 +1,26 @@
+name: consistency
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: 一致性检查（19 项）
+        run: python scripts/check_consistency.py
+      - name: 攻击测试
+        run: python tests/attack_test.py
+      - name: 硬门计算器单元测试
+        run: python tests/test_calc.py
+      - name: SKILL.sh 冒烟
+        run: |
+          bash SKILL.sh --help
+          bash SKILL.sh "10s 9:16 cyberpunk rain night street"
+          bash SKILL.sh smin 12 ordinary
+          bash SKILL.sh models

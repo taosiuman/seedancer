@@ -1,3 +1,31 @@
+# Seedancer v10.0.2 更新日志
+
+_发布日期：2026-10-18_
+
+> **定位**：合并 PR #1（硬门确定性计算器 + SKILL.sh 实用化 + CI + 评估报告），并升版发布。
+
+## 新增
+
+- `scripts/seedancer_calc.py`：零依赖硬门计算器（`smin` / `dialogue` / `check-group` / `models`，`--json`，退出码 0/1/2）
+- `tests/test_calc.py`：13 个用例，含 SKILL.md 表格 ↔ 计算器常量防漂移
+- `.github/workflows/consistency.yml`：push / PR 跑一致性检查、攻击测试、单元测试、SKILL.sh 冒烟
+- `docs/REVIEW-v10.0.1.md`：评估报告
+
+## SKILL.sh
+
+- 从请求解析时长与画幅（不再写死 10s/16:9）；超 15s 预警；新增 `--help`
+- 计算子命令委托给计算器；原调用 `bash SKILL.sh "10s 9:16 ..."` 仍 exit 0
+
+## SKILL.md / 元数据（来自 PR 第二轮）
+
+- 运镜三要素口径统一；景别↔焦段改为参考并修正英文术语
+- 模型上限、运镜最小时长表加权威注记；门控 7B 补 Kling 3.0
+- 时间片时间码改为 0-10s / 10-20s / 20-30s；补第六判定「换模式」；阶段数 6 → 8
+- 简介改为能力摘要；platforms 补 wan / gpt-image / seedream
+- 台词容量与镜头密度节引用计算器
+
+---
+
 # Seedancer v10.0.1 更新日志
 
 _发布日期：2026-10-06_

@@ -1,4 +1,4 @@
-# Seedancer v10.0.1 — AI Film Director Operating System
+# Seedancer v10.0.2 — AI Film Director Operating System
 
 <p align="center">
   <a href="README.md"><b>English</b></a> · <a href="docs/README-cn.md">中文</a>
@@ -8,7 +8,7 @@
 
 **From Script to Screen — End-to-End AI Film Production Pipeline**
 
-[![Version](https://img.shields.io/badge/version-10.0.1-blue.svg)](https://github.com/taosiuman/seedancer/releases)
+[![Version](https://img.shields.io/badge/version-10.0.2-blue.svg)](https://github.com/taosiuman/seedancer/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
 [![Seedance](https://img.shields.io/badge/Seedance-2.5-purple.svg)](https://seedance.ai)
@@ -23,16 +23,16 @@
 
 **Seedancer** is not a prompt generator. It is a **director-grade AI film production operating system** — a complete workflow engine that transforms scripts into production-ready video prompts through **12 quality gates**, **10 core modules**, and **48 reference documents**.
 
-### ✨ What's New in v10.0.1
+### ✨ What's New in v10.0.2
 
-**检查器硬化版（MAJOR）**——不改创作语义，改的是"规范怎么被机器守住"（详见 `CHANGELOG.md`）：
+**硬门可机算**——合并 [PR #1](https://github.com/taosiuman/seedancer/pull/1)：台词容量、分组时长、镜头密度 Smin 从模型心算改为可执行计算器，并补上 CI（详见 `CHANGELOG.md`）。
 
 | 变化 | 说明 |
 |------|------|
-| 🔬 **检查器 16 → 19 项** | `A2`（**阻塞**：7 个关键小节的**内容行**必须存在，此前只查"短语在不在"）、`A3`（WARN：规范枚举顺序）、`A4`（**阻塞**：文件内指针层级成立） |
-| 🧾 **G2 可断点** | 每个检查组开跑前向 stderr 打 `[RUN ] …` —— 中断时最后一行即断点 |
-| 🧹 **入口规则改名（迁移必读）** | 「四项事实」在入口 **5 处 → 2 处**；三处规则名改为「**每镜必要条件**」并加**文件内指针**。**四要素与硬门语义未变**；定义节标题仍为「每镜四项事实（缺一不可）」（术语错位为已知技术债） |
-| 🧪 **攻击测试** | `tests/attack_test.py`：**31 必拦场景 + 7 类"必须不报错"的合法写法 + 24 类显式已知漏检**，在临时副本上变异 |
+| 🧮 **硬门计算器** | `scripts/seedancer_calc.py`：`smin` / `dialogue` / `check-group` / `models`，退出码 0/1/2 |
+| 🛠 **SKILL.sh** | 解析时长与画幅；超 15s 预警；`--help`；计算子命令委托给计算器 |
+| ✅ **CI** | push / PR 跑一致性检查、攻击测试、单元测试、SKILL.sh 冒烟 |
+| 📝 **入口修正** | 运镜三要素口径统一、景别↔焦段改为参考、补第六判定「换模式」、时间片不留空档、阶段数 6→8 |
 
 ### 📜 历史：What's New in v9.0.0
 
@@ -241,7 +241,8 @@ references/
 
 | Version | Date | Highlights |
 |---------|------|-----------|
-| **v10.0.1** | 2026-10-06 | 检查器增强（A2 断言 + 攻击测试 + 规则单源试点） |
+| **v10.0.2** | 2026-10-18 | 硬门计算器 + SKILL.sh 实用化 + CI（合并 PR #1） |
+| **v10.0.1** | 2026-10-06 | 大扫除（删死代码 + 合并重复 + 清理陈旧标记） |
 | **v9.0.2** | 2026-10-06 | 元数据一致性修复（frontmatter 表述 + skill-card 漂移 + 检查器 v3） |
 | **v9.0.1** | 2026-10-06 | 安全与数据边界整改（真人素材同意/留存门 + 消除规避措辞） |
 
@@ -272,7 +273,7 @@ Full attribution: [LICENSE](LICENSE)
 
 <div align="center">
 
-**🎬 Seedancer v10.0.1 — Where Scripts Become Frames**
+**🎬 Seedancer v10.0.2 — Where Scripts Become Frames**
 
 *Made with ❤️ for AI filmmakers*
 

@@ -1,4 +1,4 @@
-# Seedancer v10.0.2 — AI Film Director Operating System
+# Seedancer v10.0.3 — AI Film Director Operating System
 
 <p align="center">
   <a href="README.md"><b>English</b></a> · <a href="docs/README-cn.md">中文</a>
@@ -8,7 +8,7 @@
 
 **From Script to Screen — End-to-End AI Film Production Pipeline**
 
-[![Version](https://img.shields.io/badge/version-10.0.2-blue.svg)](https://github.com/taosiuman/seedancer/releases)
+[![Version](https://img.shields.io/badge/version-10.0.3-blue.svg)](https://github.com/taosiuman/seedancer/releases)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
 [![Seedance](https://img.shields.io/badge/Seedance-2.5-purple.svg)](https://seedance.ai)
@@ -23,7 +23,7 @@
 
 **Seedancer** is not a prompt generator. It is a **director-grade AI film production operating system** — a complete workflow engine that transforms scripts into production-ready video prompts through **12 quality gates**, **10 core modules**, and **48 reference documents**.
 
-### ✨ What's New in v10.0.2
+### ✨ What's New in v10.0.3
 
 **硬门可机算**——合并 [PR #1](https://github.com/taosiuman/seedancer/pull/1)：台词容量、分组时长、镜头密度 Smin 从模型心算改为可执行计算器，并补上 CI（详见 `CHANGELOG.md`）。
 
@@ -241,6 +241,7 @@ references/
 
 | Version | Date | Highlights |
 |---------|------|-----------|
+| **v10.0.3** | 2026-10-18 | 排除 Python 字节码，修复 ClawHub 安全扫描拒绝 |
 | **v10.0.2** | 2026-10-18 | 硬门计算器 + SKILL.sh 实用化 + CI（合并 PR #1） |
 | **v10.0.1** | 2026-10-06 | 大扫除（删死代码 + 合并重复 + 清理陈旧标记） |
 | **v9.0.2** | 2026-10-06 | 元数据一致性修复（frontmatter 表述 + skill-card 漂移 + 检查器 v3） |
@@ -273,7 +274,7 @@ Full attribution: [LICENSE](LICENSE)
 
 <div align="center">
 
-**🎬 Seedancer v10.0.2 — Where Scripts Become Frames**
+**🎬 Seedancer v10.0.3 — Where Scripts Become Frames**
 
 *Made with ❤️ for AI filmmakers*
 

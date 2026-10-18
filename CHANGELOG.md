@@ -1,3 +1,17 @@
+# Seedancer v10.0.3 更新日志
+
+_发布日期：2026-10-18_
+
+> **定位**：修复 ClawHub 发布被安全扫描拒绝的问题。功能与 v10.0.2 相同。
+
+## 修复
+
+- 删除 `scripts/__pycache__/seedancer_calc.cpython-312.pyc`。
+  ClawHub A.I.G 0.2.1 拒绝打包的 Python 字节码（CVE-2026-84809），导致 v10.0.2 版本号被占住但版本不可查询、不可公开。
+- 新增 `.gitignore` 与 `.clawhubignore`，排除 `__pycache__/`、`*.pyc`、`*.pyo`、`*.pyd`。
+
+---
+
 # Seedancer v10.0.2 更新日志
 
 _发布日期：2026-10-18_
